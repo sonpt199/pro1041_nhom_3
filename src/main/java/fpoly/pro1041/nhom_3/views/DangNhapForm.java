@@ -95,9 +95,11 @@ public class DangNhapForm extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(199, 226, 255));
         jLabel6.setText("Password");
 
+        jButton1.setBackground(new java.awt.Color(25, 118, 211));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(25, 118, 211));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("LOGIN");
+        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jTextField1.setBackground(new java.awt.Color(25, 118, 211));
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
