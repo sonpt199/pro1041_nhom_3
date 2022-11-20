@@ -4,7 +4,7 @@
  */
 package fpoly.pro1041.nhom_3.views;
 
-import fpoly.pro1041.nhom_3.bean.DanhMucBean;
+import fpoly.pro1041.nhom_3.domainModel.DanhMucBean;
 import fpoly.pro1041.nhom_3.controller.ChuyenManHinhController;
 import java.awt.Color;
 import java.util.ArrayList;

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fpoly.pro1041.nhom_3.bean;
+package fpoly.pro1041.nhom_3.domainModel;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;

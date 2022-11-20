@@ -30,7 +30,7 @@ public class HibernateUtil {
         properties.put(Environment.URL, "jdbc:sqlserver://localhost:1433;databaseName=quan_ly_ban_dien_thoai");
         properties.put(Environment.USER, "sa");
         properties.put(Environment.PASS, "123456");
-        properties.put(Environment.SHOW_SQL, "false");
+        properties.put(Environment.SHOW_SQL, "true");
 //        properties.put(Environment.HBM2DDL_AUTO, "create");
 
 //        Thêm bảng cái add thêm zô đây để có thể kết nối với DB

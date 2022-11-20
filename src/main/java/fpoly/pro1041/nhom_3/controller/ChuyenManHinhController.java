@@ -4,7 +4,7 @@
  */
 package fpoly.pro1041.nhom_3.controller;
 
-import fpoly.pro1041.nhom_3.bean.DanhMucBean;
+import fpoly.pro1041.nhom_3.domainModel.DanhMucBean;
 import fpoly.pro1041.nhom_3.views.BanHangJPanel;
 import fpoly.pro1041.nhom_3.views.HoaDonJPanel;
 import fpoly.pro1041.nhom_3.views.KhachHangJPanel;
