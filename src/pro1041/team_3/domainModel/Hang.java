@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 
 /**
  *
+<<<<<<< HEAD
  * @author ADMIN
  */
 @Entity
@@ -28,11 +29,28 @@ public class Hang {
     @Column(name = "id")
     private UUID id;
     
+=======
+ * @author Admin
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "hang")
+public class Hang {
+
+    @Id
+    @GeneratedValue()
+    @Column(name = "id")
+    private UUID id;
+
+>>>>>>> hanhlt
     @Column(name = "ma")
     private String ma;
 
     @Column(name = "ten")
     private String ten;
+<<<<<<< HEAD
 
     public UUID getId() {
         return id;
@@ -64,4 +82,6 @@ public class Hang {
     }
     
     
+=======
+>>>>>>> hanhlt
 }

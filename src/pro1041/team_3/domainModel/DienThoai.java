@@ -1,11 +1,17 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> hanhlt
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+<<<<<<< HEAD
 >>>>>>> trangdtt
+=======
+>>>>>>> hanhlt
 package pro1041.team_3.domainModel;
 
 import java.util.UUID;
@@ -20,6 +26,7 @@ import lombok.NoArgsConstructor;
 
 /**
  *
+<<<<<<< HEAD
 <<<<<<< HEAD
  * @author van15
  */
@@ -52,10 +59,30 @@ public class DienThoai {
 =======
 
 >>>>>>> trangdtt
+=======
+ * @author Admin
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "dien_thoai")
+public class DienThoai {
+
+    @Id
+    @GeneratedValue()
+    @Column(name = "id")
+    private UUID id;
+
+    @Column(name = "ma")
+    private String ma;
+
+>>>>>>> hanhlt
     @Column(name = "ten")
     private String ten;
     
     @Column(name = "thoi_gian_bao_hanh")
+<<<<<<< HEAD
 <<<<<<< HEAD
     private Integer thoiGianBaoHanh;
 =======
@@ -101,4 +128,7 @@ public class DienThoai {
     
     
 >>>>>>> trangdtt
+=======
+    private Integer thoiGianBaoHanh;
+>>>>>>> hanhlt
 }
