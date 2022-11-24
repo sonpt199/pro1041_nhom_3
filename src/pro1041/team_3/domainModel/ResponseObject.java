@@ -17,7 +17,7 @@ import lombok.Setter;
 public class ResponseObject {
 
     private Boolean remote;
-    
+    //Remote
     private String message;
-    
+    //Remote
 }
