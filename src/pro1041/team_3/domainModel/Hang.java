@@ -1,11 +1,7 @@
-<<<<<<< HEAD
-
-=======
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
->>>>>>> trangdtt
 package pro1041.team_3.domainModel;
 
 import java.util.UUID;
@@ -20,26 +16,13 @@ import lombok.NoArgsConstructor;
 
 /**
  *
-<<<<<<< HEAD
- * @author van15
- */
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-@Entity
-@Table(name = "dien_thoai")
-public class DienThoai {
-    
-=======
  * @author ADMIN
  */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "dien_thoai")
-public class DienThoai {
->>>>>>> trangdtt
+@Table(name = "hang")
+public class Hang {
     @Id
     @GeneratedValue
     @Column(name = "id")
@@ -47,19 +30,9 @@ public class DienThoai {
     
     @Column(name = "ma")
     private String ma;
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> trangdtt
     @Column(name = "ten")
     private String ten;
-    
-    @Column(name = "thoi_gian_bao_hanh")
-<<<<<<< HEAD
-    private Integer thoiGianBaoHanh;
-=======
-    private int thoiGianBaoHanh;
 
     public UUID getId() {
         return id;
@@ -85,20 +58,10 @@ public class DienThoai {
         this.ten = ten;
     }
 
-    public int getThoiGianBaoHanh() {
-        return thoiGianBaoHanh;
-    }
-
-    public void setThoiGianBaoHanh(int thoiGianBaoHanh) {
-        this.thoiGianBaoHanh = thoiGianBaoHanh;
-    }
-
     @Override
     public String toString() {
         return ten;
     }
     
     
-    
->>>>>>> trangdtt
 }
