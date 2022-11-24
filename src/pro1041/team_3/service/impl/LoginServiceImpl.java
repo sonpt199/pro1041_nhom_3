@@ -1,9 +1,9 @@
 package pro1041.team_3.service.impl;
 
 import pro1041.team_3.service.LoginService;
-import pro1041.team_3.domainmodel.TaiKhoan;
-import pro1041.team_3.repository.UserRepository;
 import java.util.List;
+import pro1041.team_3.domainModel.NhanVien;
+import pro1041.team_3.repository.NhanVienRepository;
 
 /**
  *
@@ -11,19 +11,19 @@ import java.util.List;
  */
 public class LoginServiceImpl implements LoginService{
     
-    private UserRepository userRepository;
+    private NhanVienRepository userRepository;
 
     public LoginServiceImpl() {
-        userRepository = new UserRepository();
+        userRepository = new NhanVienRepository();
     }
 
     @Override
     public int login(String username, String password) {
-        List<TaiKhoan> lstAccoutn = userRepository.getAll();
-        for (TaiKhoan x : lstAccoutn) {
+        List<NhanVien> lstAccoutn = userRepository.getAll();
+        for (NhanVien x : lstAccoutn) {
             if (username.equals(x.getTenDangNhap()) && 
-                    password.equals(x.getMatkhau())) {
-                return x.getVaitro();
+                    password.equals(x.getMatKhau())) {
+                return x.getVaiTro();
             }
         }
         return -1;

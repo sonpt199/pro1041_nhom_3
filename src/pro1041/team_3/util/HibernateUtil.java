@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pro1041.team_3.util;
 
 import java.util.Properties;
@@ -11,8 +7,12 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
+import pro1041.team_3.domainModel.ChiTietDienThoai;
+import pro1041.team_3.domainModel.DienThoai;
+import pro1041.team_3.domainModel.Hang;
+import pro1041.team_3.domainModel.KhachHang;
 import pro1041.team_3.domainModel.MauSac;
-import pro1041.team_3.domainmodel.TaiKhoan;
+import pro1041.team_3.domainModel.NhanVien;
 
 
 /**
@@ -37,8 +37,11 @@ public class HibernateUtil {
 
 //        Thêm bảng cái add thêm zô đây để có thể kết nối với DB
         conf.addAnnotatedClass(MauSac.class);
-        conf.addAnnotatedClass(TaiKhoan.class);
-
+        conf.addAnnotatedClass(NhanVien.class);
+        conf.addAnnotatedClass(DienThoai.class);
+        conf.addAnnotatedClass(Hang.class);
+        conf.addAnnotatedClass(KhachHang.class);
+        conf.addAnnotatedClass(ChiTietDienThoai.class);
         conf.setProperties(properties);
 
         ServiceRegistry registry = new StandardServiceRegistryBuilder()
