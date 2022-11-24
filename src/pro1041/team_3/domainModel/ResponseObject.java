@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 public class ResponseObject {
 
-    private Boolean status;
+    private Boolean local;
     
     private String message;
     
