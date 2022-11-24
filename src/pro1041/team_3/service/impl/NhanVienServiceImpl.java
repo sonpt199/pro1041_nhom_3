@@ -1,35 +1,38 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pro1041.team_3.service.impl;
+
+import java.util.List;
+import java.util.UUID;
+import pro1041.team_3.domainModel.NhanVien;
+import pro1041.team_3.dto.NhanVienDto;
+import pro1041.team_3.repository.NhanVienRepository;
+import pro1041.team_3.service.NhanVienService;
 
 /**
  *
- * @author ADMIN
+ * @author trangntph19494
  */
-public class UserServiceImpl implements UserService{
+public class NhanVienServiceImpl implements NhanVienService{
     
-    private UsersRepository repos;
+    private NhanVienRepository repos;
 
-    public UserServiceImpl() {
-        repos = new UsersRepository();
+    public NhanVienServiceImpl() {
+        repos = new NhanVienRepository();
     }
     
     @Override
-    public List<UserDto> getAllReponse() {
-        return repos.getAllReponse();
+    public List<NhanVienDto> getAllReponse() {
+        return repos.getAllResponse();
     }
 
     @Override
-    public String insert(User user) {
-        if (user.getTendangnhap().trim().isEmpty()) {
+    public String insert(NhanVien user) {
+        if (user.getTenDangNhap().trim().isEmpty()) {
             return "Tên đăng nhập không được để trống";
         }
-        else if (user.getHoten().trim().isEmpty()) {
+        else if (user.getHoTen().trim().isEmpty()) {
             return "Họ và tên không được để trống";
         }
-        else if (user.getDiachi().trim().isEmpty()) {
+        else if (user.getDiaChi().trim().isEmpty()) {
             return "Địa chỉ không được để trống";
         }
         else if (user.getEmail().trim().isEmpty()) {
@@ -48,7 +51,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public String delete(UUID id) {
-        User userFind = repos.findById(id);
+        NhanVien userFind = repos.findById(id);
         if (userFind == null) {
             return "Không tìm thấy";
         }
@@ -61,26 +64,26 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> getAll() {
+    public List<NhanVien> getAll() {
         return repos.getAll();
     }
 
     @Override
-    public String update(User user) {
-       User userFindById = repos.findById(user.getId());
+    public String update(NhanVien user) {
+       NhanVien userFindById = repos.findById(user.getId());
         if (userFindById == null) {
             return "Không tìm thấy";
         }
-        if (user.getHoten().trim().isEmpty()) {
+        if (user.getHoTen().trim().isEmpty()) {
             return "Họ và tên không được trống";
         }
-        if (user.getMatkhau().trim().isEmpty()) {
+        if (user.getMatKhau().trim().isEmpty()) {
             return "Mật khẩu không được trống";
         }
-        if (user.getDiachi().trim().isEmpty()) {
+        if (user.getDiaChi().trim().isEmpty()) {
             return "Địa chỉ không được trống";
         }
-        if (user.getTendangnhap().trim().isEmpty()) {
+        if (user.getTenDangNhap().trim().isEmpty()) {
             return "Tên đăng nhập không được trống";
         }
         
@@ -90,13 +93,13 @@ public class UserServiceImpl implements UserService{
         
         
         
-        userFindById.setTendangnhap(user.getTendangnhap());
-        userFindById.setHoten(user.getHoten());
+        userFindById.setTenDangNhap(user.getTenDangNhap());
+        userFindById.setHoTen(user.getHoTen());
         userFindById.setEmail(user.getEmail());
         userFindById.setSdt(user.getSdt());
-        userFindById.setMatkhau(user.getMatkhau());
-        userFindById.setGioitinh(user.getGioitinh());
-        userFindById.setVaitro(user.getVaitro());
+        userFindById.setMatKhau(user.getMatKhau());
+        userFindById.setGioiTinh(user.getGioiTinh());
+        userFindById.setVaiTro(user.getVaiTro());
         userFindById.setId(user.getId());
         user = repos.saveOrUpdate(userFindById);
         if (user != null) {
@@ -107,7 +110,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<UserDto> findByTenDangNhap(String keyWord) {
+    public List<NhanVienDto> findByTenDangNhap(String keyWord) {
         return repos.findByTenDangNhap(keyWord);
     }
 }

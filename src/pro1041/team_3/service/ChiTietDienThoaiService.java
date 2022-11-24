@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package pro1041.team_3.service;
 
 
@@ -12,7 +8,7 @@ import pro1041.team_3.dto.ChiTietDienThoaiResponse;
 
 /**
  *
- * @author ADMIN
+ * @author trangdttph27721
  */
 public interface ChiTietDienThoaiService {
 

@@ -8,6 +8,10 @@ import pro1041.team_3.domainModel.ChiTietDienThoai;
 import pro1041.team_3.dto.ChiTietDienThoaiResponse;
 import pro1041.team_3.util.HibernateUtil;
 
+/**
+ *
+ * @author trangdttph27721
+ */
 public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUID, ChiTietDienThoaiResponse>{
 
     public ChiTietDienThoaiRepository() {

@@ -1,24 +1,15 @@
-<<<<<<< HEAD
-
 package pro1041.team_3.service.impl;
 
 import java.util.List;
 import java.util.UUID;
 import pro1041.team_3.domainModel.DienThoai;
 import pro1041.team_3.dto.DienThoaiDto;
-=======
-package pro1041.team_3.service.impl;
-
-import java.util.List;
-import pro1041.team_3.domainModel.DienThoai;
->>>>>>> trangdtt
 import pro1041.team_3.repository.DienThoaiRepository;
 import pro1041.team_3.service.DienThoaiService;
 
 /**
  *
-<<<<<<< HEAD
- * @author van15
+ * @author vanntph19604
  */
 public class DienThoaiServiceImpl implements DienThoaiService{
     
@@ -81,29 +72,11 @@ public class DienThoaiServiceImpl implements DienThoaiService{
         } else {
             return "Xoa that bai";
         }
-=======
- * @author ADMIN
- */
-public class DienThoaiServiceImpl implements DienThoaiService{
-
-    private DienThoaiRepository dienThoaiRepository;
-    public DienThoaiServiceImpl() {
-        this.dienThoaiRepository = new DienThoaiRepository();
->>>>>>> trangdtt
     }
 
     @Override
     public List<DienThoai> getAll() {
-<<<<<<< HEAD
         return repos.getAll();
-    }
-    
-    public static void main(String[] args) {
-        DienThoaiService dt = new DienThoaiServiceImpl();
-        System.out.println(dt.getAllResponse().size());
-=======
-        return this.dienThoaiRepository.getAll();
->>>>>>> trangdtt
     }
     
 }

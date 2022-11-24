@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pro1041.team_3.repository;
 
 
@@ -14,7 +10,7 @@ import pro1041.team_3.util.HibernateUtil;
 
 /**
  *
- * @author Admin
+ * @author hanhltph27725
  */
 public class KhachHangRepository extends Repository<KhachHang, UUID, KhachHangDto> {
 

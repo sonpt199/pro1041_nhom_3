@@ -1,48 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pro1041.team_3.service.impl;
 
-<<<<<<< HEAD
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import pro1041.team_3.domainModel.Hang;
+import pro1041.team_3.dto.ChiTietDienThoaiDto;
+import pro1041.team_3.dto.HangDto;
 import pro1041.team_3.repository.HangRepository;
 import pro1041.team_3.service.HangService;
 
 /**
  *
- * @author ADMIN
+ * @author hanhltph27725
  */
 public class HangServiceImpl implements HangService{
-
-    private HangRepository hangRepository;
-    public HangServiceImpl() {
-        this.hangRepository = new HangRepository();
-    }
-
-    @Override
-    public List<Hang> getAll() {
-        return this.hangRepository.getAll();
-    }
-    
-=======
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import lombok.var;
-import pro1041.team_3.domainModel.Hang;
-import pro1041.team_3.dto.ChiTietDienThoaiDto;
-import pro1041.team_3.dto.HangDto;
-import pro1041.team_3.repository.HangRepository;
-import pro1041.team_3.service.IHangService;
-
-/**
- *
- * @author Admin
- */
-public class HangServiceImpl implements IHangService {
 
     private HangRepository hangRepository;
     private ArrayList<HangDto> _lstHang;
@@ -51,9 +22,14 @@ public class HangServiceImpl implements IHangService {
         hangRepository = new HangRepository();
         _lstHang = new ArrayList<>();
     }
+    
+    @Override
+    public List<Hang> getAll() {
+        return this.hangRepository.getAll();
+    }
 
     @Override
-    public ArrayList<HangDto> getAll() {
+    public ArrayList<HangDto> getAllResponse() {
         _lstHang = new ArrayList<>();
         List<Hang> listHang = hangRepository.getAll();
         for (Hang x : listHang) {
@@ -148,5 +124,4 @@ public class HangServiceImpl implements IHangService {
         return _lstHang;
     }
 
->>>>>>> hanhlt
 }

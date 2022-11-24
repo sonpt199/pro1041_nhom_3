@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package pro1041.team_3.service;
 
 
@@ -13,9 +9,9 @@ import pro1041.team_3.dto.KhachHangDto;
 
 /**
  *
- * @author Admin
+ * @author hanhltph27725
  */
-public interface IKhachHangService {
+public interface KhachHangService {
 
     ArrayList<KhachHangDto> getAll();
 

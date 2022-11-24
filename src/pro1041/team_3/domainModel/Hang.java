@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pro1041.team_3.domainModel;
 
+import java.io.Serializable;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,76 +9,32 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-/**
- *
-<<<<<<< HEAD
- * @author ADMIN
- */
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "hang")
-public class Hang {
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
-    private UUID id;
-    
-=======
- * @author Admin
- */
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "hang")
-public class Hang {
+public class Hang implements Serializable {
 
     @Id
     @GeneratedValue()
     @Column(name = "id")
     private UUID id;
 
->>>>>>> hanhlt
     @Column(name = "ma")
     private String ma;
 
     @Column(name = "ten")
     private String ten;
-<<<<<<< HEAD
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getMa() {
-        return ma;
-    }
-
-    public void setMa(String ma) {
-        this.ma = ma;
-    }
-
-    public String getTen() {
-        return ten;
-    }
-
-    public void setTen(String ten) {
-        this.ten = ten;
-    }
 
     @Override
     public String toString() {
-        return ten;
+        return "Hang{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + '}';
     }
-    
-    
-=======
->>>>>>> hanhlt
+     
 }
