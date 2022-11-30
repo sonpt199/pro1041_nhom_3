@@ -22,11 +22,9 @@ public class DienThoaiDto {
 
     private String ten;
 
-    private Integer thoiGianBaoHanh;
-
     public Object[] toDataRow(int index) {
         return new Object[]{
-            index, ma, ten, thoiGianBaoHanh
+            index, ma, ten
         };
     }
 
