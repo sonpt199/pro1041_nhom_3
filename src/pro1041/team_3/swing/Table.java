@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
@@ -30,9 +32,9 @@ public class Table extends JTable {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                 TableHeader h = new TableHeader(o + "");
-                if (i1 == 0 || i1 == 4) {
-                    h.setHorizontalAlignment(JLabel.CENTER);
-                }
+//                if (i1 == 0 || i1 == 4) {
+                h.setHorizontalAlignment(JLabel.CENTER);
+//                }
                 return h;
             }
         });
@@ -61,21 +63,22 @@ public class Table extends JTable {
 
     @Override
     public Component prepareRenderer(TableCellRenderer tcr, int i, int i1) {
-        if (i1 == 0) {
-            Icon icon = (Icon) getValueAt(i, 0);
-            TableCell_Image cell = new TableCell_Image(icon);
-            return cell;
-        } else if (i1 == 4) {
-            TableCell_Status cell = new TableCell_Status(getValueAt(i, 4).toString());
-            return cell;
-        } else {
-            String values = "";
-            if (getValueAt(i, i1) != null) {
-                values = getValueAt(i, i1).toString();
-            }
-            TableCell cell = new TableCell(values);
-            return cell;
+//        if (i1 == 0) {
+//            Icon icon = (Icon) getValueAt(i, 0);
+//            TableCell_Image cell = new TableCell_Image(icon);
+//            return cell;
+//        } else if (i1 == 4) {
+//            TableCell_Status cell = new TableCell_Status(getValueAt(i, 4).toString());
+//            return cell;
+//        } else {
+        String values = "";
+        if (getValueAt(i, i1) != null) {
+            values = getValueAt(i, i1).toString();
         }
+        TableCell cell = new TableCell(values);
+        cell.setHorizontalAlignment(JLabel.CENTER);
+        return cell;
+//        }
     }
 
     @Override
@@ -100,7 +103,7 @@ public class Table extends JTable {
     }
 
     public void fixTable(JScrollPane scroll) {
-        scroll.setBorder(null);
+        scroll.setBorder(new TitledBorder(new MatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY), "Giỏ hàng"));
         scroll.getViewport().setBackground(new Color(250, 250, 250));
         ScrollBar sb = new ScrollBar();
         sb.setBackground(new Color(250, 250, 250));

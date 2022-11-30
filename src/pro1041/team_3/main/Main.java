@@ -1,20 +1,24 @@
 package pro1041.team_3.main;
 
+import java.awt.Image;
 import pro1041.team_3.component.MenuLayout;
 import pro1041.team_3.event.EventMenuSelected;
 import pro1041.team_3.form.Form_1;
-import pro1041.team_3.form.Form_2;
+import pro1041.team_3.form.ViewBanHang;
 import pro1041.team_3.form.MainForm;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
+import pro1041.team_3.component.Profile;
+import pro1041.team_3.form.ViewQuanLyHoaDon;
 
 public class Main extends javax.swing.JFrame {
 
@@ -25,6 +29,9 @@ public class Main extends javax.swing.JFrame {
 
     public Main() {
         initComponents();
+        this.setTitle("Quản lý bán hàng");
+        ImageIcon icon = new ImageIcon(getClass().getResource("/pro1041/team_3/icon/logoCircle.png"));
+        this.setIconImage(icon.getImage());
         layout = new MigLayout("fill", "0[fill]0", "0[fill]0");
         main = new MainForm();
         menu = new MenuLayout();
@@ -34,6 +41,8 @@ public class Main extends javax.swing.JFrame {
         mainPanel.setLayout(layout);
         mainPanel.add(main);
         mainPanel.add(menu, "pos -215 0 100% 100%", 0);
+        Profile.user = true;
+//        System.out.println(Profile.get());
         TimingTarget target = new TimingTargetAdapter() {
             @Override
             public void timingEvent(float fraction) {
@@ -93,7 +102,9 @@ public class Main extends javax.swing.JFrame {
                 if (index == 0) {
                     main.show(new Form_1());
                 } else if (index == 1) {
-                    main.show(new Form_2());
+                    main.show(new ViewBanHang());
+                } else if (index == 6) {
+                    main.show(new ViewQuanLyHoaDon());
                 } else if (index == 9) {
                     System.exit(0);
                 }
@@ -116,11 +127,11 @@ public class Main extends javax.swing.JFrame {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1100, Short.MAX_VALUE)
+            .addGap(0, 1150, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
+            .addGap(0, 800, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -138,15 +149,8 @@ public class Main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

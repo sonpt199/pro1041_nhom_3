@@ -1,6 +1,5 @@
 package pro1041.team_3.service.impl;
 
-
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -160,6 +159,11 @@ public class KhachHangServiceImpl implements KhachHangService {
                     x.getGioiTinh(), x.getSdt(), x.getDiaChi(), x.getEmail()));
         }
         return _lstKhachHang;
+    }
+
+    @Override
+    public KhachHang findBySdt(String keyWord) {
+        return khachHangRepository.findBySdt(keyWord);
     }
 
 //    public boolean export(File file) {

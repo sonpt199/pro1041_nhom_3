@@ -19,7 +19,7 @@ public class HangRepository extends Repository<Hang, UUID, HangDto> {
     public HangRepository() {
         className = Hang.class.getName();
         resCon = "new pro1041.team_3.dto.HangDto(a.id, a.ma, a.ten)";
-
+        
     }
 
     public List<Hang> findHang(String ten) {

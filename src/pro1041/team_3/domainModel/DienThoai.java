@@ -1,5 +1,6 @@
 package pro1041.team_3.domainModel;
 
+import java.io.Serializable;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "dien_thoai")
-public class DienThoai {
+public class DienThoai implements Serializable{
 
     @Id
     @GeneratedValue()

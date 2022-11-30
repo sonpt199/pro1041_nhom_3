@@ -34,5 +34,19 @@ public class KhachHangRepository extends Repository<KhachHang, UUID, KhachHangDt
             return null;
         }
     }
+    
+    public KhachHang findBySdt(String keyWord) {
+        try {
+            KhachHang khachHang;
+            session = HibernateUtil.getSession();
+            String hql = "SELECT a FROM " + className + " a WHERE a.sdt = :keyWord";
+            Query query = session.createQuery(hql);
+            query.setParameter("keyWord", keyWord);
+            khachHang = (KhachHang) query.getSingleResult();
+            return khachHang;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
 }

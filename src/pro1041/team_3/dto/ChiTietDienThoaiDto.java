@@ -15,7 +15,10 @@ import lombok.NoArgsConstructor;
 public class ChiTietDienThoaiDto {
 
     private UUID id;
+    
     private UUID idHang;
+    
     private UUID idMauSac;
+    
     private UUID idDienThoai;
 }

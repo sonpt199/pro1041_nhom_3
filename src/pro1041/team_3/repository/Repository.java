@@ -17,12 +17,19 @@ public abstract class Repository<Entity, Id, Response> {
     protected Transaction trans;
     protected String className;
     protected String resCon;
+    protected String join;
+
+    public Repository() {
+        className = "";
+        resCon = "";
+        join = "";
+    }  
 
     public List<Response> getAllResponse() {
         List<Response> list = new ArrayList<>();
         try {
             session = HibernateUtil.getSession();
-            String hql = "SELECT " + resCon + " FROM " + className + " a";
+            String hql = "SELECT " + resCon + " FROM " + className + " a" + join;
             Query query = session.createQuery(hql);
             list = query.getResultList();
         } catch (Exception e) {

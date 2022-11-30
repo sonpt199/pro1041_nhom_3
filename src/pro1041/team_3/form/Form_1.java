@@ -31,7 +31,11 @@ public class Form_1 extends javax.swing.JPanel {
             } else {
                 status = "Cancel";
             }
-                   model.addRow(new ModelStaff(new ImageIcon(getClass().getResource("/pro1041/team_3/icon/staff.jpg")), "Mr Raven", "Male", "raven_programming@gmail.com", status).toDataTable());
+            model.addRow(new Object[]{
+                "1", "Mr Raven", "Male", "raven_programming@gmail.com"
+            });
+        
+        
         }
         table1.fixTable(jScrollPane1);
         List<ModelChartPie> list1 = new ArrayList<>();
@@ -76,11 +80,11 @@ public class Form_1 extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Profile", "Name", "Gender", "Email", "Status"
+                "STT", "Mã SP", "Tên SP", "IMEI"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -90,7 +94,6 @@ public class Form_1 extends javax.swing.JPanel {
         jScrollPane1.setViewportView(table1);
         if (table1.getColumnModel().getColumnCount() > 0) {
             table1.getColumnModel().getColumn(0).setPreferredWidth(50);
-            table1.getColumnModel().getColumn(4).setPreferredWidth(50);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -120,8 +123,8 @@ public class Form_1 extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                .addGap(34, 34, 34))
         );
     }// </editor-fold>//GEN-END:initComponents
 
