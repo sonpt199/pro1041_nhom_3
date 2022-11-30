@@ -1,5 +1,6 @@
 package pro1041.team_3.domainModel;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Table(name = "chi_tiet_dien_thoai")
-public class ChiTietDienThoai {
+public class ChiTietDienThoai implements Serializable{
     @Id
     @GeneratedValue
     @Column(name = "id")
@@ -63,4 +64,6 @@ public class ChiTietDienThoai {
     @Column(name = "mo_ta")
     private String moTa;
     
+    @Column(name = "thoi_gian_bao_hanh")
+    private Integer thoiGianBaoHanh;
 }

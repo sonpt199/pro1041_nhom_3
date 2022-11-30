@@ -1,5 +1,7 @@
 package pro1041.team_3.domainModel;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,12 +29,23 @@ public class KhuyenMai {
     @GeneratedValue
     @Column(name = "id")
     private UUID id;
-    
+
     @Column(name = "ma")
     private String ma;
-    
+
     @Column(name = "ten")
     private String ten;
-    
-    
+
+    @Column(name = "ngay_bat_dau")
+    private Date ngayBatDau;
+
+    @Column(name = "ngay_ket_thuc")
+    private Date ngayKetThuc;
+
+    @Column(name = "gia_tri_phan_tram")
+    private Float giaTriPhanTram;
+
+    @Column(name = "gia_tri_tien_mat")
+    private BigDecimal giaTriTienMat;
+
 }

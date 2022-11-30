@@ -44,7 +44,13 @@ public class ChiTietDienThoaiResponse {
     
     private String moTa;
     
+    private Integer thoiGianBaoHanh;
+    
     public Object[] toDataRow() {
-        return new Object[]{ma, dienThoai, hang, giaBan, mauSac, imei, ram, boNho, tinhTrang == 1 ? "Còn hàng" : "Hết hàng", trangThai == 1 ? "Mới" : "Cũ", moTa, hinhAnh == null ? "Image" : hinhAnh};
+        return new Object[]{ma, dienThoai, hang, giaBan, mauSac, imei, ram, boNho, tinhTrang == 1 ? "Mới" : "Cũ", trangThai == 0 ? "Đang bán" : trangThai == 1 ? "Đã bán" : "Sản phẩm lỗi", moTa == null ? " " : moTa, thoiGianBaoHanh};
+    }
+    
+    public Object[] toDataRowKM() {
+        return new Object[]{ma, dienThoai, tinhTrang == 1 ? "Mới" : "Cũ", imei, false};
     }
 }

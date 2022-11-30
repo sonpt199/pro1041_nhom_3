@@ -12,7 +12,7 @@ public class DienThoaiRepository extends Repository<DienThoai, UUID, DienThoaiDt
 
     public DienThoaiRepository() {
         className = DienThoai.class.getName();
-        resCon = "new pro1041.team_3.dto.DienThoaiDto(a.id, a.ma, a.ten, a.thoi_gian_bao_hanh)";
+        resCon = "new pro1041.team_3.dto.DienThoaiDto(a.id, a.ma, a.ten)";
     }
 
 }

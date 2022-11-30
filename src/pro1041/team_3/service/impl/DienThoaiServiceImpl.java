@@ -51,7 +51,6 @@ public class DienThoaiServiceImpl implements DienThoaiService{
         }
         dienThoaiFindById.setMa(dienthoai.getMa());
         dienThoaiFindById.setTen(dienthoai.getTen());
-        dienThoaiFindById.setThoiGianBaoHanh(dienthoai.getThoiGianBaoHanh());
         dienthoai = repos.saveOrUpdate(dienThoaiFindById);
         if (dienthoai != null) {
             return "Sua thanh cong";

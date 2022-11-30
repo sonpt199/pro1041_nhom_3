@@ -1,5 +1,6 @@
 package pro1041.team_3.domainModel;
 
+import java.io.Serializable;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,14 +9,17 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "dien_thoai")
-public class DienThoai {
+public class DienThoai implements Serializable{
 
     @Id
     @GeneratedValue()
@@ -28,7 +32,10 @@ public class DienThoai {
     @Column(name = "ten")
     private String ten;
     
-    @Column(name = "thoi_gian_bao_hanh")
-    private Integer thoiGianBaoHanh;
     
+
+    @Override
+    public String toString() {
+        return ten;
+    }
 }
