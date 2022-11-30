@@ -41,13 +41,13 @@ public class ChiTietDienThoai implements Serializable{
     private Hang hang;
     
     @Column(name = "tinh_trang")
-    private int tinhTrang;
+    private Integer tinhTrang;
     
-    @Column(name = "gia_ban")
-    private BigDecimal giaBan;
+    @Column(name = "don_gia")
+    private BigDecimal donGia;
     
     @Column(name = "trang_thai")
-    private int trangThai;
+    private Integer trangThai;
     
     @Column(name = "hinh_anh")
     private String hinhAnh;
@@ -56,14 +56,15 @@ public class ChiTietDienThoai implements Serializable{
     private String imei;
     
     @Column(name = "ram")
-    private float ram;
+    private Integer ram;
     
     @Column(name = "bo_nho")
-    private float boNho;
+    private Integer boNho;
     
     @Column(name = "mo_ta")
     private String moTa;
     
     @Column(name = "thoi_gian_bao_hanh")
     private Integer thoiGianBaoHanh;
+    
 }

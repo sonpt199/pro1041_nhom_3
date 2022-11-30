@@ -16,8 +16,8 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
 
     public ChiTietDienThoaiRepository() {
         this.className = ChiTietDienThoai.class.getName();
-        this.resCon = "new pro1041.team_3.dto.ChiTietDienThoaiResponse (a.id, a.ma, a.mauSac.ten, a.dienThoai.ten, a.hang.ten, a.tinhTrang, "
-                + "a.giaBan, a.trangThai, a.hinhAnh, a.imei, a.ram, a.boNho, a.moTa, a.thoiGianBaoHanh)";
+        this.resCon = "new " + ChiTietDienThoaiResponse.class.getName() +"(a.id, a.ma, a.mauSac.ten, a.dienThoai.ten, a.hang.ten, a.tinhTrang, "
+                + "a.donGia, a.trangThai, a.hinhAnh, a.imei, a.ram, a.boNho, a.moTa, a.thoiGianBaoHanh)";
     }
     
     public List<ChiTietDienThoaiResponse> findBy(String keyWord) {

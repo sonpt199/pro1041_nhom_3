@@ -22,4 +22,7 @@ public interface KhachHangService {
     String update(KhachHang khachHang);
 
     List<KhachHangDto> findKhachHang(String key);
+    
+    KhachHang findBySdt(String keyWord);
+    
 }

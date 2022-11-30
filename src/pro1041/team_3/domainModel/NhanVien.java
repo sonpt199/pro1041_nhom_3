@@ -30,6 +30,9 @@ public class NhanVien implements Serializable{
     @Column(name = "id")
     private UUID id;
     
+    @Column
+    private String ma;
+    
     @Column(name = "ten_dang_nhap")
     private String tenDangNhap;
     

@@ -34,7 +34,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="pro1041.team_3.swing.Button" name="cmdMenu">
+    <Component class="pro1041.team_3.swing.ButtonDateChooser" name="cmdMenu">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="fa" green="fa" red="fa" type="rgb"/>

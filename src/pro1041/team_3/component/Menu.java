@@ -30,16 +30,14 @@ public class Menu extends javax.swing.JPanel {
     }
 
     private void init() {
-        listMenu1.addItem(new Model_Menu("1", "Dashboard", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("2", "Quản lý nhân viên", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("3", "Bán hàng", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("4", "Forms Stuff", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("5", "Date Table", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("6", "Icons", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("7", "Sample Page", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("8", "Extra", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("9", "More", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("10", "Logout", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("1", "Bán hàng", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("2", "Quản lý sản phẩm", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("3", "Quản lý khuyến mại", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("4", "Quản lý khách hàng", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("5", "Quản lý nhân viên", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("6", "Quản lý hóa đơn", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("7", "Thống kê", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("8", "Logout", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
     }
 

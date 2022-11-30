@@ -161,7 +161,7 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService{
                 cell6.setCellValue(x.getTinhTrang() == 1 ? "Mới" : "Cũ");
                 
                 Cell cell7 = row.createCell(6);
-                cell7.setCellValue(x.getGiaBan()+"");
+                cell7.setCellValue(x.getDonGia()+"");
                 
                 Cell cell8 = row.createCell(7);
                 cell8.setCellValue(x.getTrangThai() ==0 ? "Đang bán" : x.getTrangThai() == 1 ? "Đã bán" : "Sản phẩm lỗi");
