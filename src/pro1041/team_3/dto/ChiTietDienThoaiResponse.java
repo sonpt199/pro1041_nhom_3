@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChiTietDienThoaiResponse {
+    
     private UUID id;
     
     private String ma;
@@ -28,23 +29,29 @@ public class ChiTietDienThoaiResponse {
     
     private String hang;
     
-    private int tinhTrang;
+    private Integer tinhTrang;
     
-    private BigDecimal giaBan;
+    private BigDecimal donGia;
     
-    private int trangThai;
+    private Integer trangThai;
     
     private String hinhAnh;
     
     private String imei;
     
-    private float ram;
+    private Integer ram;
     
-    private float boNho;
+    private Integer boNho;
     
     private String moTa;
     
+    private Integer thoiGianBaoHanh;
+    
     public Object[] toDataRow() {
-        return new Object[]{ma, dienThoai, hang, giaBan, mauSac, imei, ram, boNho, tinhTrang == 1 ? "Còn hàng" : "Hết hàng", trangThai == 1 ? "Mới" : "Cũ", moTa, hinhAnh == null ? "Image" : hinhAnh};
+        return new Object[]{ma, dienThoai, hang, donGia, mauSac, imei, ram, boNho, tinhTrang == 1 ? "Mới" : "Cũ", trangThai == 0 ? "Đang bán" : trangThai == 1 ? "Đã bán" : "Sản phẩm lỗi", moTa == null ? " " : moTa, thoiGianBaoHanh};
+    }
+    
+    public Object[] toDataRowKM() {
+        return new Object[]{ma, dienThoai, tinhTrang == 1 ? "Mới" : "Cũ", imei, false};
     }
 }

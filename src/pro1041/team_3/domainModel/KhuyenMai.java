@@ -31,25 +31,23 @@ public class KhuyenMai implements Serializable{
     @GeneratedValue
     @Column(name = "id")
     private UUID id;
-    
+
     @Column(name = "ma")
     private String ma;
-    
+
     @Column(name = "ten")
     private String ten;
-    
+
     @Column(name = "ngay_bat_dau")
     private Date ngayBatDau;
-    
+
     @Column(name = "ngay_ket_thuc")
     private Date ngayKetThuc;
-    
+
     @Column(name = "gia_tri_phan_tram")
     private Float giaTriPhanTram;
-    
+
     @Column(name = "gia_tri_tien_mat")
     private BigDecimal giaTriTienMat;
-    
-//    @OneToOne(mappedBy = "khuyen_mai")
-//    private HoaDonChiTiet hoaDonChiTiet;
+
 }

@@ -10,8 +10,8 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
-import pro1041.team_3.swing.ShadowRenderer;
-import pro1041.team_3.swing.RippleEffect;
+import pro1041.team_3.swing.config.ShadowRenderer;
+import pro1041.team_3.swing.config.RippleEffect;
 
 public class ButtonCustom extends JButton {
 

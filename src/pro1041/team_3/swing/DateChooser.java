@@ -1,5 +1,12 @@
 package pro1041.team_3.swing;
 
+import pro1041.team_3.swing.config.Years;
+import pro1041.team_3.swing.config.SelectedDate;
+import pro1041.team_3.swing.config.Dates;
+import pro1041.team_3.swing.config.Months;
+import pro1041.team_3.swing.eventInterface.EventDateChooser;
+import pro1041.team_3.swing.eventInterface.Event;
+import pro1041.team_3.swing.eventInterface.SelectedAction;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -227,13 +234,13 @@ public final class DateChooser extends javax.swing.JPanel {
             }
         };
         header = new javax.swing.JPanel();
-        cmdForward = new pro1041.team_3.swing.Button();
+        cmdForward = new pro1041.team_3.swing.ButtonDateChooser();
         MY = new javax.swing.JLayeredPane();
-        cmdMonth = new pro1041.team_3.swing.Button();
+        cmdMonth = new pro1041.team_3.swing.ButtonDateChooser();
         lb = new javax.swing.JLabel();
-        cmdYear = new pro1041.team_3.swing.Button();
-        cmdPrevious = new pro1041.team_3.swing.Button();
-        slide = new pro1041.team_3.swing.Slider();
+        cmdYear = new pro1041.team_3.swing.ButtonDateChooser();
+        cmdPrevious = new pro1041.team_3.swing.ButtonDateChooser();
+        slide = new pro1041.team_3.swing.config.Slider();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -482,14 +489,14 @@ public final class DateChooser extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane MY;
-    private pro1041.team_3.swing.Button cmdForward;
-    private pro1041.team_3.swing.Button cmdMonth;
-    private pro1041.team_3.swing.Button cmdPrevious;
-    private pro1041.team_3.swing.Button cmdYear;
+    private pro1041.team_3.swing.ButtonDateChooser cmdForward;
+    private pro1041.team_3.swing.ButtonDateChooser cmdMonth;
+    private pro1041.team_3.swing.ButtonDateChooser cmdPrevious;
+    private pro1041.team_3.swing.ButtonDateChooser cmdYear;
     private javax.swing.JPanel header;
     private javax.swing.JLabel lb;
     private javax.swing.JPopupMenu popup;
-    private pro1041.team_3.swing.Slider slide;
+    private pro1041.team_3.swing.config.Slider slide;
     // End of variables declaration//GEN-END:variables
 
     public SelectedDate getSelectedDate() {

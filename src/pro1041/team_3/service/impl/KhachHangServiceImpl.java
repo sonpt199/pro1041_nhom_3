@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import lombok.var;
 //import org.apache.poi.ss.usermodel.Cell;
 //import org.apache.poi.ss.usermodel.Row;
@@ -48,33 +49,40 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Override
     public String insert(KhachHang khachHang) {
         khachHang.setId(null);
-        if (khachHang.getMa().trim().isEmpty()) {
-            return "Mã không được trống";
-        }
-        if (!khachHang.getMa().matches("^(KH)\\d{5}$")) {
-            return "Mã không đúng định dạng";
-        }
+        KhachHang findSDT = khachHangRepository.findSDT(khachHang.getSdt());
+        KhachHang findEmail = khachHangRepository.findEmail(khachHang.getEmail());
+        LocalDateTime time = LocalDateTime.now();
+        String maKH = "KH" + time.getSecond() + time.getMinute() + time.getHour();
+        khachHang.setMa(maKH);
         if (khachHang.getHoTen().trim().isEmpty()) {
             return "Họ tên không được trống";
+        }
+        if (khachHang.getHoTen().length() > 100) {
+            return "Họ tên không quá 100 ký tự";
         }
         if (khachHang.getSdt().trim().isEmpty()) {
             return "SĐT không được trống";
         }
-        if (!khachHang.getSdt().matches("^(0|\\+84)[1-9][0-9]{8,9}$")) {
-            return "SĐT không đúng định dạng";
+        if (findSDT != null) {
+            return "SĐT không được trùng";
         }
-        if (khachHang.getDiaChi().trim().isEmpty()) {
-            return "Địa chỉ không được trống";
+        if (!khachHang.getSdt().matches("^\\d+$")) {
+            return "SĐT phải là số";
+        }
+        if (khachHang.getSdt().length() > 20) {
+            return "Số điện thoại tối thiểu 20 số";
         }
         if (khachHang.getEmail().trim().isEmpty()) {
             return "Email không được trống";
         }
-        if (!khachHang.getEmail().matches("^\\S+@\\S+\\.\\S+$")) {
-            return "Email không đúng định dạng";
+        if (khachHang.getEmail().length() > 100) {
+            return "Email không quá 100 ký tự";
         }
-        KhachHang khachHangFind = khachHangRepository.findByMa(khachHang.getMa());
-        if (khachHangFind != null) {
-            return "Mã không được trùng";
+        if (findEmail != null) {
+            return "Email không được trùng";
+        }
+        if (!khachHang.getEmail().matches("^\\S+@\\S+$")) {
+            return "Email không đúng định dạng";
         }
         khachHang = khachHangRepository.saveOrUpdate(khachHang);
         if (khachHang != null) {
@@ -100,47 +108,53 @@ public class KhachHangServiceImpl implements KhachHangService {
 
     @Override
     public String update(KhachHang khachHang) {
-        KhachHang khachHangFindById = khachHangRepository.findById(khachHang.getId());
+        KhachHang khachHangFindById = khachHangRepository.findByMa(khachHang.getMa());
+        KhachHang findSDT = khachHangRepository.findSDT(khachHang.getSdt());
+        KhachHang findEmail = khachHangRepository.findEmail(khachHang.getEmail());
         if (khachHangFindById == null) {
             return "Không tìm thấy";
-        }
-        if (khachHang.getMa().trim().isEmpty()) {
-            return "Mã không được trống";
-        }
-        if (!khachHang.getMa().matches("^(KH)\\d{5}$")) {
-            return "Mã không đúng định dạng";
         }
         if (khachHang.getHoTen().trim().isEmpty()) {
             return "Họ tên không được trống";
         }
+        if (khachHang.getHoTen().length() > 100) {
+            return "Họ tên không quá 100 ký tự";
+        }
         if (khachHang.getSdt().trim().isEmpty()) {
             return "SĐT không được trống";
         }
-        if (!khachHang.getSdt().matches("^(0|\\+84)[1-9][0-9]{8,9}$")) {
-            return "SĐT không đúng định dạng";
+        if (!khachHang.getSdt().equals(khachHangFindById.getSdt())) {
+            if (findSDT != null) {
+                return "SĐT không được trùng";
+            } else {
+                khachHangFindById.setSdt(khachHang.getSdt());
+            }
         }
-        if (khachHang.getDiaChi().trim().isEmpty()) {
-            return "Địa chỉ không được trống";
+        if (!khachHang.getSdt().matches("^\\d+$")) {
+            return "SĐT phải là số";
+        }
+        if (khachHang.getSdt().length() > 20) {
+            return "Số điện thoại tối thiểu 20 số";
         }
         if (khachHang.getEmail().trim().isEmpty()) {
             return "Email không được trống";
         }
-        if (!khachHang.getEmail().matches("^\\S+@\\S+\\.\\S+$")) {
-            return "Email không đúng định dạng";
+        if (khachHang.getEmail().length() > 100) {
+            return "Email không quá 100 ký tự";
         }
-        if (!khachHang.getMa().equals(khachHangFindById.getMa())) {
-            KhachHang khachHangFindByMa = khachHangRepository.findByMa(khachHang.getMa());
-            if (khachHangFindByMa != null) {
-                return "Mã không được trùng";
+        if (!khachHang.getEmail().equals(khachHangFindById.getEmail())) {
+            if (findEmail != null) {
+                return "Email không được trùng";
             } else {
-                khachHangFindById.setMa(khachHang.getMa());
+                khachHangFindById.setEmail(khachHang.getEmail());
             }
         }
+        if (!khachHang.getEmail().matches("^\\S+@\\S+$")) {
+            return "Email không đúng định dạng";
+        }
         khachHangFindById.setHoTen(khachHang.getHoTen());
-        khachHangFindById.setSdt(khachHang.getSdt());
         khachHangFindById.setNgaySinh(khachHang.getNgaySinh());
         khachHangFindById.setDiaChi(khachHang.getDiaChi());
-        khachHangFindById.setEmail(khachHang.getEmail());
         khachHangFindById.setGioiTinh(khachHang.getGioiTinh());
         khachHang = khachHangRepository.saveOrUpdate(khachHangFindById);
         if (khachHang != null) {
@@ -161,64 +175,10 @@ public class KhachHangServiceImpl implements KhachHangService {
         return _lstKhachHang;
     }
 
+
     @Override
     public KhachHang findBySdt(String keyWord) {
         return khachHangRepository.findBySdt(keyWord);
     }
 
-//    public boolean export(File file) {
-//        List<KhachHang> lst = khachHangRepository.getAll();
-//        try {
-//            FileOutputStream fos = new FileOutputStream(file);
-//            XSSFWorkbook workbook = new XSSFWorkbook();
-//            XSSFSheet sheet = workbook.createSheet("Danh sách khách hàng");
-//            int rowNum = 0;
-//            Row firstRow = sheet.createRow(rowNum++);
-//            Cell idTitle = firstRow.createCell(0);
-//            idTitle.setCellValue("ID");
-//            Cell maKHTitle = firstRow.createCell(1);
-//            maKHTitle.setCellValue("Mã khách hàng");
-//            Cell hoTenTitle = firstRow.createCell(2);
-//            hoTenTitle.setCellValue("Họ tên");
-//            Cell gioiTinhTitle = firstRow.createCell(3);
-//            gioiTinhTitle.setCellValue("Giới tính");
-//            Cell ngayTitle = firstRow.createCell(4);
-//            ngayTitle.setCellValue("Ngày sinh");
-//            Cell diaChiTitle = firstRow.createCell(5);
-//            diaChiTitle.setCellValue("Địa chỉ");
-//            Cell sdtTitle = firstRow.createCell(6);
-//            sdtTitle.setCellValue("SĐT");
-//            Cell emailTitle = firstRow.createCell(7);
-//            emailTitle.setCellValue("Email");
-//
-//            for (KhachHang x : lst) {
-//                Row row = sheet.createRow(rowNum++);
-//                Cell cell1 = row.createCell(0);
-//                cell1.setCellValue(x.getId().toString());
-//                Cell cell2 = row.createCell(1);
-//                cell2.setCellValue(x.getMa());
-//                Cell cell3 = row.createCell(2);
-//                cell3.setCellValue(x.getHoTen());
-//                Cell cell4 = row.createCell(3);
-//                cell4.setCellValue(x.getGioiTinh() == 0 ? "Nam" : "Nữ");
-//                Cell cell5 = row.createCell(4);
-//                cell5.setCellValue(x.getNgaySinh().toString());
-//                Cell cell6 = row.createCell(5);
-//                cell6.setCellValue(x.getDiaChi());
-//                Cell cell7 = row.createCell(6);
-//                cell7.setCellValue(x.getSdt());
-//                Cell cell8 = row.createCell(7);
-//                cell8.setCellValue(x.getEmail());
-//            }
-//            workbook.write(fos);
-//            workbook.close();
-//        } catch (FileNotFoundException ex) {
-//            ex.printStackTrace();
-//            return false;
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//            return false;
-//        }
-//        return true;
-//    }
 }

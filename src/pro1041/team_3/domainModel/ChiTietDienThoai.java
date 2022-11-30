@@ -64,4 +64,7 @@ public class ChiTietDienThoai implements Serializable{
     @Column(name = "mo_ta")
     private String moTa;
     
+    @Column(name = "thoi_gian_bao_hanh")
+    private Integer thoiGianBaoHanh;
+    
 }

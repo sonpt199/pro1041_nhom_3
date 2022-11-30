@@ -319,10 +319,10 @@ public class ViewBanHang extends javax.swing.JPanel {
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jspTbGioHangChiTietTreo = new javax.swing.JScrollPane();
-        tbGioHangChiTietTreo = new pro1041.team_3.swing.Table();
+        tbGioHangChiTietTreo = new pro1041.team_3.swing.config.Table();
         jPanel9 = new javax.swing.JPanel();
         jspTbGioHangtreo = new javax.swing.JScrollPane();
-        tbGioHangTreo = new pro1041.team_3.swing.Table();
+        tbGioHangTreo = new pro1041.team_3.swing.config.Table();
         jPanel18 = new javax.swing.JPanel();
         btnGoiLaiGioHang = new javax.swing.JLabel();
         jPanel19 = new javax.swing.JPanel();
@@ -344,7 +344,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         themNgaySinhKh = new pro1041.team_3.swing.DateChooser();
         grThemGioiTinhKh = new javax.swing.ButtonGroup();
         jspTbGioHang = new javax.swing.JScrollPane();
-        tbGioHang = new pro1041.team_3.swing.Table();
+        tbGioHang = new pro1041.team_3.swing.config.Table();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -1752,9 +1752,9 @@ public class ViewBanHang extends javax.swing.JPanel {
     private javax.swing.JRadioButton rdDetailNu;
     private pro1041.team_3.swing.RadioButtonCustom rdNamThemKh;
     private pro1041.team_3.swing.RadioButtonCustom rdNuThemKh;
-    private pro1041.team_3.swing.Table tbGioHang;
-    private pro1041.team_3.swing.Table tbGioHangChiTietTreo;
-    private pro1041.team_3.swing.Table tbGioHangTreo;
+    private pro1041.team_3.swing.config.Table tbGioHang;
+    private pro1041.team_3.swing.config.Table tbGioHangChiTietTreo;
+    private pro1041.team_3.swing.config.Table tbGioHangTreo;
     private pro1041.team_3.swing.DateChooser themNgaySinhKh;
     private javax.swing.JPanel tienMatJPanel;
     private javax.swing.JTextField txtBoNho;

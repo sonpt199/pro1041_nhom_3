@@ -1,9 +1,14 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package pro1041.team_3.domainModel;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -15,7 +20,7 @@ import lombok.NoArgsConstructor;
 
 /**
  *
- * @author sonpt_ph19600
+ * @author hanhltph27725
  */
 @Entity
 @AllArgsConstructor
@@ -23,7 +28,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Table(name = "dien_thoai_khuyen_mai")
 @IdClass(DienThoaiKhuyenMaiId.class)
-public class DienThoaiKhuyenMai implements Serializable{
+public class DienThoaiKhuyenMai {
 
     @Id
     @ManyToOne

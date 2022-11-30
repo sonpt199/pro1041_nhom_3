@@ -1,5 +1,6 @@
 package pro1041.team_3.swing;
 
+import pro1041.team_3.swing.config.TextFieldSuggestionUI;
 import javax.swing.JTextField;
 
 public class TextFieldSuggestion extends JTextField {

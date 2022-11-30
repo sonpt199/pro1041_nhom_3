@@ -78,9 +78,9 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
         dlHoaDonChiTiet = new javax.swing.JDialog();
         jPanel3 = new javax.swing.JPanel();
         jspTbHoaDonChiTiet = new javax.swing.JScrollPane();
-        tbHoaDonChiTiet = new pro1041.team_3.swing.Table();
+        tbHoaDonChiTiet = new pro1041.team_3.swing.config.Table();
         jspTbHoaDon = new javax.swing.JScrollPane();
-        tbHoaDon = new pro1041.team_3.swing.Table();
+        tbHoaDon = new pro1041.team_3.swing.config.Table();
         jPanel1 = new javax.swing.JPanel();
         txtTongTien = new pro1041.team_3.swing.TextField();
         txtMaHoaDon = new pro1041.team_3.swing.TextField();
@@ -306,8 +306,8 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jspTbHoaDon;
     private javax.swing.JScrollPane jspTbHoaDonChiTiet;
-    private pro1041.team_3.swing.Table tbHoaDon;
-    private pro1041.team_3.swing.Table tbHoaDonChiTiet;
+    private pro1041.team_3.swing.config.Table tbHoaDon;
+    private pro1041.team_3.swing.config.Table tbHoaDonChiTiet;
     private pro1041.team_3.swing.TextField txtHinhThucThanhToan;
     private pro1041.team_3.swing.TextField txtMaGiaoDich;
     private pro1041.team_3.swing.TextField txtMaHoaDon;

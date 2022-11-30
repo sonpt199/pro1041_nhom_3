@@ -75,6 +75,7 @@ public abstract class Repository<Entity, Id, Response> {
             trans = session.beginTransaction();
             session.saveOrUpdate(entity);
             trans.commit();
+            session.close();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

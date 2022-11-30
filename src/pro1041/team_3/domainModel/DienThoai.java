@@ -9,9 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -29,7 +32,10 @@ public class DienThoai implements Serializable{
     @Column(name = "ten")
     private String ten;
     
-    @Column(name = "thoi_gian_bao_hanh")
-    private Integer thoiGianBaoHanh;
     
+
+    @Override
+    public String toString() {
+        return ten;
+    }
 }

@@ -94,7 +94,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="com.raven.datechooser.Button" name="cmdForward">
+        <Component class="pro1041.team_3.swing.ButtonDateChooser" name="cmdForward">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/pro1041/team_3/icon/forward.png"/>
@@ -111,7 +111,7 @@
         </Component>
         <Container class="javax.swing.JLayeredPane" name="MY">
           <SubComponents>
-            <Component class="com.raven.datechooser.Button" name="cmdMonth">
+            <Component class="pro1041.team_3.swing.ButtonDateChooser" name="cmdMonth">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -139,7 +139,7 @@
                 <Property name="text" type="java.lang.String" value="-"/>
               </Properties>
             </Component>
-            <Component class="com.raven.datechooser.Button" name="cmdYear">
+            <Component class="pro1041.team_3.swing.ButtonDateChooser" name="cmdYear">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -226,7 +226,7 @@
             </CodeStatement>
           </LayoutCode>
         </Container>
-        <Component class="com.raven.datechooser.Button" name="cmdPrevious">
+        <Component class="pro1041.team_3.swing.ButtonDateChooser" name="cmdPrevious">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/pro1041/team_3/icon/previous.png"/>
@@ -244,7 +244,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="com.raven.datechooser.Slider" name="slide">
+    <Container class="pro1041.team_3.swing.Slider" name="slide">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
     </Container>

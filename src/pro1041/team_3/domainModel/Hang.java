@@ -34,7 +34,7 @@ public class Hang implements Serializable {
 
     @Override
     public String toString() {
-        return "Hang{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + '}';
+        return ten;
     }
      
 }

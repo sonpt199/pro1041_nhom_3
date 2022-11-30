@@ -9,7 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  *
@@ -18,7 +20,8 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "mau_sac")
 public class MauSac implements Serializable{
@@ -33,5 +36,10 @@ public class MauSac implements Serializable{
     
     @Column(name = "ten")
     private String ten;
+
+    @Override
+    public String toString() {
+        return ten;
+    }
 
 }

@@ -3,7 +3,7 @@ package pro1041.team_3.main;
 import java.awt.Image;
 import pro1041.team_3.component.MenuLayout;
 import pro1041.team_3.event.EventMenuSelected;
-import pro1041.team_3.form.Form_1;
+import pro1041.team_3.form.ViewThongKe;
 import pro1041.team_3.form.ViewBanHang;
 import pro1041.team_3.form.MainForm;
 import java.awt.event.ActionEvent;
@@ -19,6 +19,10 @@ import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 import pro1041.team_3.component.Profile;
 import pro1041.team_3.form.ViewQuanLyHoaDon;
+import pro1041.team_3.form.ViewQuanLyKhachHang;
+import pro1041.team_3.form.ViewQuanLyKhuyenMai;
+import pro1041.team_3.form.ViewQuanLyNhanVien;
+import pro1041.team_3.form.ViewQuanLySanPham;
 
 public class Main extends javax.swing.JFrame {
 
@@ -100,12 +104,20 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void selected(int index) {
                 if (index == 0) {
-                    main.show(new Form_1());
+                    main.show(new ViewBanHang()); 
                 } else if (index == 1) {
-                    main.show(new ViewBanHang());
-                } else if (index == 6) {
+                    main.show(new ViewQuanLySanPham());
+                } else if (index == 2) {
+                    main.show(new ViewQuanLyKhuyenMai());
+                } else if (index == 3) {
+                    main.show(new ViewQuanLyKhachHang());
+                } else if (index == 4) {
+                    main.show(new ViewQuanLyNhanVien());
+                } else if (index == 5) {
                     main.show(new ViewQuanLyHoaDon());
-                } else if (index == 9) {
+                } else if (index == 6) {
+                    main.show(new ViewThongKe());
+                } else if (index == 7) {
                     System.exit(0);
                 }
             }
