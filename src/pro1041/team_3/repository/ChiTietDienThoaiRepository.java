@@ -76,4 +76,21 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             return null;
         }
     }
+    
+    public List<ChiTietDienThoaiResponse> getAllDienThoaiNotInKM(UUID id) {
+        try {
+            List<ChiTietDienThoaiResponse> lst;
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
+                    + "and a.id not in (select b.chiTietDienThoai.id from DienThoaiKhuyenMai b where b.khuyenMai.id =: id)";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id);
+            lst = query.getResultList();
+            return lst;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
 }

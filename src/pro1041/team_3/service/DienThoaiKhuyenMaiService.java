@@ -32,5 +32,7 @@ public interface DienThoaiKhuyenMaiService {
     String deleteDTKM(DienThoaiKhuyenMai dienThoaiKhuyenMai);
 
     List<DienThoaiKhuyenMaiDto> findDTKhuyenMaiDienRavaTgLai(UUID id);
+    
+    List<DienThoaiKhuyenMaiDto> findDTKhuyenMaiKetThuc();
 
 }

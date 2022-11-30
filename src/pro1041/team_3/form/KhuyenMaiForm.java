@@ -42,7 +42,7 @@ public class KhuyenMaiForm extends javax.swing.JPanel {
         dienThoaiKhuyenMaiServiceImpl = new DienThoaiKhuyenMaiServiceImpl();
         chiTietDienThoaiImpl = new ChiTietDienThoaiImpl();
         list1 = this.khuyenMaiImpl.getAllResponse();
-        listSPKM = this.chiTietDienThoaiImpl.getAllTrangThai0();
+        listSPKM = this.chiTietDienThoaiImpl.getAllTrangThai(0);
         loadTableKM(list1);
         txtMa.setEditable(false);
 
@@ -662,7 +662,7 @@ public class KhuyenMaiForm extends javax.swing.JPanel {
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
 
-        this.loadTableSPKM(chiTietDienThoaiImpl.getAllTrangThai0());
+        this.loadTableSPKM(chiTietDienThoaiImpl.getAllTrangThai(0));
         danhSachSanPham.setVisible(true);
         danhSachSanPham.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnThemActionPerformed

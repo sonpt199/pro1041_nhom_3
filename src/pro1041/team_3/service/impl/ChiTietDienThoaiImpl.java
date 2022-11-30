@@ -192,5 +192,10 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService{
         }
         return true;
     }
+
+    @Override
+    public List<ChiTietDienThoaiResponse> getAllDienThoaiNotInKM(UUID id) {
+        return chiTietDienThoaiRepository.getAllDienThoaiNotInKM(id);
+    }
     
 }

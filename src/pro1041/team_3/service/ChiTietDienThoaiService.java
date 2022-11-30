@@ -29,5 +29,7 @@ public interface ChiTietDienThoaiService {
     List<ChiTietDienThoaiResponse> sapXep(String chieu);
 
     List<ChiTietDienThoaiResponse> sapXep2(String loai, String chieu);
+    
+    List<ChiTietDienThoaiResponse> getAllDienThoaiNotInKM(UUID id);
 
 }
