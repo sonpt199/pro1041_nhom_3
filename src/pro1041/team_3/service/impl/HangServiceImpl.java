@@ -1,5 +1,6 @@
 package pro1041.team_3.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -13,7 +14,7 @@ import pro1041.team_3.service.HangService;
  *
  * @author hanhltph27725
  */
-public class HangServiceImpl implements HangService{
+public class HangServiceImpl implements HangService {
 
     private HangRepository hangRepository;
     private ArrayList<HangDto> _lstHang;
@@ -22,7 +23,7 @@ public class HangServiceImpl implements HangService{
         hangRepository = new HangRepository();
         _lstHang = new ArrayList<>();
     }
-    
+
     @Override
     public List<Hang> getAll() {
         return this.hangRepository.getAll();
@@ -42,12 +43,9 @@ public class HangServiceImpl implements HangService{
     @Override
     public String insert(Hang hangResponse) {
         hangResponse.setId(null);
-        if (hangResponse.getMa().trim().isEmpty()) {
-            return "Mã không được trống";
-        }
-        if (!hangResponse.getMa().matches("^(H)\\d{5}$")) {
-            return "Mã không đúng định dạng";
-        }
+        LocalDateTime time = LocalDateTime.now();
+        String maHang = "Hang" + time.getSecond() + time.getMinute() + time.getHour();
+        hangResponse.setMa(maHang);
         if (hangResponse.getTen().trim().isEmpty()) {
             return "Tên không được trống";
         }
@@ -86,12 +84,6 @@ public class HangServiceImpl implements HangService{
         Hang hangByID = hangRepository.findById(hangResponse.getId());
         if (hangByID == null) {
             return "Không tìm thấy";
-        }
-        if (hangResponse.getMa().trim().isEmpty()) {
-            return "Mã không được trống";
-        }
-        if (!hangResponse.getMa().matches("^(H)\\d{5}$")) {
-            return "Mã không đúng định dạng";
         }
         if (hangResponse.getTen().trim().isEmpty()) {
             return "Tên không được trống";
