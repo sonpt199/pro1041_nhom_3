@@ -13,10 +13,8 @@ import pro1041.team_3.dto.ChiTietDienThoaiResponse;
 public interface ChiTietDienThoaiService {
 
     List<ChiTietDienThoaiResponse> getAllResponse();
-
-    List<ChiTietDienThoaiResponse> getAllByTinhTrang1();
-
-    List<ChiTietDienThoaiResponse> getAllByTinhTrang0();
+    
+    List<ChiTietDienThoaiResponse> getAllTrangThai(int trangThai);
 
     void insert(ChiTietDienThoai chiTietSP);
 
@@ -32,5 +30,4 @@ public interface ChiTietDienThoaiService {
 
     List<ChiTietDienThoaiResponse> sapXep2(String loai, String chieu);
 
-    ChiTietDienThoai anSanPham(String ma);
 }
