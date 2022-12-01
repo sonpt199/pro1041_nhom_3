@@ -22,7 +22,7 @@ public class DienThoaiKhuyenMaiRepository extends Repository<DienThoaiKhuyenMai,
         className = DienThoaiKhuyenMai.class.getName();
         resCon = "new pro1041.team_3.dto.DienThoaiKhuyenMaiDto(a.khuyenMai.id, a.chiTietDienThoai.id, a.chiTietDienThoai.ma, a.chiTietDienThoai.dienThoai.ten, "
                 + " a.chiTietDienThoai.hang.ten, a.chiTietDienThoai.mauSac.ten, "
-                + " a.chiTietDienThoai.imei, a.chiTietDienThoai.giaBan, a.giaConLai)";
+                + " a.chiTietDienThoai.imei, a.chiTietDienThoai.donGia, a.giaConLai)";
     }
 
     public List<DienThoaiKhuyenMaiDto> findDienThoaiKhuyenMaiByIdKM(UUID id) {
@@ -32,7 +32,7 @@ public class DienThoaiKhuyenMaiRepository extends Repository<DienThoaiKhuyenMai,
             String hql = "SELECT new pro1041.team_3.dto.DienThoaiKhuyenMaiDto "
                     + "(a.khuyenMai.id, a.chiTietDienThoai.id, a.chiTietDienThoai.ma, a.chiTietDienThoai.dienThoai.ten, "
                     + " a.chiTietDienThoai.hang.ten, a.chiTietDienThoai.mauSac.ten, "
-                    + " a.chiTietDienThoai.imei, a.chiTietDienThoai.giaBan, a.giaConLai) "
+                    + " a.chiTietDienThoai.imei, a.chiTietDienThoai.donGia, a.giaConLai) "
                     + "FROM DienThoaiKhuyenMai a WHERE a.khuyenMai.id = :id";
 
             Query query = session.createQuery(hql);
@@ -51,7 +51,7 @@ public class DienThoaiKhuyenMaiRepository extends Repository<DienThoaiKhuyenMai,
             String hql = "SELECT  new pro1041.team_3.dto.DienThoaiKhuyenMaiDto "
                     + "(a.khuyenMai.id, a.chiTietDienThoai.id, a.chiTietDienThoai.ma, a.chiTietDienThoai.dienThoai.ten, "
                     + " a.chiTietDienThoai.hang.ten, a.chiTietDienThoai.mauSac.ten, "
-                    + " a.chiTietDienThoai.imei, a.chiTietDienThoai.giaBan, a.giaConLai) "
+                    + " a.chiTietDienThoai.imei, a.chiTietDienThoai.donGia, a.giaConLai) "
                     + "FROM DienThoaiKhuyenMai a WHERE (a.chiTietDienThoai.ma LIKE CONCAT('%', :key, '%') or a.chiTietDienThoai.dienThoai.ten LIKE CONCAT('%', :key, '%')"
                     + " or a.chiTietDienThoai.hang.ten LIKE CONCAT('%', :key, '%') or a.chiTietDienThoai.mauSac.ten LIKE CONCAT('%', :key, '%')"
                     + " or a.chiTietDienThoai.imei LIKE CONCAT('%', :key, '%')) and a.khuyenMai.id = :id";

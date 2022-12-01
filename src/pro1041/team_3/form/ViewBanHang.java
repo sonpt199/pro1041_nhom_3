@@ -297,38 +297,34 @@ public class ViewBanHang extends javax.swing.JPanel {
         jLabel26 = new javax.swing.JLabel();
         txtDetailNgaySinh = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
-        rdDetailNam = new javax.swing.JRadioButton();
-        rdDetailNu = new javax.swing.JRadioButton();
         jLabel28 = new javax.swing.JLabel();
         txtDetailEmail = new javax.swing.JTextField();
         jLabel29 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDetailDiaChi = new javax.swing.JTextArea();
-        jPanel14 = new javax.swing.JPanel();
-        btnThemKhVaoGh = new javax.swing.JLabel();
-        jPanel15 = new javax.swing.JPanel();
-        btnDongChiTietKhachHang = new javax.swing.JLabel();
+        btnDongChiTietKhachHang = new pro1041.team_3.swing.ButtonCustom();
+        btnThemKhVaoGh = new pro1041.team_3.swing.ButtonCustom();
+        rdDetailNam = new pro1041.team_3.swing.RadioButtonCustom();
+        rdDetailNu = new pro1041.team_3.swing.RadioButtonCustom();
         grGender = new javax.swing.ButtonGroup();
         dlLyDo = new javax.swing.JDialog();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtLyDo = new javax.swing.JTextArea();
-        jPanel16 = new javax.swing.JPanel();
-        btnLyDoTreo = new javax.swing.JLabel();
+        btnLyDoTreo = new pro1041.team_3.swing.ButtonCustom();
         dlGioHangTreo = new javax.swing.JDialog();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jspTbGioHangChiTietTreo = new javax.swing.JScrollPane();
         tbGioHangChiTietTreo = new pro1041.team_3.swing.config.Table();
+        jLabel9 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jspTbGioHangtreo = new javax.swing.JScrollPane();
         tbGioHangTreo = new pro1041.team_3.swing.config.Table();
-        jPanel18 = new javax.swing.JPanel();
-        btnGoiLaiGioHang = new javax.swing.JLabel();
-        jPanel19 = new javax.swing.JPanel();
-        btnCloseShowGioHangTreo = new javax.swing.JLabel();
-        jPanel20 = new javax.swing.JPanel();
-        btnXoaGioHangTreo = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        btnXoaGioHangTreo = new pro1041.team_3.swing.ButtonCustom();
+        btnGoiLaiGioHang = new pro1041.team_3.swing.ButtonCustom();
+        btnCloseShowGioHangTreo = new pro1041.team_3.swing.ButtonCustom();
         dlThemKhachHang = new javax.swing.JDialog();
         jPanel22 = new javax.swing.JPanel();
         txtThemSdtKh = new pro1041.team_3.swing.TextField();
@@ -339,8 +335,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         txtThemNgaySinhKh = new pro1041.team_3.swing.TextField();
         txtThemEmailKh = new pro1041.team_3.swing.TextField();
         txtThemDiaChiKh = new pro1041.team_3.swing.TextField();
-        jPanel24 = new javax.swing.JPanel();
-        btnThemKhachHang = new javax.swing.JLabel();
+        btnThemKhachHang = new pro1041.team_3.swing.ButtonCustom();
         themNgaySinhKh = new pro1041.team_3.swing.DateChooser();
         grThemGioiTinhKh = new javax.swing.ButtonGroup();
         jspTbGioHang = new javax.swing.JScrollPane();
@@ -450,14 +445,6 @@ public class ViewBanHang extends javax.swing.JPanel {
         jLabel27.setText("Giới tính");
         jPanel6.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
 
-        grGender.add(rdDetailNam);
-        rdDetailNam.setText("Nam");
-        jPanel6.add(rdDetailNam, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, -1, -1));
-
-        grGender.add(rdDetailNu);
-        rdDetailNu.setText("Nữ");
-        jPanel6.add(rdDetailNu, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, -1, -1));
-
         jLabel28.setText("Email");
         jPanel6.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
 
@@ -477,77 +464,53 @@ public class ViewBanHang extends javax.swing.JPanel {
 
         jPanel6.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 260, -1));
 
-        jPanel14.setBackground(new java.awt.Color(1, 181, 204));
-
-        btnThemKhVaoGh.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
-        btnThemKhVaoGh.setForeground(new java.awt.Color(255, 255, 255));
-        btnThemKhVaoGh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnThemKhVaoGh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/addCart.png"))); // NOI18N
-        btnThemKhVaoGh.setText("Thêm");
-        btnThemKhVaoGh.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnThemKhVaoGh.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnThemKhVaoGhMouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                .addGap(0, 1, Short.MAX_VALUE)
-                .addComponent(btnThemKhVaoGh, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnThemKhVaoGh, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        jPanel6.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, 100, 35));
-
-        jPanel15.setBackground(new java.awt.Color(1, 181, 204));
-
-        btnDongChiTietKhachHang.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnDongChiTietKhachHang.setBackground(new java.awt.Color(153, 153, 153));
         btnDongChiTietKhachHang.setForeground(new java.awt.Color(255, 255, 255));
-        btnDongChiTietKhachHang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnDongChiTietKhachHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/back.png"))); // NOI18N
         btnDongChiTietKhachHang.setText("Quay lại");
-        btnDongChiTietKhachHang.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnDongChiTietKhachHang.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnDongChiTietKhachHangMouseClicked(evt);
+        btnDongChiTietKhachHang.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnDongChiTietKhachHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDongChiTietKhachHangActionPerformed(evt);
             }
         });
+        jPanel6.add(btnDongChiTietKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 340, -1, 45));
 
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addComponent(btnDongChiTietKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnDongChiTietKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        btnThemKhVaoGh.setBackground(new java.awt.Color(1, 181, 204));
+        btnThemKhVaoGh.setForeground(new java.awt.Color(255, 255, 255));
+        btnThemKhVaoGh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/addUser.png"))); // NOI18N
+        btnThemKhVaoGh.setText("Thêm");
+        btnThemKhVaoGh.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnThemKhVaoGh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemKhVaoGhActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnThemKhVaoGh, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 340, 110, 45));
 
-        jPanel6.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 340, -1, -1));
+        grGender.add(rdDetailNam);
+        rdDetailNam.setText("Nam");
+        rdDetailNam.setEnabled(false);
+        jPanel6.add(rdDetailNam, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, -1, -1));
+
+        grGender.add(rdDetailNu);
+        rdDetailNu.setText("Nữ");
+        rdDetailNu.setEnabled(false);
+        jPanel6.add(rdDetailNu, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, -1, -1));
 
         javax.swing.GroupLayout dlDetailKhachHangLayout = new javax.swing.GroupLayout(dlDetailKhachHang.getContentPane());
         dlDetailKhachHang.getContentPane().setLayout(dlDetailKhachHangLayout);
         dlDetailKhachHangLayout.setHorizontalGroup(
             dlDetailKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(dlDetailKhachHangLayout.createSequentialGroup()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(163, Short.MAX_VALUE))
         );
         dlDetailKhachHangLayout.setVerticalGroup(
             dlDetailKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(dlDetailKhachHangLayout.createSequentialGroup()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         dlLyDo.setBackground(new java.awt.Color(255, 255, 255));
@@ -558,43 +521,24 @@ public class ViewBanHang extends javax.swing.JPanel {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtLyDo.setColumns(20);
-        txtLyDo.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtLyDo.setFont(new java.awt.Font("Nunito", 0, 14)); // NOI18N
         txtLyDo.setRows(5);
         txtLyDo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray), "Lý do"));
         jScrollPane3.setViewportView(txtLyDo);
 
         jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 376, 160));
 
-        jPanel16.setBackground(new java.awt.Color(1, 181, 204));
-
-        btnLyDoTreo.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnLyDoTreo.setBackground(new java.awt.Color(1, 181, 204));
         btnLyDoTreo.setForeground(new java.awt.Color(255, 255, 255));
-        btnLyDoTreo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnLyDoTreo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/waiting.png"))); // NOI18N
-        btnLyDoTreo.setText("Treo");
-        btnLyDoTreo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnLyDoTreo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnLyDoTreoMouseClicked(evt);
+        btnLyDoTreo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/change.png"))); // NOI18N
+        btnLyDoTreo.setText("Treo GH");
+        btnLyDoTreo.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnLyDoTreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLyDoTreoActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
-        jPanel16.setLayout(jPanel16Layout);
-        jPanel16Layout.setHorizontalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnLyDoTreo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel16Layout.setVerticalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnLyDoTreo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        jPanel3.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, -1, -1));
+        jPanel3.add(btnLyDoTreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, -1, 40));
 
         javax.swing.GroupLayout dlLyDoLayout = new javax.swing.GroupLayout(dlLyDo.getContentPane());
         dlLyDo.getContentPane().setLayout(dlLyDoLayout);
@@ -615,7 +559,6 @@ public class ViewBanHang extends javax.swing.JPanel {
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách sản phẩm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito", 0, 12))); // NOI18N
         jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tbGioHangChiTietTreo.setModel(new javax.swing.table.DefaultTableModel(
@@ -647,10 +590,13 @@ public class ViewBanHang extends javax.swing.JPanel {
 
         jPanel8.add(jspTbGioHangChiTietTreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 760, 230));
 
+        jLabel9.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        jLabel9.setText("Chi tiết giỏ hàng");
+        jPanel8.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 140, -1));
+
         jPanel7.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 780, 260));
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách giỏ hàng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito", 0, 12))); // NOI18N
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tbGioHangTreo.setModel(new javax.swing.table.DefaultTableModel(
@@ -683,100 +629,47 @@ public class ViewBanHang extends javax.swing.JPanel {
 
         jPanel9.add(jspTbGioHangtreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 760, 270));
 
+        jLabel31.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        jLabel31.setText("Danh sách giỏ hàng treo");
+        jPanel9.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 160, -1));
+
         jPanel7.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 780, 300));
 
-        jPanel18.setBackground(new java.awt.Color(1, 181, 204));
+        btnXoaGioHangTreo.setBackground(new java.awt.Color(255, 0, 51));
+        btnXoaGioHangTreo.setForeground(new java.awt.Color(255, 255, 255));
+        btnXoaGioHangTreo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/delete.png"))); // NOI18N
+        btnXoaGioHangTreo.setText("Xóa GH");
+        btnXoaGioHangTreo.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnXoaGioHangTreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaGioHangTreoActionPerformed(evt);
+            }
+        });
+        jPanel7.add(btnXoaGioHangTreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 110, 45));
 
-        btnGoiLaiGioHang.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnGoiLaiGioHang.setBackground(new java.awt.Color(1, 181, 204));
         btnGoiLaiGioHang.setForeground(new java.awt.Color(255, 255, 255));
-        btnGoiLaiGioHang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnGoiLaiGioHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/change.png"))); // NOI18N
         btnGoiLaiGioHang.setText("Gọi lại GH");
-        btnGoiLaiGioHang.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnGoiLaiGioHang.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnGoiLaiGioHangMouseClicked(evt);
+        btnGoiLaiGioHang.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnGoiLaiGioHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGoiLaiGioHangActionPerformed(evt);
             }
         });
+        jPanel7.add(btnGoiLaiGioHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 20, 120, 45));
 
-        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
-        jPanel18.setLayout(jPanel18Layout);
-        jPanel18Layout.setHorizontalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnGoiLaiGioHang, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel18Layout.setVerticalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnGoiLaiGioHang, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        jPanel7.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(669, 20, 110, -1));
-
-        jPanel19.setBackground(new java.awt.Color(1, 181, 204));
-
-        btnCloseShowGioHangTreo.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnCloseShowGioHangTreo.setBackground(new java.awt.Color(153, 153, 153));
         btnCloseShowGioHangTreo.setForeground(new java.awt.Color(255, 255, 255));
-        btnCloseShowGioHangTreo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnCloseShowGioHangTreo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/change.png"))); // NOI18N
-        btnCloseShowGioHangTreo.setText("Gọi lại GH");
-        btnCloseShowGioHangTreo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCloseShowGioHangTreo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCloseShowGioHangTreoMouseClicked(evt);
+        btnCloseShowGioHangTreo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/back.png"))); // NOI18N
+        btnCloseShowGioHangTreo.setText("Quay lại");
+        btnCloseShowGioHangTreo.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnCloseShowGioHangTreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseShowGioHangTreoActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
-        jPanel19.setLayout(jPanel19Layout);
-        jPanel19Layout.setHorizontalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnCloseShowGioHangTreo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel19Layout.setVerticalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnCloseShowGioHangTreo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        jPanel7.add(jPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, -1));
-
-        jPanel20.setBackground(new java.awt.Color(1, 181, 204));
-
-        btnXoaGioHangTreo.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
-        btnXoaGioHangTreo.setForeground(new java.awt.Color(255, 255, 255));
-        btnXoaGioHangTreo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnXoaGioHangTreo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/change.png"))); // NOI18N
-        btnXoaGioHangTreo.setText("Gọi lại GH");
-        btnXoaGioHangTreo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnXoaGioHangTreo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnXoaGioHangTreoMouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
-        jPanel20.setLayout(jPanel20Layout);
-        jPanel20Layout.setHorizontalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnXoaGioHangTreo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel20Layout.setVerticalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnXoaGioHangTreo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        jPanel7.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, -1, -1));
+        jPanel7.add(btnCloseShowGioHangTreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, 110, 45));
 
         javax.swing.GroupLayout dlGioHangTreoLayout = new javax.swing.GroupLayout(dlGioHangTreo.getContentPane());
         dlGioHangTreo.getContentPane().setLayout(dlGioHangTreoLayout);
@@ -828,35 +721,17 @@ public class ViewBanHang extends javax.swing.JPanel {
         txtThemDiaChiKh.setLabelText("Địa chỉ");
         jPanel22.add(txtThemDiaChiKh, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 240, -1));
 
-        jPanel24.setBackground(new java.awt.Color(1, 181, 204));
-
-        btnThemKhachHang.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnThemKhachHang.setBackground(new java.awt.Color(1, 181, 204));
         btnThemKhachHang.setForeground(new java.awt.Color(255, 255, 255));
-        btnThemKhachHang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnThemKhachHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/addUser.png"))); // NOI18N
-        btnThemKhachHang.setText("Thêm");
-        btnThemKhachHang.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnThemKhachHangMouseClicked(evt);
+        btnThemKhachHang.setText("Thêm KH");
+        btnThemKhachHang.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnThemKhachHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemKhachHangActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
-        jPanel24.setLayout(jPanel24Layout);
-        jPanel24Layout.setHorizontalGroup(
-            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel24Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnThemKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel24Layout.setVerticalGroup(
-            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel24Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnThemKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        jPanel22.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, -1, 30));
+        jPanel22.add(btnThemKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 370, -1, -1));
 
         javax.swing.GroupLayout dlThemKhachHangLayout = new javax.swing.GroupLayout(dlThemKhachHang.getContentPane());
         dlThemKhachHang.getContentPane().setLayout(dlThemKhachHangLayout);
@@ -1350,140 +1225,10 @@ public class ViewBanHang extends javax.swing.JPanel {
         loadTableGioHangChiTietTreo();
     }//GEN-LAST:event_tbGioHangTreoMouseClicked
 
-    private void btnThemKhVaoGhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemKhVaoGhMouseClicked
-        // BTN thêm khách hàng
-        txtMaKh.setText(khachHang.getMa());
-        txtTenKh.setText(khachHang.getHoTen());
-        dlDetailKhachHang.setVisible(false);
-    }//GEN-LAST:event_btnThemKhVaoGhMouseClicked
-
-    private void btnDongChiTietKhachHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDongChiTietKhachHangMouseClicked
-        // BTN close Detail
-        dlDetailKhachHang.setVisible(false);
-        khachHang = null;
-    }//GEN-LAST:event_btnDongChiTietKhachHangMouseClicked
-
-    private void btnLyDoTreoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLyDoTreoMouseClicked
-        // BTN treo - nhập lý do xong
-        dlLyDo.setVisible(false);
-        List<GioHangRequest> lstSp = new ArrayList<>();
-        for (BhChiTietDienThoaiDto x : mapGioHang.values()) {
-            GioHangRequest ghct = new GioHangRequest();
-            ghct.setIdChiTietDienThoai(x.getId());
-            ghct.setKhachHang(khachHang);
-            ghct.setNhanVien(nhanVien);
-            ghct.setLyDo(txtLyDo.getText().trim());
-            lstSp.add(ghct);
-        }
-        String mess = banHangService.treoHoaDon(lstSp);
-        if (mess.equals("Treo giỏ hàng thành công")) {
-            mapGioHang.clear();
-            loadTableGioHang();
-            khachHang = null;
-            clearFormInput();
-        }
-        JOptionPane.showMessageDialog(this, mess);
-    }//GEN-LAST:event_btnLyDoTreoMouseClicked
-
-    private void btnGoiLaiGioHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGoiLaiGioHangMouseClicked
-        // BTN Gọi lại giỏ hàng treo
-        if (!mapGioHang.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Đang có sản phẩm trong giỏ hàng");
-            return;
-        }
-        int row = tbGioHangTreo.getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Mời chọn một giỏ hàng");
-            return;
-        }
-        GioHangDto gioHang = lstGioHangTreo.get(row);
-        if (gioHang.getIdKhachHang() != null) {
-            khachHang = new KhachHang();
-            khachHang.setId(gioHang.getIdKhachHang());
-            txtMaKh.setText(gioHang.getMaKhachHang());
-            txtTenKh.setText(gioHang.getTenKhachHang());
-            txtSdtKhachHang.setText(gioHang.getSdtKhachHang());
-        }
-        mapGioHang.clear();
-        List<BhChiTietDienThoaiDto> lstDienThoai = gioHangChiTietService.getAllByIdGioHang(gioHang.getIdGioHang());
-        for (BhChiTietDienThoaiDto x : lstDienThoai) {
-            if (x.getTrangThai() == 1) {
-                JOptionPane.showMessageDialog(this, "Điện thoại: " + x.getTen()
-                        + "\nIMEI: " + x.getImei()
-                        + "\nHãng: " + x.getHang()
-                        + "\nMàu sắc: " + x.getMauSac()
-                        + "\nĐã được bán bán");
-                continue;
-            }
-            mapGioHang.put(x.getId(), x);
-        }
-        loadTableGioHang();
-        gioHangHienTai = new GioHang();
-        gioHangHienTai.setId(gioHang.getIdGioHang());
-        dlGioHangTreo.setVisible(false);
-    }//GEN-LAST:event_btnGoiLaiGioHangMouseClicked
-
-    private void btnCloseShowGioHangTreoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseShowGioHangTreoMouseClicked
-        // BTN Close Ds Giỏ hàng treo
-        dlGioHangTreo.setVisible(false);
-    }//GEN-LAST:event_btnCloseShowGioHangTreoMouseClicked
-
-    private void btnXoaGioHangTreoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaGioHangTreoMouseClicked
-        // BTN xóa giỏ hàng treo
-        int row = tbGioHangTreo.getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Mời chọn một giỏ hàng để xóa");
-            return;
-        }
-        GioHangDto gioHangTreo = lstGioHangTreo.get(row);
-        if (!gioHangChiTietService.deteleByIdGioHang(gioHangTreo.getIdGioHang())) {
-            JOptionPane.showMessageDialog(this, "Xóa thất bại");
-            return;
-        }
-        String messXoaGioHangTreo = gioHangService.delete(gioHangTreo.getIdGioHang());
-        JOptionPane.showMessageDialog(this, messXoaGioHangTreo);
-        if (messXoaGioHangTreo.equals("Xóa giỏ hàng treo thành công")) {
-            loadTableGioHangTreo();
-            DefaultTableModel model = (DefaultTableModel) tbGioHangChiTietTreo.getModel();
-            model.setRowCount(0);
-        }
-    }//GEN-LAST:event_btnXoaGioHangTreoMouseClicked
-
     private void txtTimKiemKhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemKhActionPerformed
         // TXT Tìm kiếm KH type
         searchKhachHang();
     }//GEN-LAST:event_txtTimKiemKhActionPerformed
-
-    private void btnThemKhachHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemKhachHangMouseClicked
-        KhachHang khachHangMoi = new KhachHang();
-        try {
-            // BTN Thêm khách hàng
-            SimpleDateFormat sdfNgaySinh = new SimpleDateFormat("dd-MM-yyyy");
-            String ngaySinhStr = txtThemNgaySinhKh.getText();
-            khachHangMoi.setHoTen(txtThemTenKh.getText().trim());
-            Date ngaySinh = sdfNgaySinh.parse(ngaySinhStr);
-            khachHangMoi.setNgaySinh(ngaySinh);
-            if (rdNamThemKh.isSelected()) {
-                khachHangMoi.setGioiTinh(0);
-            } else if (rdNuThemKh.isSelected()) {
-                khachHangMoi.setGioiTinh(1);
-            }
-            khachHangMoi.setSdt(txtThemSdtKh.getText().trim());
-            khachHangMoi.setDiaChi(txtThemDiaChiKh.getText().trim());
-            khachHangMoi.setEmail(txtThemEmailKh.getText().trim());
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Lỗi ngày sinh");
-            return;
-        }
-        String mess = khachHangService.insert(khachHangMoi);
-        if (mess.equals("Thêm thành công")) {
-            int check = JOptionPane.showConfirmDialog(this, "Bạn có muốn thêm khách hàng này vào giỏ hàng hiện tại?", "Confirm", JOptionPane.OK_OPTION);
-            if (check == 0) {
-                txtTimKiemKH.setText(khachHangMoi.getSdt());
-                searchKhachHang();
-            }
-        }
-    }//GEN-LAST:event_btnThemKhachHangMouseClicked
 
     private void cbbHtThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbHtThanhToanActionPerformed
         // cbb Hình thức thanh toán
@@ -1667,22 +1412,152 @@ public class ViewBanHang extends javax.swing.JPanel {
         loadTableGioHang();
     }//GEN-LAST:event_btnThemVaoGioHangActionPerformed
 
+    private void btnCloseShowGioHangTreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseShowGioHangTreoActionPerformed
+        // BTN Close Ds Giỏ hàng treo
+        dlGioHangTreo.setVisible(false);
+    }//GEN-LAST:event_btnCloseShowGioHangTreoActionPerformed
+
+    private void btnXoaGioHangTreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaGioHangTreoActionPerformed
+        // BTN xóa giỏ hàng treo
+        int row = tbGioHangTreo.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Mời chọn một giỏ hàng để xóa");
+            return;
+        }
+        GioHangDto gioHangTreo = lstGioHangTreo.get(row);
+        if (!gioHangChiTietService.deteleByIdGioHang(gioHangTreo.getIdGioHang())) {
+            JOptionPane.showMessageDialog(this, "Xóa thất bại");
+            return;
+        }
+        String messXoaGioHangTreo = gioHangService.delete(gioHangTreo.getIdGioHang());
+        JOptionPane.showMessageDialog(this, messXoaGioHangTreo);
+        if (messXoaGioHangTreo.equals("Xóa giỏ hàng treo thành công")) {
+            loadTableGioHangTreo();
+            DefaultTableModel model = (DefaultTableModel) tbGioHangChiTietTreo.getModel();
+            model.setRowCount(0);
+        }
+    }//GEN-LAST:event_btnXoaGioHangTreoActionPerformed
+
+    private void btnGoiLaiGioHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoiLaiGioHangActionPerformed
+        // BTN Gọi lại giỏ hàng treo
+        if (!mapGioHang.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Đang có sản phẩm trong giỏ hàng");
+            return;
+        }
+        int row = tbGioHangTreo.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Mời chọn một giỏ hàng");
+            return;
+        }
+        GioHangDto gioHang = lstGioHangTreo.get(row);
+        if (gioHang.getIdKhachHang() != null) {
+            khachHang = new KhachHang();
+            khachHang.setId(gioHang.getIdKhachHang());
+            txtMaKh.setText(gioHang.getMaKhachHang());
+            txtTenKh.setText(gioHang.getTenKhachHang());
+            txtSdtKhachHang.setText(gioHang.getSdtKhachHang());
+        }
+        mapGioHang.clear();
+        List<BhChiTietDienThoaiDto> lstDienThoai = gioHangChiTietService.getAllByIdGioHang(gioHang.getIdGioHang());
+        for (BhChiTietDienThoaiDto x : lstDienThoai) {
+            if (x.getTrangThai() == 1) {
+                JOptionPane.showMessageDialog(this, "Điện thoại: " + x.getTen()
+                        + "\nIMEI: " + x.getImei()
+                        + "\nHãng: " + x.getHang()
+                        + "\nMàu sắc: " + x.getMauSac()
+                        + "\nĐã được bán bán");
+                continue;
+            }
+            mapGioHang.put(x.getId(), x);
+        }
+        loadTableGioHang();
+        gioHangHienTai = new GioHang();
+        gioHangHienTai.setId(gioHang.getIdGioHang());
+        dlGioHangTreo.setVisible(false);
+    }//GEN-LAST:event_btnGoiLaiGioHangActionPerformed
+
+    private void btnLyDoTreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLyDoTreoActionPerformed
+         // BTN treo - nhập lý do xong
+        dlLyDo.setVisible(false);
+        List<GioHangRequest> lstSp = new ArrayList<>();
+        for (BhChiTietDienThoaiDto x : mapGioHang.values()) {
+            GioHangRequest ghct = new GioHangRequest();
+            ghct.setIdChiTietDienThoai(x.getId());
+            ghct.setKhachHang(khachHang);
+            ghct.setNhanVien(nhanVien);
+            ghct.setLyDo(txtLyDo.getText().trim());
+            lstSp.add(ghct);
+        }
+        String mess = banHangService.treoHoaDon(lstSp);
+        if (mess.equals("Treo giỏ hàng thành công")) {
+            mapGioHang.clear();
+            loadTableGioHang();
+            khachHang = null;
+            clearFormInput();
+        }
+        JOptionPane.showMessageDialog(this, mess);
+    }//GEN-LAST:event_btnLyDoTreoActionPerformed
+
+    private void btnDongChiTietKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDongChiTietKhachHangActionPerformed
+        // BTN close Detail
+        dlDetailKhachHang.setVisible(false);
+        khachHang = null;
+    }//GEN-LAST:event_btnDongChiTietKhachHangActionPerformed
+
+    private void btnThemKhVaoGhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKhVaoGhActionPerformed
+        // BTN thêm khách hàng
+        txtMaKh.setText(khachHang.getMa());
+        txtTenKh.setText(khachHang.getHoTen());
+        dlDetailKhachHang.setVisible(false);
+    }//GEN-LAST:event_btnThemKhVaoGhActionPerformed
+
+    private void btnThemKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKhachHangActionPerformed
+        KhachHang khachHangMoi = new KhachHang();
+        try {
+            // BTN Thêm khách hàng
+            SimpleDateFormat sdfNgaySinh = new SimpleDateFormat("dd-MM-yyyy");
+            String ngaySinhStr = txtThemNgaySinhKh.getText();
+            khachHangMoi.setHoTen(txtThemTenKh.getText().trim());
+            Date ngaySinh = sdfNgaySinh.parse(ngaySinhStr);
+            khachHangMoi.setNgaySinh(ngaySinh);
+            if (rdNamThemKh.isSelected()) {
+                khachHangMoi.setGioiTinh(0);
+            } else if (rdNuThemKh.isSelected()) {
+                khachHangMoi.setGioiTinh(1);
+            }
+            khachHangMoi.setSdt(txtThemSdtKh.getText().trim());
+            khachHangMoi.setDiaChi(txtThemDiaChiKh.getText().trim());
+            khachHangMoi.setEmail(txtThemEmailKh.getText().trim());
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi ngày sinh");
+            return;
+        }
+        String mess = khachHangService.insert(khachHangMoi);
+        if (mess.equals("Thêm thành công")) {
+            int check = JOptionPane.showConfirmDialog(this, "Bạn có muốn thêm khách hàng này vào giỏ hàng hiện tại?", "Confirm", JOptionPane.OK_OPTION);
+            if (check == 0) {
+                txtTimKiemKH.setText(khachHangMoi.getSdt());
+                searchKhachHang();
+            }
+        }
+    }//GEN-LAST:event_btnThemKhachHangActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel HinhThucThanhToan;
-    private javax.swing.JLabel btnCloseShowGioHangTreo;
-    private javax.swing.JLabel btnDongChiTietKhachHang;
-    private javax.swing.JLabel btnGoiLaiGioHang;
-    private javax.swing.JLabel btnLyDoTreo;
+    private pro1041.team_3.swing.ButtonCustom btnCloseShowGioHangTreo;
+    private pro1041.team_3.swing.ButtonCustom btnDongChiTietKhachHang;
+    private pro1041.team_3.swing.ButtonCustom btnGoiLaiGioHang;
+    private pro1041.team_3.swing.ButtonCustom btnLyDoTreo;
     private pro1041.team_3.swing.ButtonCustom btnShowDlThemKhachHang;
     private pro1041.team_3.swing.ButtonCustom btnShowGioHangTreo;
     private pro1041.team_3.swing.ButtonCustom btnThanhToan;
-    private javax.swing.JLabel btnThemKhVaoGh;
-    private javax.swing.JLabel btnThemKhachHang;
+    private pro1041.team_3.swing.ButtonCustom btnThemKhVaoGh;
+    private pro1041.team_3.swing.ButtonCustom btnThemKhachHang;
     private pro1041.team_3.swing.ButtonCustom btnThemVaoGioHang;
     private javax.swing.JLabel btnTimKiem;
     private pro1041.team_3.swing.ButtonCustom btnTreoGioHang;
-    private javax.swing.JLabel btnXoaGioHangTreo;
+    private pro1041.team_3.swing.ButtonCustom btnXoaGioHangTreo;
     private pro1041.team_3.swing.ButtonCustom btnXoaTrongGioHang;
     private pro1041.team_3.swing.ButtonCustom buttonCustom3;
     private pro1041.team_3.swing.Combobox cbbHtThanhToan;
@@ -1716,22 +1591,17 @@ public class ViewBanHang extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel23;
-    private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1748,8 +1618,8 @@ public class ViewBanHang extends javax.swing.JPanel {
     private javax.swing.JScrollPane jspTbGioHangtreo;
     private javax.swing.JPanel ketHopJPanel;
     private javax.swing.JPanel nganHangJPanel;
-    private javax.swing.JRadioButton rdDetailNam;
-    private javax.swing.JRadioButton rdDetailNu;
+    private pro1041.team_3.swing.RadioButtonCustom rdDetailNam;
+    private pro1041.team_3.swing.RadioButtonCustom rdDetailNu;
     private pro1041.team_3.swing.RadioButtonCustom rdNamThemKh;
     private pro1041.team_3.swing.RadioButtonCustom rdNuThemKh;
     private pro1041.team_3.swing.config.Table tbGioHang;

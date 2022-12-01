@@ -106,7 +106,7 @@ public class Table extends JTable {
     }
 
     public void fixTable(JScrollPane scroll) {
-        scroll.setBorder(new TitledBorder(new MatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY), "Giỏ hàng"));
+        scroll.setBorder(new TitledBorder(new MatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY)));
         scroll.getViewport().setBackground(new Color(250, 250, 250));
         ScrollBar sb = new ScrollBar();
         sb.setBackground(new Color(250, 250, 250));

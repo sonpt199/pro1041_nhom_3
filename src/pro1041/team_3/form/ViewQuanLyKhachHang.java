@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package pro1041.team_3.form;
 
 import java.text.ParseException;
@@ -23,9 +19,6 @@ public class ViewQuanLyKhachHang extends javax.swing.JPanel {
 
     private KhachHangServiceImpl khachHangServiceImpl;
 
-    /**
-     * Creates new form KhachHangForm
-     */
     public ViewQuanLyKhachHang() {
         initComponents();
         khachHangServiceImpl = new KhachHangServiceImpl();
@@ -131,6 +124,7 @@ public class ViewQuanLyKhachHang extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel1.setText("Mã");
 
+        txtMa.setEditable(false);
         txtMa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtMa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
 
@@ -197,14 +191,11 @@ public class ViewQuanLyKhachHang extends javax.swing.JPanel {
                     .addComponent(jLabel6)
                     .addComponent(txtSdt, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(rdoNam)
-                                .addGap(18, 18, 18)
-                                .addComponent(rdoNu))
-                            .addComponent(jLabel7))
-                        .addGap(88, 88, 88)))
-                .addGap(46, 46, 46)
+                        .addComponent(rdoNam)
+                        .addGap(18, 18, 18)
+                        .addComponent(rdoNu))
+                    .addComponent(jLabel7))
+                .addGap(51, 51, 51)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
