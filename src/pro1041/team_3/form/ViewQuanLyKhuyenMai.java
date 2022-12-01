@@ -450,7 +450,7 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtNgayKT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(cbbLoaiKM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -732,7 +732,8 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         khuyenMai.setId(id);
         String ketQua = khuyenMaiImpl.update(khuyenMai);
         if (ketQua.equals("Sửa thành công")) {
-            loadTableKM(khuyenMaiImpl.getAllResponse());
+            list1 = khuyenMaiImpl.getAllResponse();
+            loadTableKM(list1);
         }
         JOptionPane.showMessageDialog(this, ketQua);
     }//GEN-LAST:event_btnSuaActionPerformed
