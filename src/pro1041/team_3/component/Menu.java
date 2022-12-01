@@ -1,6 +1,6 @@
 package pro1041.team_3.component;
 
-import pro1041.team_3.event.EventMenuSelected;
+import pro1041.team_3.swing.eventInterface.EventMenuSelected;
 import pro1041.team_3.model.Model_Menu;
 import java.awt.Color;
 import java.awt.GradientPaint;
