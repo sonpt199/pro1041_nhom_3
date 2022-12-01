@@ -2,7 +2,7 @@ package pro1041.team_3.main;
 
 import java.awt.Image;
 import pro1041.team_3.component.MenuLayout;
-import pro1041.team_3.event.EventMenuSelected;
+import pro1041.team_3.swing.eventInterface.EventMenuSelected;
 import pro1041.team_3.form.ViewThongKe;
 import pro1041.team_3.form.ViewBanHang;
 import pro1041.team_3.form.MainForm;

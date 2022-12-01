@@ -1,4 +1,4 @@
-package pro1041.team_3.event;
+package pro1041.team_3.swing.eventInterface;
 
 public interface EventMenuSelected {
 
