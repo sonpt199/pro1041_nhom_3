@@ -3,6 +3,7 @@ package pro1041.team_3.repository;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import pro1041.team_3.domainModel.KhachHang;
 import pro1041.team_3.dto.KhachHangDto;
 import pro1041.team_3.util.HibernateUtil;
@@ -33,7 +34,7 @@ public class KhachHangRepository extends Repository<KhachHang, UUID, KhachHangDt
             return null;
         }
     }
-    
+
     public KhachHang findBySdt(String keyWord) {
         try {
             KhachHang khachHang;
@@ -50,26 +51,33 @@ public class KhachHangRepository extends Repository<KhachHang, UUID, KhachHangDt
 
     public KhachHang findSDT(String key) {
         try {
-            KhachHang khachHang;
+            KhachHang khachHang = null;
             session = HibernateUtil.getSession();
             String hql = "SELECT a FROM " + className + " a WHERE a.sdt = :key";
-            Query query = session.createQuery(hql);
+            TypedQuery<KhachHang> query = session.createQuery(hql, KhachHang.class);
             query.setParameter("key", key);
-            khachHang = (KhachHang) query.getSingleResult();
+            List<KhachHang> lst = query.getResultList();
+            if (!lst.isEmpty()) {
+                khachHang = lst.get(0);
+            }
             return khachHang;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
+
     public KhachHang findEmail(String key) {
         try {
-            KhachHang khachHang;
+            KhachHang khachHang = null;
             session = HibernateUtil.getSession();
             String hql = "SELECT a FROM " + className + " a WHERE a.email = :key";
-            Query query = session.createQuery(hql);
+            TypedQuery<KhachHang> query = session.createQuery(hql, KhachHang.class);
             query.setParameter("key", key);
-            khachHang = (KhachHang) query.getSingleResult();
+            List<KhachHang> lst = query.getResultList();
+            if (!lst.isEmpty()) {
+                khachHang = lst.get(0);
+            }
             return khachHang;
         } catch (Exception e) {
             e.printStackTrace();
