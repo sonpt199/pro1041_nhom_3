@@ -109,7 +109,6 @@ public class BanHangServiceImpl implements BanHangService {
         gioHang.setNhanVien(lstSp.get(0).getNhanVien());
         gioHang.setNgayTao(new Date());
         gioHang.setLyDo(lstSp.get(0).getLyDo());
-        gioHang.setTrangThai(0);
         if (gioHangRepository.saveOrUpdate(gioHang) == null) {
             return "Lỗi hệ thống. Không thể treo giỏ hàng";
         }

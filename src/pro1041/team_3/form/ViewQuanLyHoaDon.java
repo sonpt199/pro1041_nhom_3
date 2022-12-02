@@ -96,6 +96,7 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
         txtMaGiaoDich = new pro1041.team_3.swing.TextField();
         jPanel2 = new javax.swing.JPanel();
         btnXemChiTiet = new pro1041.team_3.swing.ButtonCustom();
+        textField1 = new pro1041.team_3.swing.TextField();
 
         dlHoaDonChiTiet.setResizable(false);
         dlHoaDonChiTiet.setSize(new java.awt.Dimension(1095, 365));
@@ -178,50 +179,74 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtTongTien.setEditable(false);
+        txtTongTien.setFont(new java.awt.Font("Nunito SemiBold", 0, 12)); // NOI18N
+        txtTongTien.setLabelColor(new java.awt.Color(1, 132, 203));
         txtTongTien.setLabelText("Tổng tiền");
         jPanel1.add(txtTongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 170, 230, -1));
 
         txtMaHoaDon.setEditable(false);
+        txtMaHoaDon.setFont(new java.awt.Font("Nunito SemiBold", 0, 12)); // NOI18N
+        txtMaHoaDon.setLabelColor(new java.awt.Color(1, 132, 203));
         txtMaHoaDon.setLabelText("Mã hóa đơn");
         jPanel1.add(txtMaHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 230, -1));
 
         txtMaKhachHang.setEditable(false);
+        txtMaKhachHang.setFont(new java.awt.Font("Nunito SemiBold", 0, 12)); // NOI18N
+        txtMaKhachHang.setLabelColor(new java.awt.Color(1, 132, 203));
         txtMaKhachHang.setLabelText("Mã khách hàng");
         jPanel1.add(txtMaKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 230, -1));
 
         txtTenKhachHang.setEditable(false);
+        txtTenKhachHang.setFont(new java.awt.Font("Nunito SemiBold", 0, 12)); // NOI18N
+        txtTenKhachHang.setLabelColor(new java.awt.Color(1, 132, 203));
         txtTenKhachHang.setLabelText("Tên khách hàng");
         jPanel1.add(txtTenKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 230, -1));
 
         txtSdtKhachHang.setEditable(false);
+        txtSdtKhachHang.setFont(new java.awt.Font("Nunito SemiBold", 0, 12)); // NOI18N
+        txtSdtKhachHang.setLabelColor(new java.awt.Color(1, 132, 203));
         txtSdtKhachHang.setLabelText("SĐT khách hàng");
         jPanel1.add(txtSdtKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 230, -1));
 
         txtMaNhanVien.setEditable(false);
+        txtMaNhanVien.setFont(new java.awt.Font("Nunito SemiBold", 0, 12)); // NOI18N
+        txtMaNhanVien.setLabelColor(new java.awt.Color(1, 132, 203));
         txtMaNhanVien.setLabelText("Mã nhân viên");
         jPanel1.add(txtMaNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 230, -1));
 
         txtTenNhanVien.setEditable(false);
+        txtTenNhanVien.setFont(new java.awt.Font("Nunito SemiBold", 0, 12)); // NOI18N
+        txtTenNhanVien.setLabelColor(new java.awt.Color(1, 132, 203));
         txtTenNhanVien.setLabelText("Tên nhân viên");
         jPanel1.add(txtTenNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 230, -1));
 
         txtNgayThanhToan.setEditable(false);
+        txtNgayThanhToan.setFont(new java.awt.Font("Nunito SemiBold", 0, 12)); // NOI18N
+        txtNgayThanhToan.setLabelColor(new java.awt.Color(1, 132, 203));
         txtNgayThanhToan.setLabelText("Ngày thanh toán");
         jPanel1.add(txtNgayThanhToan, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 230, -1));
 
         txtHinhThucThanhToan.setEditable(false);
+        txtHinhThucThanhToan.setFont(new java.awt.Font("Nunito SemiBold", 0, 12)); // NOI18N
+        txtHinhThucThanhToan.setLabelColor(new java.awt.Color(1, 132, 203));
         txtHinhThucThanhToan.setLabelText("Hình thức thanh toán");
         jPanel1.add(txtHinhThucThanhToan, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, 230, -1));
 
         txtTienMat.setEditable(false);
+        txtTienMat.setFont(new java.awt.Font("Nunito SemiBold", 0, 12)); // NOI18N
+        txtTienMat.setLabelColor(new java.awt.Color(1, 132, 203));
         txtTienMat.setLabelText("Tiền mặt");
         jPanel1.add(txtTienMat, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 230, -1));
 
         txtNganHang.setEditable(false);
+        txtNganHang.setFont(new java.awt.Font("Nunito SemiBold", 0, 12)); // NOI18N
+        txtNganHang.setLabelColor(new java.awt.Color(1, 132, 203));
         txtNganHang.setLabelText("Ngân hàng");
         jPanel1.add(txtNganHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 230, -1));
 
         txtMaGiaoDich.setEditable(false);
+        txtMaGiaoDich.setFont(new java.awt.Font("Nunito SemiBold", 0, 12)); // NOI18N
+        txtMaGiaoDich.setLabelColor(new java.awt.Color(1, 132, 203));
         txtMaGiaoDich.setLabelText("Mã giao dịch");
         jPanel1.add(txtMaGiaoDich, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, 230, -1));
 
@@ -240,7 +265,12 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
                 btnXemChiTietActionPerformed(evt);
             }
         });
-        jPanel2.add(btnXemChiTiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 14, 116, -1));
+        jPanel2.add(btnXemChiTiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 116, -1));
+
+        textField1.setText("textField1");
+        textField1.setFont(new java.awt.Font("Nunito SemiBold", 0, 12)); // NOI18N
+        textField1.setLabelColor(new java.awt.Color(1, 132, 203));
+        jPanel2.add(textField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 270, -1));
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 20, 310, 230));
     }// </editor-fold>//GEN-END:initComponents
@@ -309,6 +339,7 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
     private javax.swing.JScrollPane jspTbHoaDonChiTiet;
     private pro1041.team_3.swing.config.Table tbHoaDon;
     private pro1041.team_3.swing.config.Table tbHoaDonChiTiet;
+    private pro1041.team_3.swing.TextField textField1;
     private pro1041.team_3.swing.TextField txtHinhThucThanhToan;
     private pro1041.team_3.swing.TextField txtMaGiaoDich;
     private pro1041.team_3.swing.TextField txtMaHoaDon;

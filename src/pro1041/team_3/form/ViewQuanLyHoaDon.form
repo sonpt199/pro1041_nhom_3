@@ -284,6 +284,12 @@
         <Component class="pro1041.team_3.swing.TextField" name="txtTongTien">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Nunito SemiBold" size="12" style="0"/>
+            </Property>
+            <Property name="labelColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cb" green="84" red="1" type="rgb"/>
+            </Property>
             <Property name="labelText" type="java.lang.String" value="T&#x1ed5;ng ti&#x1ec1;n"/>
           </Properties>
           <Constraints>
@@ -295,6 +301,12 @@
         <Component class="pro1041.team_3.swing.TextField" name="txtMaHoaDon">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Nunito SemiBold" size="12" style="0"/>
+            </Property>
+            <Property name="labelColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cb" green="84" red="1" type="rgb"/>
+            </Property>
             <Property name="labelText" type="java.lang.String" value="M&#xe3; h&#xf3;a &#x111;&#x1a1;n"/>
           </Properties>
           <Constraints>
@@ -306,6 +318,12 @@
         <Component class="pro1041.team_3.swing.TextField" name="txtMaKhachHang">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Nunito SemiBold" size="12" style="0"/>
+            </Property>
+            <Property name="labelColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cb" green="84" red="1" type="rgb"/>
+            </Property>
             <Property name="labelText" type="java.lang.String" value="M&#xe3; kh&#xe1;ch h&#xe0;ng"/>
           </Properties>
           <Constraints>
@@ -317,6 +335,12 @@
         <Component class="pro1041.team_3.swing.TextField" name="txtTenKhachHang">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Nunito SemiBold" size="12" style="0"/>
+            </Property>
+            <Property name="labelColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cb" green="84" red="1" type="rgb"/>
+            </Property>
             <Property name="labelText" type="java.lang.String" value="T&#xea;n kh&#xe1;ch h&#xe0;ng"/>
           </Properties>
           <Constraints>
@@ -328,6 +352,12 @@
         <Component class="pro1041.team_3.swing.TextField" name="txtSdtKhachHang">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Nunito SemiBold" size="12" style="0"/>
+            </Property>
+            <Property name="labelColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cb" green="84" red="1" type="rgb"/>
+            </Property>
             <Property name="labelText" type="java.lang.String" value="S&#x110;T kh&#xe1;ch h&#xe0;ng"/>
           </Properties>
           <Constraints>
@@ -339,6 +369,12 @@
         <Component class="pro1041.team_3.swing.TextField" name="txtMaNhanVien">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Nunito SemiBold" size="12" style="0"/>
+            </Property>
+            <Property name="labelColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cb" green="84" red="1" type="rgb"/>
+            </Property>
             <Property name="labelText" type="java.lang.String" value="M&#xe3; nh&#xe2;n vi&#xea;n"/>
           </Properties>
           <Constraints>
@@ -350,6 +386,12 @@
         <Component class="pro1041.team_3.swing.TextField" name="txtTenNhanVien">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Nunito SemiBold" size="12" style="0"/>
+            </Property>
+            <Property name="labelColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cb" green="84" red="1" type="rgb"/>
+            </Property>
             <Property name="labelText" type="java.lang.String" value="T&#xea;n nh&#xe2;n vi&#xea;n"/>
           </Properties>
           <Constraints>
@@ -361,6 +403,12 @@
         <Component class="pro1041.team_3.swing.TextField" name="txtNgayThanhToan">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Nunito SemiBold" size="12" style="0"/>
+            </Property>
+            <Property name="labelColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cb" green="84" red="1" type="rgb"/>
+            </Property>
             <Property name="labelText" type="java.lang.String" value="Ng&#xe0;y thanh to&#xe1;n"/>
           </Properties>
           <Constraints>
@@ -372,6 +420,12 @@
         <Component class="pro1041.team_3.swing.TextField" name="txtHinhThucThanhToan">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Nunito SemiBold" size="12" style="0"/>
+            </Property>
+            <Property name="labelColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cb" green="84" red="1" type="rgb"/>
+            </Property>
             <Property name="labelText" type="java.lang.String" value="H&#xec;nh th&#x1ee9;c thanh to&#xe1;n"/>
           </Properties>
           <Constraints>
@@ -383,6 +437,12 @@
         <Component class="pro1041.team_3.swing.TextField" name="txtTienMat">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Nunito SemiBold" size="12" style="0"/>
+            </Property>
+            <Property name="labelColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cb" green="84" red="1" type="rgb"/>
+            </Property>
             <Property name="labelText" type="java.lang.String" value="Ti&#x1ec1;n m&#x1eb7;t"/>
           </Properties>
           <Constraints>
@@ -394,6 +454,12 @@
         <Component class="pro1041.team_3.swing.TextField" name="txtNganHang">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Nunito SemiBold" size="12" style="0"/>
+            </Property>
+            <Property name="labelColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cb" green="84" red="1" type="rgb"/>
+            </Property>
             <Property name="labelText" type="java.lang.String" value="Ng&#xe2;n h&#xe0;ng"/>
           </Properties>
           <Constraints>
@@ -405,6 +471,12 @@
         <Component class="pro1041.team_3.swing.TextField" name="txtMaGiaoDich">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Nunito SemiBold" size="12" style="0"/>
+            </Property>
+            <Property name="labelColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cb" green="84" red="1" type="rgb"/>
+            </Property>
             <Property name="labelText" type="java.lang.String" value="M&#xe3; giao d&#x1ecb;ch"/>
           </Properties>
           <Constraints>
@@ -454,7 +526,23 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="13" y="14" width="116" height="-1"/>
+              <AbsoluteConstraints x="20" y="180" width="116" height="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="pro1041.team_3.swing.TextField" name="textField1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="textField1"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Nunito SemiBold" size="12" style="0"/>
+            </Property>
+            <Property name="labelColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cb" green="84" red="1" type="rgb"/>
+            </Property>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="20" y="10" width="270" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

@@ -44,9 +44,6 @@ public class GioHang implements Serializable {
     @Column(name = "ngay_tao")
     private Date ngayTao;
 
-    @Column(name = "trang_thai")
-    private Integer trangThai;
-
     @Column(name = "ly_do")
     private String lyDo;
 
