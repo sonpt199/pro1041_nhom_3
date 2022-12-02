@@ -3,12 +3,13 @@ package pro1041.team_3.form;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
+import pro1041.team_3.domainModel.NhanVien;
 
 public class MainForm extends javax.swing.JPanel {
 
-    public MainForm() {
+    public MainForm(NhanVien user) {
         initComponents();
-        show(new ViewBanHang());
+        show(new ViewBanHang(user));
     }
 
     @SuppressWarnings("unchecked")

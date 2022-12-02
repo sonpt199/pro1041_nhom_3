@@ -15,7 +15,9 @@ import pro1041.team_3.domainModel.HoaDonChiTiet;
 import pro1041.team_3.domainModel.KhachHang;
 import pro1041.team_3.domainModel.NhanVien;
 import pro1041.team_3.dto.BhChiTietDienThoaiDto;
+import pro1041.team_3.dto.GioHangDto;
 import pro1041.team_3.dto.GioHangRequest;
+import pro1041.team_3.dto.HoaDonDto;
 import pro1041.team_3.dto.HoaDonRequest;
 import pro1041.team_3.repository.BanHangRepository;
 import pro1041.team_3.repository.ChiTietDienThoaiRepository;
@@ -54,7 +56,7 @@ public class BanHangServiceImpl implements BanHangService {
                 + time.getDayOfMonth() + time.getHour() + time.getMinute() + time.getSecond();
         HoaDon hoaDon = new HoaDon();
         hoaDon.setMa(maHd);
-        hoaDon.setNhanVien(null);
+        hoaDon.setNhanVien(lstSp.get(0).getNhanVien());
         hoaDon.setNgayThanhToan(new Date());
         hoaDon.setKhachHang(lstSp.get(0).getKhachHang());
         hoaDon.setNhanVien(lstSp.get(0).getNhanVien());
@@ -120,9 +122,22 @@ public class BanHangServiceImpl implements BanHangService {
             lstGioHangChiTiet.add(ghct);
         }
         if (!gioHangChiTietRepository.saveAll(lstGioHangChiTiet)) {
-            return "Lỗi hệ thống. Không thể thêm sản phẩm vào giỏ hàng treo";
+            return "Lỗi hệ thống. Không t013886005198676hể thêm sản phẩm vào giỏ hàng treo";
         }
         return "Treo giỏ hàng thành công";
     }
-    
+
+    @Override
+    public List<GioHangDto> getGioHangByIdSp(UUID idChiTietDienThoai) {
+        return banHangRepository.getGioHangByIdSp(idChiTietDienThoai);
+    }
+    public static void main(String[] args) {
+        BanHangServiceImpl x = new BanHangServiceImpl();
+        System.out.println(x.getGioHangByIdSp(UUID.fromString("c758277c-f33d-c54f-98a4-e29c4a094c7a")));
+    }
+
+    @Override
+    public HoaDonDto getHoaDonByIdSp(UUID idChiTietDienThoai) {
+        return banHangRepository.getHoaDonByIdSp(idChiTietDienThoai);
+    }
 }

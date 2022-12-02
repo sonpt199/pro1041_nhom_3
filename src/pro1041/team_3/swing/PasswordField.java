@@ -2,6 +2,7 @@ package pro1041.team_3.swing;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -49,6 +50,30 @@ public class PasswordField extends JPasswordField {
         this.lineColor = lineColor;
     }
 
+    public Color getLabelColor() {
+        return labelColor;
+    }
+
+    public void setLabelColor(Color labelColor) {
+        this.labelColor = labelColor;
+    }   
+
+    public Color getFocusLostColor() {
+        return focusLostColor;
+    }
+
+    public void setFocusLostColor(Color focusLostColor) {
+        this.focusLostColor = focusLostColor;
+    }    
+    
+//    public Font getLabelFont() {
+//        return labelFont;
+//    }
+//
+//    public void setLabelFont(Font labelFont) {
+//        this.labelFont = labelFont;
+//    }     
+    
     private final Animator animator;
     private boolean animateHinText = true;
     private float location;
@@ -60,7 +85,10 @@ public class PasswordField extends JPasswordField {
     private final Image eye_hide;
     private boolean hide = true;
     private boolean showAndHide;
-
+    private Color labelColor = new Color(1, 181, 204);   
+    private Color focusLostColor = new Color(1, 181, 204);
+//    private Font labelFont = new Font("nunito", 1, 12);
+    
     public PasswordField() {
         setBorder(new EmptyBorder(20, 3, 10, 30));
         setSelectionColor(new Color(76, 204, 255));
@@ -130,8 +158,8 @@ public class PasswordField extends JPasswordField {
             }
 
         };
-        eye = new ImageIcon(getClass().getResource("/textfield/eye.png")).getImage();
-        eye_hide = new ImageIcon(getClass().getResource("/textfield/eye_hide.png")).getImage();
+        eye = new ImageIcon(getClass().getResource("/pro1041/team_3/icon/eye.png")).getImage();
+        eye_hide = new ImageIcon(getClass().getResource("/pro1041/team_3/icon/eye_hide.png")).getImage();
         animator = new Animator(300, target);
         animator.setResolution(0);
         animator.setAcceleration(0.5f);
@@ -161,7 +189,7 @@ public class PasswordField extends JPasswordField {
         if (mouseOver) {
             g2.setColor(lineColor);
         } else {
-            g2.setColor(new Color(150, 150, 150));
+            g2.setColor(focusLostColor);
         }
         g2.fillRect(2, height - 1, width - 4, 1);
         createHintText(g2);
@@ -180,8 +208,9 @@ public class PasswordField extends JPasswordField {
 
     private void createHintText(Graphics2D g2) {
         Insets in = getInsets();
-        g2.setColor(new Color(150, 150, 150));
+        g2.setColor(labelColor);
         FontMetrics ft = g2.getFontMetrics();
+//        FontMetrics ft = getFontMetrics(labelFont);
         Rectangle2D r2 = ft.getStringBounds(labelText, g2);
         double height = getHeight() - in.top - in.bottom;
         double textY = (height - r2.getHeight()) / 2;

@@ -1,6 +1,7 @@
 package pro1041.team_3.form;
 
 import java.awt.Panel;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -18,14 +19,19 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import pro1041.team_3.domainModel.ChiTietDienThoai;
 import pro1041.team_3.domainModel.DienThoaiKhuyenMai;
 import pro1041.team_3.domainModel.GioHang;
 import pro1041.team_3.domainModel.KhachHang;
 import pro1041.team_3.domainModel.NhanVien;
 import pro1041.team_3.dto.BhChiTietDienThoaiDto;
+import pro1041.team_3.dto.ChiTietDienThoaiDto;
+import pro1041.team_3.dto.ChiTietDienThoaiResponse;
 import pro1041.team_3.dto.GioHangChiTietDto;
 import pro1041.team_3.dto.GioHangDto;
 import pro1041.team_3.dto.GioHangRequest;
+import pro1041.team_3.dto.HoaDonDto;
 import pro1041.team_3.dto.HoaDonRequest;
 import pro1041.team_3.dto.KhachHangDto;
 import pro1041.team_3.service.BanHangService;
@@ -34,10 +40,12 @@ import pro1041.team_3.service.GioHangChiTietService;
 import pro1041.team_3.service.GioHangService;
 import pro1041.team_3.service.KhachHangService;
 import pro1041.team_3.service.impl.BanHangServiceImpl;
+import pro1041.team_3.service.impl.ChiTietDienThoaiImpl;
 import pro1041.team_3.service.impl.GioHangChiTietServiceImpl;
 import pro1041.team_3.service.impl.GioHangServiceImpl;
 import pro1041.team_3.service.impl.KhachHangServiceImpl;
 import pro1041.team_3.swing.MessageAlert;
+import pro1041.team_3.swing.Notification;
 
 /**
  *
@@ -47,22 +55,26 @@ public class ViewBanHang extends javax.swing.JPanel {
 
     private KhachHangService khachHangService;
     private BanHangService banHangService;
+    private ChiTietDienThoaiService chiTietDienThoaiService;
     private GioHangChiTietService gioHangChiTietService;
     private GioHangService gioHangService;
     private Map<UUID, BhChiTietDienThoaiDto> mapGioHang;
     private BhChiTietDienThoaiDto ctdtFind;
     private GioHang gioHangHienTai;
     private KhachHang khachHang;
-    private NhanVien nhanVien;
+    private NhanVien nhanVienHienTai;
     private DecimalFormat moneyFormat;
     private List<GioHangDto> lstGioHangTreo;
     private List<BhChiTietDienThoaiDto> lstGioHangChiTietTreo;
 
-    public ViewBanHang() {
+    public ViewBanHang(NhanVien user) {
         initComponents();
-//        nhanVien = nhanVienHienTai; Set nhân viên đăng nhập hiện tại
+        cbbHtThanhToan.setSelectedIndex(0);
+        nhanVienHienTai = user; //Set nhân viên đăng nhập hiện tại
+        System.out.println(nhanVienHienTai.toString());
         //Khởi tạo service
         khachHangService = new KhachHangServiceImpl();
+        chiTietDienThoaiService = new ChiTietDienThoaiImpl();
         banHangService = new BanHangServiceImpl();
         gioHangChiTietService = new GioHangChiTietServiceImpl();
         gioHangService = new GioHangServiceImpl();
@@ -71,7 +83,6 @@ public class ViewBanHang extends javax.swing.JPanel {
         moneyFormat = new DecimalFormat("#,###");
         gioHangHienTai = null;
         khachHang = null;
-        nhanVien = null;
         //Setting Jpanel, dialog
         ImageIcon iconDialog = new ImageIcon(getClass().getResource("/pro1041/team_3/icon/logoCircle.png"));
         ImageIcon iconDialogThemKh = new ImageIcon(getClass().getResource("/pro1041/team_3/icon/addUserBlack.png"));
@@ -89,23 +100,36 @@ public class ViewBanHang extends javax.swing.JPanel {
         tbGioHang.fixTable(jspTbGioHang);
         tbGioHangTreo.fixTable(jspTbGioHangtreo);
         tbGioHangChiTietTreo.fixTable(jspTbGioHangChiTietTreo);
-//
-//        List<KhachHangDto> lst = khachHangService.getAll();
-//        for (KhachHangDto x : lst) {
-//            txtTest.addItemSuggestion(x.getSdt());
-//        }
+        initComboBoxSearch();
+    }
+
+    private void initComboBoxSearch() {
+        txtTimKiemKhachHang.clearItemSuggestion();
+        List<KhachHangDto> lst = khachHangService.getAll();
+        if (!lst.isEmpty()) {
+            for (KhachHangDto x : lst) {
+                txtTimKiemKhachHang.addItemSuggestion(x.getSdt());
+            }
+        }
+        txtTimKiemSanPham.clearItemSuggestion();
+        List<ChiTietDienThoaiResponse> lstDienThoai = chiTietDienThoaiService.getAllResponse();
+        if (!lstDienThoai.isEmpty()) {
+            for (ChiTietDienThoaiResponse x : lstDienThoai) {
+                txtTimKiemSanPham.addItemSuggestion(x.getImei());
+            }
+        }
     }
 
     private void clearFormInput() {
         txtMaKh.setText("");
-        txtTenKh.setText("");
+        textField1.setText("");
         txtTongTien.setText("");
         txtTienKhachDua.setText("");
         txtTienKhachDuaKetHop.setText("");
         txtNganHangKetHop.setText("");
         txtMaGiaoDich.setText("");
         txtMaGiaoDichKetHop.setText("");
-
+        txtSdtKhachHang.setText("");
     }
 
     private void loadTableGioHang() {
@@ -133,13 +157,19 @@ public class ViewBanHang extends javax.swing.JPanel {
         }
         if (tongTien.compareTo(BigDecimal.ZERO) == 0) {
             txtTongTien.setText("");
+            return;
         }
         txtTongTien.setText(moneyFormat.format(tongTien).toString() + "VNĐ");
     }
 
     private void searchKhachHang() {
-        String keyWord = txtTimKiemKh.getText().trim();
+        String keyWord = (String) txtTimKiemKhachHang.getText();
+//        String keyWord = txtTimKiemKh.getText().trim();
         if (keyWord.isEmpty()) {
+            return;
+        }
+        if (!keyWord.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số điện thoại khách hàng");
             return;
         }
         KhachHang khachHangFind = khachHangService.findBySdt(keyWord);
@@ -165,8 +195,16 @@ public class ViewBanHang extends javax.swing.JPanel {
     }
 
     private void searchSanPham() {
-        String keyWord = txtTimKiemSp.getText().trim();
-        if (keyWord.isEmpty()) {
+        String keyWord = (String) txtTimKiemSanPham.getText();
+//        String keyWord = txtTimKiemSp.getText().trim();
+        if (keyWord.isEmpty() || keyWord == null) {
+            return;
+        }
+        if (!keyWord.matches("\\d+")) {
+            //****************alert mới
+//            Notification panel = new Notification((JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this), Notification.Type.WARNING, Notification.Location.TOP_CENTER, "Vui lòng nhập IMEI của điện thoại");
+//            panel.showNotification();
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập IMEI của điện thoại");
             return;
         }
         BhChiTietDienThoaiDto result = banHangService.bhFindByImei(keyWord);
@@ -183,12 +221,12 @@ public class ViewBanHang extends javax.swing.JPanel {
             result.setGiaBan(result.getDonGia());
             jpnGiamGia.setVisible(false);
         }
-        txtMaSP.setText(result.getMa());
-        txtTenSP.setText(result.getTen());
+        txtMaDienThoai.setText(result.getMa());
+        txtTenDienThoai.setText(result.getTen());
         txtIMEI.setText(result.getImei());
         txtHang.setText(result.getHang());
         txtMauSac.setText(result.getMauSac());
-        txtTinhTrang.setText(result.getTinhTrang() == 0 ? "Mới" : "Cũ");
+        txtTinhTrang.setText(result.getTinhTrang() == 100 ? "Mới" : "Cũ - " + result.getTinhTrang() + "%");
         txtBoNho.setText(result.getBoNho() + "GB");
         txtDonGia.setText(moneyFormat.format(result.getDonGia()).toString());
         txtMoTa.setText(result.getMoTa() == null ? "" : result.getMoTa());
@@ -233,20 +271,16 @@ public class ViewBanHang extends javax.swing.JPanel {
         }
         BigDecimal tongTien = new BigDecimal(tongTienStr);
         BigDecimal tienThua = tienKhachDua.add(nganHang).subtract(tongTien);
-        if (tienThua.compareTo(BigDecimal.ZERO) == 1 || tienThua.compareTo(BigDecimal.ZERO) == 0) {
-            txtTienThuaKetHop.setText(moneyFormat.format(tienThua));
+        if (tienThua.compareTo(BigDecimal.ZERO) == 1) {
+            txtTienThuaKetHop.setText(moneyFormat.format(tienThua) + "VNĐ");
         }
     }
 
-    private void loadTableGioHangTreo() {
+    private boolean loadTableGioHangTreo() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy kk:mm");
         lstGioHangTreo = gioHangService.getAllResponse();
         if (lstGioHangTreo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Không có giỏ hàng nào đang treo");
-            dlGioHangTreo.setVisible(false);
-            return;
-        } else {
-            dlGioHangTreo.setVisible(true);
+            return false;
         }
         DefaultTableModel model = (DefaultTableModel) tbGioHangTreo.getModel();
         model.setRowCount(0);
@@ -260,12 +294,14 @@ public class ViewBanHang extends javax.swing.JPanel {
             model.addRow(new Object[]{
                 count, x.getMaGioHang(),
                 x.getIdKhachHang() == null ? "-" : x.getTenKhachHang(),
+                x.getSdtKhachHang() == null ? "-" : x.getSdtKhachHang(),
                 x.getMaNhanVien(),
                 sdf.format(x.getNgayTao()),
                 x.getLyDo() == null || x.getLyDo().equals("") ? "-" : x.getLyDo()
             });
             count += 1;
         }
+        return true;
     }
 
     private void loadTableGioHangChiTietTreo() {
@@ -325,6 +361,8 @@ public class ViewBanHang extends javax.swing.JPanel {
         btnXoaGioHangTreo = new pro1041.team_3.swing.ButtonCustom();
         btnGoiLaiGioHang = new pro1041.team_3.swing.ButtonCustom();
         btnCloseShowGioHangTreo = new pro1041.team_3.swing.ButtonCustom();
+        jLabel32 = new javax.swing.JLabel();
+        cbbTimKiemGioHangTreo = new pro1041.team_3.swing.ComboBoxSuggestion<>();
         dlThemKhachHang = new javax.swing.JDialog();
         jPanel22 = new javax.swing.JPanel();
         txtThemSdtKh = new pro1041.team_3.swing.TextField();
@@ -341,70 +379,51 @@ public class ViewBanHang extends javax.swing.JPanel {
         jspTbGioHang = new javax.swing.JScrollPane();
         tbGioHang = new pro1041.team_3.swing.config.Table();
         jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtTongTien = new javax.swing.JTextField();
+        txtTimKiemKH = new javax.swing.JLabel();
+        cbbHtThanhToan = new pro1041.team_3.swing.Combobox();
+        txtTimKiemKhachHang = new pro1041.team_3.swing.TextFieldSuggestion();
+        txtMaKh = new pro1041.team_3.swing.TextField();
+        textField1 = new pro1041.team_3.swing.TextField();
+        txtSdtKhachHang = new pro1041.team_3.swing.TextField();
+        txtTongTien = new pro1041.team_3.swing.TextField();
         HinhThucThanhToan = new javax.swing.JPanel();
         tienMatJPanel = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        txtTienKhachDua = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        txtTienThua = new javax.swing.JTextField();
         buttonCustom3 = new pro1041.team_3.swing.ButtonCustom();
+        txtTienKhachDua = new pro1041.team_3.swing.TextField();
+        txtTienThua = new pro1041.team_3.swing.TextField();
         nganHangJPanel = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        txtMaGiaoDich = new javax.swing.JTextField();
+        txtMaGiaoDich = new pro1041.team_3.swing.TextField();
+        txtNganHang = new pro1041.team_3.swing.TextField();
+        txtTienThuaNganHang = new pro1041.team_3.swing.TextField();
         ketHopJPanel = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        txtTienKhachDuaKetHop = new javax.swing.JTextField();
-        txtNganHangKetHop = new javax.swing.JTextField();
-        txtMaGiaoDichKetHop = new javax.swing.JTextField();
-        txtTienThuaKetHop = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        txtTenKh = new javax.swing.JTextField();
-        txtMaKh = new javax.swing.JTextField();
-        txtTimKiemKh = new javax.swing.JTextField();
-        txtTimKiemKH = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        txtSdtKhachHang = new javax.swing.JTextField();
-        cbbHtThanhToan = new pro1041.team_3.swing.Combobox();
+        txtTienKhachDuaKetHop = new pro1041.team_3.swing.TextField();
+        txtNganHangKetHop = new pro1041.team_3.swing.TextField();
+        txtMaGiaoDichKetHop = new pro1041.team_3.swing.TextField();
+        txtTienThuaKetHop = new pro1041.team_3.swing.TextField();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        txtTimKiemSp = new javax.swing.JTextField();
         btnTimKiem = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        txtMaSP = new javax.swing.JTextField();
-        txtTenSP = new javax.swing.JTextField();
-        txtIMEI = new javax.swing.JTextField();
-        txtMauSac = new javax.swing.JTextField();
-        txtBoNho = new javax.swing.JTextField();
-        txtTinhTrang = new javax.swing.JTextField();
-        txtDonGia = new javax.swing.JTextField();
-        txtHang = new javax.swing.JTextField();
+        txtTimKiemSanPham = new pro1041.team_3.swing.TextFieldSuggestion();
         jpnGiamGia = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        txtGiaBan = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        txtMoTa = new javax.swing.JTextArea();
+        txtGiaBan = new pro1041.team_3.swing.TextField();
         btnThemVaoGioHang = new pro1041.team_3.swing.ButtonCustom();
+        txtMaDienThoai = new pro1041.team_3.swing.TextField();
+        txtMauSac = new pro1041.team_3.swing.TextField();
+        txtBoNho = new pro1041.team_3.swing.TextField();
+        txtTenDienThoai = new pro1041.team_3.swing.TextField();
+        txtTinhTrang = new pro1041.team_3.swing.TextField();
+        txtIMEI = new pro1041.team_3.swing.TextField();
+        txtDonGia = new pro1041.team_3.swing.TextField();
+        txtHang = new pro1041.team_3.swing.TextField();
+        textAreaScroll1 = new pro1041.team_3.swing.config.TextAreaScroll();
+        txtMoTa = new pro1041.team_3.swing.TextArea();
         jPanel5 = new javax.swing.JPanel();
         btnThanhToan = new pro1041.team_3.swing.ButtonCustom();
         btnTreoGioHang = new pro1041.team_3.swing.ButtonCustom();
         btnShowGioHangTreo = new pro1041.team_3.swing.ButtonCustom();
         btnXoaTrongGioHang = new pro1041.team_3.swing.ButtonCustom();
         btnShowDlThemKhachHang = new pro1041.team_3.swing.ButtonCustom();
+        btnHuyGioHangHienTai = new pro1041.team_3.swing.ButtonCustom();
 
         dlDetailKhachHang.setSize(new java.awt.Dimension(375, 430));
         dlDetailKhachHang.setType(java.awt.Window.Type.POPUP);
@@ -578,6 +597,9 @@ public class ViewBanHang extends javax.swing.JPanel {
             }
         });
         tbGioHangChiTietTreo.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        tbGioHangChiTietTreo.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        tbGioHangChiTietTreo.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbGioHangChiTietTreo.getTableHeader().setReorderingAllowed(false);
         jspTbGioHangChiTietTreo.setViewportView(tbGioHangChiTietTreo);
         if (tbGioHangChiTietTreo.getColumnModel().getColumnCount() > 0) {
             tbGioHangChiTietTreo.getColumnModel().getColumn(0).setPreferredWidth(10);
@@ -590,7 +612,7 @@ public class ViewBanHang extends javax.swing.JPanel {
 
         jPanel8.add(jspTbGioHangChiTietTreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 760, 230));
 
-        jLabel9.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
         jLabel9.setText("Chi tiết giỏ hàng");
         jPanel8.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 140, -1));
 
@@ -604,17 +626,18 @@ public class ViewBanHang extends javax.swing.JPanel {
 
             },
             new String [] {
-                "STT", "Mã GH", "Tên KH", "Mã NV", "Ngày tạo", "Lý do"
+                "STT", "Mã GH", "Tên KH", "SĐT KH", "Mã NV", "Ngày tạo", "Lý do"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, true, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tbGioHangTreo.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
         tbGioHangTreo.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tbGioHangTreo.getTableHeader().setReorderingAllowed(false);
         tbGioHangTreo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -625,11 +648,12 @@ public class ViewBanHang extends javax.swing.JPanel {
         jspTbGioHangtreo.setViewportView(tbGioHangTreo);
         if (tbGioHangTreo.getColumnModel().getColumnCount() > 0) {
             tbGioHangTreo.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tbGioHangTreo.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jPanel9.add(jspTbGioHangtreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 760, 270));
 
-        jLabel31.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        jLabel31.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
         jLabel31.setText("Danh sách giỏ hàng treo");
         jPanel9.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 160, -1));
 
@@ -669,7 +693,18 @@ public class ViewBanHang extends javax.swing.JPanel {
                 btnCloseShowGioHangTreoActionPerformed(evt);
             }
         });
-        jPanel7.add(btnCloseShowGioHangTreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, 110, 45));
+        jPanel7.add(btnCloseShowGioHangTreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, 110, 45));
+
+        jLabel32.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        jLabel32.setText("Tìm kiếm");
+        jPanel7.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+
+        cbbTimKiemGioHangTreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbTimKiemGioHangTreoActionPerformed(evt);
+            }
+        });
+        jPanel7.add(cbbTimKiemGioHangTreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 28, 220, 30));
 
         javax.swing.GroupLayout dlGioHangTreoLayout = new javax.swing.GroupLayout(dlGioHangTreo.getContentPane());
         dlGioHangTreo.getContentPane().setLayout(dlGioHangTreoLayout);
@@ -747,6 +782,8 @@ public class ViewBanHang extends javax.swing.JPanel {
         themNgaySinhKh.setTextRefernce(txtThemNgaySinhKh);
 
         setBackground(new java.awt.Color(250, 250, 250));
+        setMinimumSize(new java.awt.Dimension(1160, 720));
+        setPreferredSize(new java.awt.Dimension(1160, 720));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tbGioHang.setModel(new javax.swing.table.DefaultTableModel(
@@ -766,6 +803,7 @@ public class ViewBanHang extends javax.swing.JPanel {
             }
         });
         tbGioHang.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        tbGioHang.setFont(new java.awt.Font("Nunito", 0, 14)); // NOI18N
         jspTbGioHang.setViewportView(tbGioHang);
         if (tbGioHang.getColumnModel().getColumnCount() > 0) {
             tbGioHang.getColumnModel().getColumn(0).setPreferredWidth(10);
@@ -776,140 +814,11 @@ public class ViewBanHang extends javax.swing.JPanel {
             tbGioHang.getColumnModel().getColumn(7).setPreferredWidth(10);
         }
 
-        add(jspTbGioHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 1100, 310));
+        add(jspTbGioHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 1100, 310));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.gray, java.awt.Color.gray, java.awt.Color.gray, java.awt.Color.gray), "Hóa đơn", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito", 0, 12))); // NOI18N
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel3.setFont(new java.awt.Font("Nunito", 1, 12)); // NOI18N
-        jLabel3.setText("Tổng tiền (VNĐ)");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
-
-        jLabel4.setFont(new java.awt.Font("Nunito", 1, 12)); // NOI18N
-        jLabel4.setText("HT thanh toán");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
-
-        txtTongTien.setEditable(false);
-        txtTongTien.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        jPanel2.add(txtTongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 200, 20));
-
-        HinhThucThanhToan.setBackground(new java.awt.Color(255, 255, 255));
-        HinhThucThanhToan.setLayout(new java.awt.CardLayout());
-
-        tienMatJPanel.setBackground(new java.awt.Color(255, 255, 255));
-        tienMatJPanel.setPreferredSize(new java.awt.Dimension(300, 190));
-        tienMatJPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel6.setFont(new java.awt.Font("Nunito", 1, 12)); // NOI18N
-        jLabel6.setText("Tiền khách đưa");
-        tienMatJPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
-
-        txtTienKhachDua.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        txtTienKhachDua.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                txtTienKhachDuaCaretUpdate(evt);
-            }
-        });
-        tienMatJPanel.add(txtTienKhachDua, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 200, -1));
-
-        jLabel7.setFont(new java.awt.Font("Nunito", 1, 12)); // NOI18N
-        jLabel7.setText("Tiền thừa");
-        tienMatJPanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 60, -1));
-
-        txtTienThua.setEditable(false);
-        txtTienThua.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        tienMatJPanel.add(txtTienThua, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 200, -1));
-
-        buttonCustom3.setBackground(new java.awt.Color(1, 181, 204));
-        buttonCustom3.setForeground(new java.awt.Color(255, 255, 255));
-        buttonCustom3.setText("buttonCustom1");
-        buttonCustom3.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
-        tienMatJPanel.add(buttonCustom3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 120, -1));
-
-        HinhThucThanhToan.add(tienMatJPanel, "card2");
-
-        nganHangJPanel.setBackground(new java.awt.Color(255, 255, 255));
-        nganHangJPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel8.setFont(new java.awt.Font("Nunito", 1, 12)); // NOI18N
-        jLabel8.setText("Mã giao dịch");
-        nganHangJPanel.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
-
-        txtMaGiaoDich.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        nganHangJPanel.add(txtMaGiaoDich, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 190, -1));
-
-        HinhThucThanhToan.add(nganHangJPanel, "card3");
-
-        ketHopJPanel.setBackground(new java.awt.Color(255, 255, 255));
-        ketHopJPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel10.setFont(new java.awt.Font("Nunito", 1, 12)); // NOI18N
-        jLabel10.setText("Tiền mặt");
-        ketHopJPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
-
-        jLabel11.setFont(new java.awt.Font("Nunito", 1, 12)); // NOI18N
-        jLabel11.setText("Ngân hàng");
-        ketHopJPanel.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
-
-        jLabel12.setFont(new java.awt.Font("Nunito", 1, 12)); // NOI18N
-        jLabel12.setText("Mã giao dịch");
-        ketHopJPanel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
-
-        jLabel19.setFont(new java.awt.Font("Nunito", 1, 12)); // NOI18N
-        jLabel19.setText("Tiền thừa");
-        ketHopJPanel.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
-
-        txtTienKhachDuaKetHop.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        txtTienKhachDuaKetHop.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                txtTienKhachDuaKetHopCaretUpdate(evt);
-            }
-        });
-        ketHopJPanel.add(txtTienKhachDuaKetHop, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 200, -1));
-
-        txtNganHangKetHop.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        txtNganHangKetHop.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                txtNganHangKetHopCaretUpdate(evt);
-            }
-        });
-        ketHopJPanel.add(txtNganHangKetHop, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 200, -1));
-
-        txtMaGiaoDichKetHop.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        ketHopJPanel.add(txtMaGiaoDichKetHop, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 200, -1));
-
-        txtTienThuaKetHop.setEditable(false);
-        txtTienThuaKetHop.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        ketHopJPanel.add(txtTienThuaKetHop, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 200, -1));
-
-        HinhThucThanhToan.add(ketHopJPanel, "card4");
-
-        jPanel2.add(HinhThucThanhToan, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 310, 150));
-
-        jLabel13.setFont(new java.awt.Font("Nunito", 1, 12)); // NOI18N
-        jLabel13.setText("Mã KH");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
-
-        jLabel14.setFont(new java.awt.Font("Nunito", 1, 12)); // NOI18N
-        jLabel14.setText("Tên KH");
-        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
-
-        txtTenKh.setEditable(false);
-        txtTenKh.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        jPanel2.add(txtTenKh, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 200, -1));
-
-        txtMaKh.setEditable(false);
-        txtMaKh.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        jPanel2.add(txtMaKh, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 200, -1));
-
-        txtTimKiemKh.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        txtTimKiemKh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTimKiemKhActionPerformed(evt);
-            }
-        });
-        jPanel2.add(txtTimKiemKh, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 200, 20));
 
         txtTimKiemKH.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtTimKiemKH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/customSearch.png"))); // NOI18N
@@ -919,28 +828,163 @@ public class ViewBanHang extends javax.swing.JPanel {
                 txtTimKiemKHMouseClicked(evt);
             }
         });
-        jPanel2.add(txtTimKiemKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, 30, 30));
-
-        jLabel30.setFont(new java.awt.Font("Nunito", 1, 12)); // NOI18N
-        jLabel30.setText("SĐT");
-        jPanel2.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
-
-        txtSdtKhachHang.setEditable(false);
-        txtSdtKhachHang.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        jPanel2.add(txtSdtKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 200, -1));
+        jPanel2.add(txtTimKiemKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 30, 30));
 
         cbbHtThanhToan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tiền mặt", "Ngân hàng", "Kết hợp" }));
-        cbbHtThanhToan.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        cbbHtThanhToan.setLabeText("");
-        cbbHtThanhToan.setLineColor(new java.awt.Color(1, 181, 204));
+        cbbHtThanhToan.setSelectedIndex(-1);
+        cbbHtThanhToan.setFocusLostColor(new java.awt.Color(1, 132, 203));
+        cbbHtThanhToan.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        cbbHtThanhToan.setLabeText("HT Thanh toán");
+        cbbHtThanhToan.setLabelColor(new java.awt.Color(1, 132, 203));
+        cbbHtThanhToan.setLineColor(new java.awt.Color(1, 132, 203));
         cbbHtThanhToan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbbHtThanhToanActionPerformed(evt);
             }
         });
-        jPanel2.add(cbbHtThanhToan, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 200, -1));
+        jPanel2.add(cbbHtThanhToan, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, 190, 60));
 
-        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, 360, 390));
+        txtTimKiemKhachHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimKiemKhachHangActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtTimKiemKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 200, 40));
+
+        txtMaKh.setEditable(false);
+        txtMaKh.setFocusLostColor(new java.awt.Color(1, 132, 203));
+        txtMaKh.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtMaKh.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtMaKh.setLabelText("Mã KH");
+        jPanel2.add(txtMaKh, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 190, -1));
+
+        textField1.setEditable(false);
+        textField1.setFocusLostColor(new java.awt.Color(1, 132, 203));
+        textField1.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        textField1.setLabelColor(new java.awt.Color(1, 132, 203));
+        textField1.setLabelText("Tên khách hàng");
+        jPanel2.add(textField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 260, -1));
+
+        txtSdtKhachHang.setEditable(false);
+        txtSdtKhachHang.setFocusLostColor(new java.awt.Color(1, 132, 203));
+        txtSdtKhachHang.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtSdtKhachHang.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtSdtKhachHang.setLabelText("SĐT");
+        jPanel2.add(txtSdtKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 190, -1));
+
+        txtTongTien.setEditable(false);
+        txtTongTien.setFocusLostColor(new java.awt.Color(1, 132, 203));
+        txtTongTien.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtTongTien.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtTongTien.setLabelText("Tổng tiền");
+        jPanel2.add(txtTongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 190, -1));
+
+        HinhThucThanhToan.setBackground(new java.awt.Color(255, 255, 255));
+        HinhThucThanhToan.setMinimumSize(new java.awt.Dimension(100, 100));
+        HinhThucThanhToan.setLayout(new java.awt.CardLayout());
+
+        tienMatJPanel.setBackground(new java.awt.Color(255, 255, 255));
+        tienMatJPanel.setPreferredSize(new java.awt.Dimension(300, 190));
+        tienMatJPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        buttonCustom3.setBackground(new java.awt.Color(1, 181, 204));
+        buttonCustom3.setForeground(new java.awt.Color(255, 255, 255));
+        buttonCustom3.setText("buttonCustom1");
+        buttonCustom3.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        tienMatJPanel.add(buttonCustom3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 120, -1));
+
+        txtTienKhachDua.setFocusLostColor(new java.awt.Color(1, 132, 203));
+        txtTienKhachDua.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtTienKhachDua.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtTienKhachDua.setLabelText("Tiền khách đưa");
+        txtTienKhachDua.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtTienKhachDuaCaretUpdate(evt);
+            }
+        });
+        tienMatJPanel.add(txtTienKhachDua, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 190, -1));
+
+        txtTienThua.setEditable(false);
+        txtTienThua.setFocusLostColor(new java.awt.Color(1, 132, 203));
+        txtTienThua.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtTienThua.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtTienThua.setLabelText("Tiền thừa");
+        tienMatJPanel.add(txtTienThua, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 190, -1));
+
+        HinhThucThanhToan.add(tienMatJPanel, "card2");
+
+        nganHangJPanel.setBackground(new java.awt.Color(255, 255, 255));
+        nganHangJPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtMaGiaoDich.setFocusLostColor(new java.awt.Color(1, 132, 203));
+        txtMaGiaoDich.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtMaGiaoDich.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtMaGiaoDich.setLabelText("Mã giao dịch");
+        nganHangJPanel.add(txtMaGiaoDich, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 190, -1));
+
+        txtNganHang.setFocusLostColor(new java.awt.Color(1, 132, 203));
+        txtNganHang.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtNganHang.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtNganHang.setLabelText("Tiền chuyển khoản");
+        txtNganHang.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtNganHangCaretUpdate(evt);
+            }
+        });
+        nganHangJPanel.add(txtNganHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, -1));
+
+        txtTienThuaNganHang.setEditable(false);
+        txtTienThuaNganHang.setFocusLostColor(new java.awt.Color(1, 132, 203));
+        txtTienThuaNganHang.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtTienThuaNganHang.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtTienThuaNganHang.setLabelText("Tiền thừa");
+        nganHangJPanel.add(txtTienThuaNganHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 190, -1));
+
+        HinhThucThanhToan.add(nganHangJPanel, "card3");
+
+        ketHopJPanel.setBackground(new java.awt.Color(255, 255, 255));
+        ketHopJPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtTienKhachDuaKetHop.setFocusLostColor(new java.awt.Color(1, 132, 203));
+        txtTienKhachDuaKetHop.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtTienKhachDuaKetHop.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtTienKhachDuaKetHop.setLabelText("Tiền mặt");
+        txtTienKhachDuaKetHop.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtTienKhachDuaKetHopCaretUpdate(evt);
+            }
+        });
+        ketHopJPanel.add(txtTienKhachDuaKetHop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, -1));
+
+        txtNganHangKetHop.setFocusLostColor(new java.awt.Color(1, 132, 203));
+        txtNganHangKetHop.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtNganHangKetHop.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtNganHangKetHop.setLabelText("Ngân hàng");
+        txtNganHangKetHop.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtNganHangKetHopCaretUpdate(evt);
+            }
+        });
+        ketHopJPanel.add(txtNganHangKetHop, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 190, -1));
+
+        txtMaGiaoDichKetHop.setFocusLostColor(new java.awt.Color(1, 132, 203));
+        txtMaGiaoDichKetHop.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtMaGiaoDichKetHop.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtMaGiaoDichKetHop.setLabelText("Mã giao dịch");
+        ketHopJPanel.add(txtMaGiaoDichKetHop, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 190, -1));
+
+        txtTienThuaKetHop.setEditable(false);
+        txtTienThuaKetHop.setFocusLostColor(new java.awt.Color(1, 132, 203));
+        txtTienThuaKetHop.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtTienThuaKetHop.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtTienThuaKetHop.setLabelText("Tiền thừa");
+        ketHopJPanel.add(txtTienThuaKetHop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 190, -1));
+
+        HinhThucThanhToan.add(ketHopJPanel, "card4");
+
+        jPanel2.add(HinhThucThanhToan, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 400, 140));
+
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, 420, 420));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Sản phẩm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito", 0, 12))); // NOI18N
@@ -949,14 +993,6 @@ public class ViewBanHang extends javax.swing.JPanel {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Tìm kiếm"));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtTimKiemSp.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        txtTimKiemSp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTimKiemSpActionPerformed(evt);
-            }
-        });
-        jPanel4.add(txtTimKiemSp, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 240, 30));
 
         btnTimKiem.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/customSearch.png"))); // NOI18N
@@ -968,115 +1004,25 @@ public class ViewBanHang extends javax.swing.JPanel {
         });
         jPanel4.add(btnTimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 30, 30));
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 310, 60));
+        txtTimKiemSanPham.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimKiemSanPhamActionPerformed(evt);
+            }
+        });
+        jPanel4.add(txtTimKiemSanPham, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 220, 40));
 
-        jLabel5.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        jLabel5.setText("Mã SP");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
-
-        jLabel15.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        jLabel15.setText("Tên SP");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
-
-        jLabel16.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        jLabel16.setText("IMEI");
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
-
-        jLabel17.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        jLabel17.setText("Hãng");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
-
-        jLabel18.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        jLabel18.setText("Màu sắc");
-        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, -1, -1));
-
-        jLabel20.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        jLabel20.setText("Bộ nhớ");
-        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, -1, -1));
-
-        jLabel21.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        jLabel21.setText("Tình trạng");
-        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, -1, -1));
-
-        jLabel22.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        jLabel22.setText("Đơn giá");
-        jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, -1, -1));
-
-        txtMaSP.setEditable(false);
-        txtMaSP.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        jPanel1.add(txtMaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 180, -1));
-
-        txtTenSP.setEditable(false);
-        txtTenSP.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        jPanel1.add(txtTenSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 180, -1));
-
-        txtIMEI.setEditable(false);
-        txtIMEI.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        jPanel1.add(txtIMEI, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 180, -1));
-
-        txtMauSac.setEditable(false);
-        txtMauSac.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        jPanel1.add(txtMauSac, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 180, -1));
-
-        txtBoNho.setEditable(false);
-        txtBoNho.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        jPanel1.add(txtBoNho, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 160, 180, -1));
-
-        txtTinhTrang.setEditable(false);
-        txtTinhTrang.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        jPanel1.add(txtTinhTrang, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, 180, -1));
-
-        txtDonGia.setEditable(false);
-        txtDonGia.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        jPanel1.add(txtDonGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 260, 180, -1));
-
-        txtHang.setEditable(false);
-        txtHang.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
-        jPanel1.add(txtHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, 180, -1));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 310, 70));
 
         jpnGiamGia.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel1.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        jLabel1.setText("Giá giảm");
+        jpnGiamGia.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtGiaBan.setEditable(false);
-        txtGiaBan.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(1, 181, 204)));
+        txtGiaBan.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtGiaBan.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtGiaBan.setLabelText("Màu sắc");
+        jpnGiamGia.add(txtGiaBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 220, -1));
 
-        javax.swing.GroupLayout jpnGiamGiaLayout = new javax.swing.GroupLayout(jpnGiamGia);
-        jpnGiamGia.setLayout(jpnGiamGiaLayout);
-        jpnGiamGiaLayout.setHorizontalGroup(
-            jpnGiamGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpnGiamGiaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(txtGiaBan, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jpnGiamGiaLayout.setVerticalGroup(
-            jpnGiamGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnGiamGiaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jpnGiamGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtGiaBan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        jPanel1.add(jpnGiamGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 290, -1, 40));
-
-        jLabel2.setText("Mô tả");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
-
-        txtMoTa.setEditable(false);
-        txtMoTa.setColumns(20);
-        txtMoTa.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtMoTa.setLineWrap(true);
-        txtMoTa.setRows(4);
-        txtMoTa.setTabSize(4);
-        jScrollPane5.setViewportView(txtMoTa);
-
-        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 290, 190, -1));
+        jPanel1.add(jpnGiamGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 240, 50));
 
         btnThemVaoGioHang.setBackground(new java.awt.Color(1, 181, 204));
         btnThemVaoGioHang.setForeground(new java.awt.Color(255, 255, 255));
@@ -1088,9 +1034,72 @@ public class ViewBanHang extends javax.swing.JPanel {
                 btnThemVaoGioHangActionPerformed(evt);
             }
         });
-        jPanel1.add(btnThemVaoGioHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 330, 150, -1));
+        jPanel1.add(btnThemVaoGioHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 360, 150, -1));
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 550, 390));
+        txtMaDienThoai.setEditable(false);
+        txtMaDienThoai.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtMaDienThoai.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtMaDienThoai.setLabelText("Mã");
+        jPanel1.add(txtMaDienThoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 220, -1));
+
+        txtMauSac.setEditable(false);
+        txtMauSac.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtMauSac.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtMauSac.setLabelText("Màu sắc");
+        jPanel1.add(txtMauSac, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 220, -1));
+
+        txtBoNho.setEditable(false);
+        txtBoNho.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtBoNho.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtBoNho.setLabelText("Bộ nhớ");
+        jPanel1.add(txtBoNho, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 220, -1));
+
+        txtTenDienThoai.setEditable(false);
+        txtTenDienThoai.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtTenDienThoai.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtTenDienThoai.setLabelText("Tên");
+        jPanel1.add(txtTenDienThoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 220, -1));
+
+        txtTinhTrang.setEditable(false);
+        txtTinhTrang.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtTinhTrang.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtTinhTrang.setLabelText("Tình trạng");
+        jPanel1.add(txtTinhTrang, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 220, -1));
+
+        txtIMEI.setEditable(false);
+        txtIMEI.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtIMEI.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtIMEI.setLabelText("IMEI");
+        jPanel1.add(txtIMEI, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 220, -1));
+
+        txtDonGia.setEditable(false);
+        txtDonGia.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtDonGia.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtDonGia.setLabelText("Đơn giá");
+        jPanel1.add(txtDonGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 220, -1));
+
+        txtHang.setEditable(false);
+        txtHang.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtHang.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtHang.setLabelText("Màu sắc");
+        jPanel1.add(txtHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 220, -1));
+
+        textAreaScroll1.setBackground(new java.awt.Color(255, 255, 255));
+        textAreaScroll1.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        textAreaScroll1.setLabelColor(new java.awt.Color(1, 132, 203));
+        textAreaScroll1.setLabelText("Mô tả");
+        textAreaScroll1.setLostFocusColor(new java.awt.Color(3, 155, 216));
+
+        txtMoTa.setEditable(false);
+        txtMoTa.setColumns(20);
+        txtMoTa.setRows(5);
+        txtMoTa.setFocusable(false);
+        txtMoTa.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        textAreaScroll1.setViewportView(txtMoTa);
+
+        jPanel1.add(textAreaScroll1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 240, -1));
+
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 500, 420));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -1106,7 +1115,7 @@ public class ViewBanHang extends javax.swing.JPanel {
                 btnThanhToanActionPerformed(evt);
             }
         });
-        jPanel5.add(btnThanhToan, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 140, -1));
+        jPanel5.add(btnThanhToan, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 140, 50));
 
         btnTreoGioHang.setBackground(new java.awt.Color(1, 181, 204));
         btnTreoGioHang.setForeground(new java.awt.Color(255, 255, 255));
@@ -1123,26 +1132,26 @@ public class ViewBanHang extends javax.swing.JPanel {
         btnShowGioHangTreo.setBackground(new java.awt.Color(1, 181, 204));
         btnShowGioHangTreo.setForeground(new java.awt.Color(255, 255, 255));
         btnShowGioHangTreo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/change.png"))); // NOI18N
-        btnShowGioHangTreo.setText("Gọi GH");
+        btnShowGioHangTreo.setText("Gọi GH treo");
         btnShowGioHangTreo.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
         btnShowGioHangTreo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnShowGioHangTreoActionPerformed(evt);
             }
         });
-        jPanel5.add(btnShowGioHangTreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 140, -1));
+        jPanel5.add(btnShowGioHangTreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 140, -1));
 
-        btnXoaTrongGioHang.setBackground(new java.awt.Color(1, 181, 204));
+        btnXoaTrongGioHang.setBackground(new java.awt.Color(204, 0, 0));
         btnXoaTrongGioHang.setForeground(new java.awt.Color(255, 255, 255));
         btnXoaTrongGioHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/delete.png"))); // NOI18N
-        btnXoaTrongGioHang.setText("Xóa");
+        btnXoaTrongGioHang.setText("Xóa DT");
         btnXoaTrongGioHang.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
         btnXoaTrongGioHang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXoaTrongGioHangActionPerformed(evt);
             }
         });
-        jPanel5.add(btnXoaTrongGioHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 140, -1));
+        jPanel5.add(btnXoaTrongGioHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 140, -1));
 
         btnShowDlThemKhachHang.setBackground(new java.awt.Color(1, 181, 204));
         btnShowDlThemKhachHang.setForeground(new java.awt.Color(255, 255, 255));
@@ -1154,68 +1163,27 @@ public class ViewBanHang extends javax.swing.JPanel {
                 btnShowDlThemKhachHangActionPerformed(evt);
             }
         });
-        jPanel5.add(btnShowDlThemKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 140, -1));
+        jPanel5.add(btnShowDlThemKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 140, -1));
 
-        add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 27, 160, 370));
+        btnHuyGioHangHienTai.setBackground(new java.awt.Color(204, 0, 0));
+        btnHuyGioHangHienTai.setForeground(new java.awt.Color(255, 255, 255));
+        btnHuyGioHangHienTai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/deleteCart.png"))); // NOI18N
+        btnHuyGioHangHienTai.setText("Xóa tất cả");
+        btnHuyGioHangHienTai.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnHuyGioHangHienTai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHuyGioHangHienTaiActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnHuyGioHangHienTai, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 140, -1));
+
+        add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 27, 160, 390));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtTimKiemSpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemSpActionPerformed
-        //TXT tìm kiếm sản phẩm Enter
-        searchSanPham();
-    }//GEN-LAST:event_txtTimKiemSpActionPerformed
-
-    private void txtTimKiemKHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTimKiemKHMouseClicked
-        // TxtTimKiemKhachHang
-        searchKhachHang();
-    }//GEN-LAST:event_txtTimKiemKHMouseClicked
 
     private void btnTimKiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTimKiemMouseClicked
         // BTN Tìm kiếm sản phẩm
         searchSanPham();
     }//GEN-LAST:event_btnTimKiemMouseClicked
-
-    private void txtTienKhachDuaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhachDuaCaretUpdate
-        //TXT Tiền khách đưa type
-        if (txtTongTien.getText().length() == 0) {
-            return;
-        }
-        String tienKhachDuaStr = txtTienKhachDua.getText().trim();
-        if (tienKhachDuaStr.equals("")) {
-            txtTienThua.setText("");
-            return;
-        }
-        BigDecimal tienKhachDua = null;
-        try {
-            tienKhachDua = new BigDecimal(tienKhachDuaStr);
-            if (tienKhachDua.compareTo(BigDecimal.ZERO) == -1) {
-                JOptionPane.showMessageDialog(this, "Tiền khách đưa phải lớn hơn 0");
-                return;
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Tiền khách đưa là số");
-            e.printStackTrace();
-            return;
-        }
-        String tongTienStr = txtTongTien.getText().replace(".", "").replace("VNĐ", "");
-        if (tongTienStr.equals("") || tongTienStr.equals("0")) {
-            return;
-        }
-        BigDecimal tongTien = new BigDecimal(tongTienStr);
-        BigDecimal tienThua = tienKhachDua.subtract(tongTien);
-        if (tienThua.compareTo(BigDecimal.ZERO) == 1) {
-            txtTienThua.setText(moneyFormat.format(tienThua));
-        }
-    }//GEN-LAST:event_txtTienKhachDuaCaretUpdate
-
-    private void txtNganHangKetHopCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtNganHangKetHopCaretUpdate
-        // TXT Ngân hàng (kết hợp) Type
-        tinhTienThuaThanhToanKetHop();
-    }//GEN-LAST:event_txtNganHangKetHopCaretUpdate
-
-    private void txtTienKhachDuaKetHopCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhachDuaKetHopCaretUpdate
-        // TXT tiền mặt (kết hợp) Type
-        tinhTienThuaThanhToanKetHop();
-    }//GEN-LAST:event_txtTienKhachDuaKetHopCaretUpdate
 
     private void tbGioHangTreoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbGioHangTreoMouseClicked
         // TB giỏ hàng treo click
@@ -1224,29 +1192,6 @@ public class ViewBanHang extends javax.swing.JPanel {
         lstGioHangChiTietTreo = gioHangChiTietService.getAllByIdGioHang(gioHangTreo.getIdGioHang());
         loadTableGioHangChiTietTreo();
     }//GEN-LAST:event_tbGioHangTreoMouseClicked
-
-    private void txtTimKiemKhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemKhActionPerformed
-        // TXT Tìm kiếm KH type
-        searchKhachHang();
-    }//GEN-LAST:event_txtTimKiemKhActionPerformed
-
-    private void cbbHtThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbHtThanhToanActionPerformed
-        // cbb Hình thức thanh toán
-        int selected = cbbHtThanhToan.getSelectedIndex();
-        if (selected == 0) {
-            tienMatJPanel.setVisible(true);
-            nganHangJPanel.setVisible(false);
-            ketHopJPanel.setVisible(false);
-        } else if (selected == 1) {
-            tienMatJPanel.setVisible(false);
-            nganHangJPanel.setVisible(true);
-            ketHopJPanel.setVisible(false);
-        } else if (selected == 2) {
-            tienMatJPanel.setVisible(false);
-            nganHangJPanel.setVisible(false);
-            ketHopJPanel.setVisible(true);
-        }
-    }//GEN-LAST:event_cbbHtThanhToanActionPerformed
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         // BTN Thanh toán
@@ -1312,7 +1257,7 @@ public class ViewBanHang extends javax.swing.JPanel {
             HoaDonRequest hdct = new HoaDonRequest();
             hdct.setIdChiTietDienThoai(x.getId());
             hdct.setKhachHang(khachHang);
-            hdct.setNhanVien(nhanVien);
+            hdct.setNhanVien(nhanVienHienTai);
             hdct.setDonGia(x.getDonGia());
             hdct.setGiaBan(x.getGiaBan());
             hdct.setHinhThucThanhToan(hinhThucThanhToan);
@@ -1328,6 +1273,7 @@ public class ViewBanHang extends javax.swing.JPanel {
             mapGioHang.clear();
             loadTableGioHang();
             khachHang = null;
+            ctdtFind = null;
             clearFormInput();
             if (gioHangHienTai != null) {
                 Boolean check = gioHangChiTietService.deteleByIdGioHang(gioHangHienTai.getId());
@@ -1352,11 +1298,30 @@ public class ViewBanHang extends javax.swing.JPanel {
     }//GEN-LAST:event_btnTreoGioHangActionPerformed
 
     private void btnShowGioHangTreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowGioHangTreoActionPerformed
-        // BTN Show ds HĐ treo
+        // BTN Show ds giỏ hàng treo
+        dlGioHangTreo.setLocationRelativeTo(null);
         DefaultTableModel model = (DefaultTableModel) tbGioHangChiTietTreo.getModel();
         model.setRowCount(0);
-        loadTableGioHangTreo();
-        dlGioHangTreo.setLocationRelativeTo(null);
+        boolean check = loadTableGioHangTreo();
+        if (check) {
+            cbbTimKiemGioHangTreo.removeAllItems();
+            cbbTimKiemGioHangTreo.addItem("");
+            for (GioHangDto x : lstGioHangTreo) {
+                cbbTimKiemGioHangTreo.addItem(x.getMaGioHang());
+                if (x.getMaKhachHang() != null) {
+                    cbbTimKiemGioHangTreo.addItem(x.getSdtKhachHang());
+                    cbbTimKiemGioHangTreo.addItem(x.getTenKhachHang());
+                }
+                if (x.getMaNhanVien() != null) {
+                    cbbTimKiemGioHangTreo.addItem(x.getMaNhanVien());
+                }
+            }
+
+            dlGioHangTreo.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Không có giỏ hàng nào đang treo");
+            dlGioHangTreo.setVisible(false);
+        }
     }//GEN-LAST:event_btnShowGioHangTreoActionPerformed
 
     private void btnXoaTrongGioHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaTrongGioHangActionPerformed
@@ -1386,6 +1351,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         // BTN Thêm vào giỏ hàng
         if (ctdtFind == null) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập IMEI sản phẩm và tìm kiếm");
+            //*****************alert mới
 //            MessageAlert alert = new MessageAlert((JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this), false , "Vui lòng nhập IMEI sản phẩm và tìm kiếm");
 //            alert.showAlert();
             return;
@@ -1394,12 +1360,31 @@ public class ViewBanHang extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Sản phẩm này đã bán");
             return;
         }
+        if (ctdtFind.getTrangThai() == 2) {
+            JOptionPane.showMessageDialog(this, "Sản phẩm này đang lỗi");
+            return;
+        }
         if (mapGioHang.containsKey(ctdtFind.getId())) {
             JOptionPane.showMessageDialog(this, "Sản phẩm đã tồn tại trong giỏ hàng");
             return;
         }
-        txtMaSP.setText("");
-        txtTenSP.setText("");
+        List<GioHangDto> lstGioHangFind = banHangService.getGioHangByIdSp(ctdtFind.getId());
+        if (!lstGioHangFind.isEmpty()) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy kk:mm");
+            String mess = "Sản phẩm này đang nằm trong giỏ hàng treo:\n";
+            for (GioHangDto x : lstGioHangFind) {
+                mess += "Mã giỏ hàng: " + x.getMaGioHang()
+                        + "\nTên KH: " + x.getTenKhachHang()
+                        + "\nNhân viên treo: " + x.getMaNhanVien()
+                        + "\nThời gian treo: " + sdf.format(x.getNgayTao())
+                        + "\n-------------------\n";
+            }
+            if (JOptionPane.showConfirmDialog(this, mess, "Thêm sản phẩm vào giỏ hàng", JOptionPane.OK_OPTION) != 0) {
+                return;
+            }
+        }
+        txtMaDienThoai.setText("");
+        txtTenDienThoai.setText("");
         txtIMEI.setText("");
         txtGiaBan.setText("");
         txtMauSac.setText("");
@@ -1450,41 +1435,55 @@ public class ViewBanHang extends javax.swing.JPanel {
             return;
         }
         GioHangDto gioHang = lstGioHangTreo.get(row);
-        if (gioHang.getIdKhachHang() != null) {
-            khachHang = new KhachHang();
-            khachHang.setId(gioHang.getIdKhachHang());
-            txtMaKh.setText(gioHang.getMaKhachHang());
-            txtTenKh.setText(gioHang.getTenKhachHang());
-            txtSdtKhachHang.setText(gioHang.getSdtKhachHang());
-        }
         mapGioHang.clear();
         List<BhChiTietDienThoaiDto> lstDienThoai = gioHangChiTietService.getAllByIdGioHang(gioHang.getIdGioHang());
         for (BhChiTietDienThoaiDto x : lstDienThoai) {
             if (x.getTrangThai() == 1) {
+                HoaDonDto hoaDonFind = banHangService.getHoaDonByIdSp(x.getId());
                 JOptionPane.showMessageDialog(this, "Điện thoại: " + x.getTen()
                         + "\nIMEI: " + x.getImei()
                         + "\nHãng: " + x.getHang()
                         + "\nMàu sắc: " + x.getMauSac()
-                        + "\nĐã được bán bán");
+                        + "\nĐã được bán trong hóa đơn: "
+                        + "\nMã hóa đơn: " + hoaDonFind.getMaHoaDon()
+                        + "\nNhân viên thanh toán: " + hoaDonFind.getMaNhanVien() + "-" + hoaDonFind.getTenNhanVien());
+
                 continue;
             }
             mapGioHang.put(x.getId(), x);
         }
-        loadTableGioHang();
         gioHangHienTai = new GioHang();
         gioHangHienTai.setId(gioHang.getIdGioHang());
         dlGioHangTreo.setVisible(false);
+        if (mapGioHang.isEmpty()) {
+            Boolean check = gioHangChiTietService.deteleByIdGioHang(gioHangHienTai.getId());
+            String messDelete = gioHangService.delete(gioHangHienTai.getId());
+            if (!check && !messDelete.equals("Xóa giỏ hàng treo thành công")) {
+                JOptionPane.showMessageDialog(this, "Lỗi hệ thống. \nKhông thể xóa giỏ hàng treo");
+                return;
+            }
+            gioHangHienTai = null;
+            return;
+        }
+        if (gioHang.getIdKhachHang() != null) {
+            khachHang = new KhachHang();
+            khachHang.setId(gioHang.getIdKhachHang());
+            txtMaKh.setText(gioHang.getMaKhachHang());
+            textField1.setText(gioHang.getTenKhachHang());
+            txtSdtKhachHang.setText(gioHang.getSdtKhachHang());
+        }
+        loadTableGioHang();
     }//GEN-LAST:event_btnGoiLaiGioHangActionPerformed
 
     private void btnLyDoTreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLyDoTreoActionPerformed
-         // BTN treo - nhập lý do xong
+        // BTN treo - nhập lý do xong
         dlLyDo.setVisible(false);
         List<GioHangRequest> lstSp = new ArrayList<>();
         for (BhChiTietDienThoaiDto x : mapGioHang.values()) {
             GioHangRequest ghct = new GioHangRequest();
             ghct.setIdChiTietDienThoai(x.getId());
             ghct.setKhachHang(khachHang);
-            ghct.setNhanVien(nhanVien);
+            ghct.setNhanVien(nhanVienHienTai);
             ghct.setLyDo(txtLyDo.getText().trim());
             lstSp.add(ghct);
         }
@@ -1507,7 +1506,8 @@ public class ViewBanHang extends javax.swing.JPanel {
     private void btnThemKhVaoGhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKhVaoGhActionPerformed
         // BTN thêm khách hàng
         txtMaKh.setText(khachHang.getMa());
-        txtTenKh.setText(khachHang.getHoTen());
+        textField1.setText(khachHang.getHoTen());
+        txtSdtKhachHang.setText(khachHang.getSdt());
         dlDetailKhachHang.setVisible(false);
     }//GEN-LAST:event_btnThemKhVaoGhActionPerformed
 
@@ -1542,12 +1542,151 @@ public class ViewBanHang extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnThemKhachHangActionPerformed
 
+    private void cbbTimKiemGioHangTreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbTimKiemGioHangTreoActionPerformed
+        //Cbb tìm kiếm giỏ hàng treo selected
+        String selected = (String) cbbTimKiemGioHangTreo.getSelectedItem();
+        if (selected == null) {
+            return;
+        }
+        for (int row = 0; row < tbGioHangTreo.getRowCount(); row++) {
+            String maGh = (String) tbGioHangTreo.getValueAt(row, 1);
+            String sdtKh = (String) tbGioHangTreo.getValueAt(row, 3);
+            String tenKh = (String) tbGioHangTreo.getValueAt(row, 2);
+            if (selected.equals(maGh) || sdtKh.equals(selected) || tenKh.equals(selected)) {
+                tbGioHangTreo.changeSelection(row, 1, false, false);
+                GioHangDto gioHangTreo = lstGioHangTreo.get(row);
+                lstGioHangChiTietTreo = gioHangChiTietService.getAllByIdGioHang(gioHangTreo.getIdGioHang());
+                loadTableGioHangChiTietTreo();
+            }
+        }
+    }//GEN-LAST:event_cbbTimKiemGioHangTreoActionPerformed
+
+    private void txtTimKiemSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemSanPhamActionPerformed
+        // TXT tìm kiếm sản phẩm
+        searchSanPham();
+    }//GEN-LAST:event_txtTimKiemSanPhamActionPerformed
+
+    private void txtTimKiemKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemKhachHangActionPerformed
+        // TXT Tìm kiếm khách hàng
+        searchKhachHang();
+    }//GEN-LAST:event_txtTimKiemKhachHangActionPerformed
+
+    private void cbbHtThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbHtThanhToanActionPerformed
+        // cbb Hình thức thanh toán
+        int selected = cbbHtThanhToan.getSelectedIndex();
+        if (selected == 0) {
+            tienMatJPanel.setVisible(true);
+            nganHangJPanel.setVisible(false);
+            ketHopJPanel.setVisible(false);
+        } else if (selected == 1) {
+            tienMatJPanel.setVisible(false);
+            nganHangJPanel.setVisible(true);
+            ketHopJPanel.setVisible(false);
+        } else if (selected == 2) {
+            tienMatJPanel.setVisible(false);
+            nganHangJPanel.setVisible(false);
+            ketHopJPanel.setVisible(true);
+        }
+    }//GEN-LAST:event_cbbHtThanhToanActionPerformed
+
+    private void txtTimKiemKHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTimKiemKHMouseClicked
+        // TxtTimKiemKhachHang
+        searchKhachHang();
+    }//GEN-LAST:event_txtTimKiemKHMouseClicked
+
+    private void txtTienKhachDuaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhachDuaCaretUpdate
+        //TXT Tiền khách đưa type
+        if (txtTongTien.getText().length() == 0) {
+            return;
+        }
+        String tienKhachDuaStr = txtTienKhachDua.getText().trim();
+        if (tienKhachDuaStr.equals("")) {
+            txtTienThua.setText("");
+            return;
+        }
+        BigDecimal tienKhachDua = null;
+        try {
+            tienKhachDua = new BigDecimal(tienKhachDuaStr);
+            if (tienKhachDua.compareTo(BigDecimal.ZERO) == -1) {
+                JOptionPane.showMessageDialog(this, "Tiền khách đưa phải lớn hơn 0");
+                return;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Tiền khách đưa là số");
+            e.printStackTrace();
+            return;
+        }
+        String tongTienStr = txtTongTien.getText().replace(".", "").replace("VNĐ", "");
+        if (tongTienStr.equals("") || tongTienStr.equals("0")) {
+            return;
+        }
+        BigDecimal tongTien = new BigDecimal(tongTienStr);
+        BigDecimal tienThua = tienKhachDua.subtract(tongTien);
+        if (tienThua.compareTo(BigDecimal.ZERO) == 1) {
+            txtTienThua.setText(moneyFormat.format(tienThua) + "VNĐ");
+        }
+    }//GEN-LAST:event_txtTienKhachDuaCaretUpdate
+
+    private void txtTienKhachDuaKetHopCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhachDuaKetHopCaretUpdate
+        // TXT tiền mặt (kết hợp) Type
+        tinhTienThuaThanhToanKetHop();
+    }//GEN-LAST:event_txtTienKhachDuaKetHopCaretUpdate
+
+    private void txtNganHangKetHopCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtNganHangKetHopCaretUpdate
+        // TXT Ngân hàng (kết hợp) Type
+        tinhTienThuaThanhToanKetHop();
+    }//GEN-LAST:event_txtNganHangKetHopCaretUpdate
+
+    private void txtNganHangCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtNganHangCaretUpdate
+        //TXT Tiền ngân hàng type
+        if (txtTongTien.getText().length() == 0) {
+            return;
+        }
+        String tienNganHangStr = txtNganHang.getText().trim();
+        if (tienNganHangStr.equals("")) {
+            txtTienThua.setText("");
+            return;
+        }
+        BigDecimal tienNganHang = null;
+        try {
+            tienNganHang = new BigDecimal(tienNganHangStr);
+            if (tienNganHang.compareTo(BigDecimal.ZERO) == -1) {
+                JOptionPane.showMessageDialog(this, "Số tiền khách chuyển khoản phải lớn hơn 0");
+                return;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Số tiền khách chuyển khoản là số");
+            e.printStackTrace();
+            return;
+        }
+        String tongTienStr = txtTongTien.getText().replace(".", "").replace("VNĐ", "");
+        if (tongTienStr.equals("") || tongTienStr.equals("0")) {
+            return;
+        }
+        BigDecimal tongTien = new BigDecimal(tongTienStr);
+        BigDecimal tienThua = tienNganHang.subtract(tongTien);
+        if (tienThua.compareTo(BigDecimal.ZERO) == 1) {
+            txtTienThuaNganHang.setText(moneyFormat.format(tienThua) + "VNĐ");
+        }
+    }//GEN-LAST:event_txtNganHangCaretUpdate
+
+    private void btnHuyGioHangHienTaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyGioHangHienTaiActionPerformed
+        // BTN xóa tất cả SP trong giỏ hàng
+        if (mapGioHang.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Chưa có sản phẩm nào trong giỏ hàng");
+            return;
+        }
+        mapGioHang.clear();
+        loadTableGioHang();
+    }//GEN-LAST:event_btnHuyGioHangHienTaiActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel HinhThucThanhToan;
     private pro1041.team_3.swing.ButtonCustom btnCloseShowGioHangTreo;
     private pro1041.team_3.swing.ButtonCustom btnDongChiTietKhachHang;
     private pro1041.team_3.swing.ButtonCustom btnGoiLaiGioHang;
+    private pro1041.team_3.swing.ButtonCustom btnHuyGioHangHienTai;
     private pro1041.team_3.swing.ButtonCustom btnLyDoTreo;
     private pro1041.team_3.swing.ButtonCustom btnShowDlThemKhachHang;
     private pro1041.team_3.swing.ButtonCustom btnShowGioHangTreo;
@@ -1561,27 +1700,13 @@ public class ViewBanHang extends javax.swing.JPanel {
     private pro1041.team_3.swing.ButtonCustom btnXoaTrongGioHang;
     private pro1041.team_3.swing.ButtonCustom buttonCustom3;
     private pro1041.team_3.swing.Combobox cbbHtThanhToan;
+    private pro1041.team_3.swing.ComboBoxSuggestion<String> cbbTimKiemGioHangTreo;
     private javax.swing.JDialog dlDetailKhachHang;
     private javax.swing.JDialog dlGioHangTreo;
     private javax.swing.JDialog dlLyDo;
     private javax.swing.JDialog dlThemKhachHang;
     private javax.swing.ButtonGroup grGender;
     private javax.swing.ButtonGroup grThemGioiTinhKh;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
@@ -1589,14 +1714,8 @@ public class ViewBanHang extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -1611,7 +1730,6 @@ public class ViewBanHang extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JPanel jpnGiamGia;
     private javax.swing.JScrollPane jspTbGioHang;
     private javax.swing.JScrollPane jspTbGioHangChiTietTreo;
@@ -1625,43 +1743,46 @@ public class ViewBanHang extends javax.swing.JPanel {
     private pro1041.team_3.swing.config.Table tbGioHang;
     private pro1041.team_3.swing.config.Table tbGioHangChiTietTreo;
     private pro1041.team_3.swing.config.Table tbGioHangTreo;
+    private pro1041.team_3.swing.config.TextAreaScroll textAreaScroll1;
+    private pro1041.team_3.swing.TextField textField1;
     private pro1041.team_3.swing.DateChooser themNgaySinhKh;
     private javax.swing.JPanel tienMatJPanel;
-    private javax.swing.JTextField txtBoNho;
+    private pro1041.team_3.swing.TextField txtBoNho;
     private javax.swing.JTextArea txtDetailDiaChi;
     private javax.swing.JTextField txtDetailEmail;
     private javax.swing.JTextField txtDetailMaKh;
     private javax.swing.JTextField txtDetailNgaySinh;
     private javax.swing.JTextField txtDetailSdt;
     private javax.swing.JTextField txtDetailTenKh;
-    private javax.swing.JTextField txtDonGia;
-    private javax.swing.JTextField txtGiaBan;
-    private javax.swing.JTextField txtHang;
-    private javax.swing.JTextField txtIMEI;
+    private pro1041.team_3.swing.TextField txtDonGia;
+    private pro1041.team_3.swing.TextField txtGiaBan;
+    private pro1041.team_3.swing.TextField txtHang;
+    private pro1041.team_3.swing.TextField txtIMEI;
     private javax.swing.JTextArea txtLyDo;
-    private javax.swing.JTextField txtMaGiaoDich;
-    private javax.swing.JTextField txtMaGiaoDichKetHop;
-    private javax.swing.JTextField txtMaKh;
-    private javax.swing.JTextField txtMaSP;
-    private javax.swing.JTextField txtMauSac;
-    private javax.swing.JTextArea txtMoTa;
-    private javax.swing.JTextField txtNganHangKetHop;
-    private javax.swing.JTextField txtSdtKhachHang;
-    private javax.swing.JTextField txtTenKh;
-    private javax.swing.JTextField txtTenSP;
+    private pro1041.team_3.swing.TextField txtMaDienThoai;
+    private pro1041.team_3.swing.TextField txtMaGiaoDich;
+    private pro1041.team_3.swing.TextField txtMaGiaoDichKetHop;
+    private pro1041.team_3.swing.TextField txtMaKh;
+    private pro1041.team_3.swing.TextField txtMauSac;
+    private pro1041.team_3.swing.TextArea txtMoTa;
+    private pro1041.team_3.swing.TextField txtNganHang;
+    private pro1041.team_3.swing.TextField txtNganHangKetHop;
+    private pro1041.team_3.swing.TextField txtSdtKhachHang;
+    private pro1041.team_3.swing.TextField txtTenDienThoai;
     private pro1041.team_3.swing.TextField txtThemDiaChiKh;
     private pro1041.team_3.swing.TextField txtThemEmailKh;
     private pro1041.team_3.swing.TextField txtThemNgaySinhKh;
     private pro1041.team_3.swing.TextField txtThemSdtKh;
     private pro1041.team_3.swing.TextField txtThemTenKh;
-    private javax.swing.JTextField txtTienKhachDua;
-    private javax.swing.JTextField txtTienKhachDuaKetHop;
-    private javax.swing.JTextField txtTienThua;
-    private javax.swing.JTextField txtTienThuaKetHop;
+    private pro1041.team_3.swing.TextField txtTienKhachDua;
+    private pro1041.team_3.swing.TextField txtTienKhachDuaKetHop;
+    private pro1041.team_3.swing.TextField txtTienThua;
+    private pro1041.team_3.swing.TextField txtTienThuaKetHop;
+    private pro1041.team_3.swing.TextField txtTienThuaNganHang;
     private javax.swing.JLabel txtTimKiemKH;
-    private javax.swing.JTextField txtTimKiemKh;
-    private javax.swing.JTextField txtTimKiemSp;
-    private javax.swing.JTextField txtTinhTrang;
-    private javax.swing.JTextField txtTongTien;
+    private pro1041.team_3.swing.TextFieldSuggestion txtTimKiemKhachHang;
+    private pro1041.team_3.swing.TextFieldSuggestion txtTimKiemSanPham;
+    private pro1041.team_3.swing.TextField txtTinhTrang;
+    private pro1041.team_3.swing.TextField txtTongTien;
     // End of variables declaration//GEN-END:variables
 }

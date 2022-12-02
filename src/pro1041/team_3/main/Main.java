@@ -18,11 +18,13 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 import pro1041.team_3.component.Profile;
+import pro1041.team_3.domainModel.NhanVien;
 import pro1041.team_3.form.ViewQuanLyHoaDon;
 import pro1041.team_3.form.ViewQuanLyKhachHang;
 import pro1041.team_3.form.ViewQuanLyKhuyenMai;
 import pro1041.team_3.form.ViewQuanLyNhanVien;
 import pro1041.team_3.form.ViewQuanLySanPham;
+import pro1041.team_3.swing.Notification;
 
 public class Main extends javax.swing.JFrame {
 
@@ -31,13 +33,15 @@ public class Main extends javax.swing.JFrame {
     private final MenuLayout menu;
     private final Animator animator;
 
-    public Main() {
+    public Main(NhanVien user) {
         initComponents();
+        Notification panel = new Notification(this, Notification.Type.SUCCESS, Notification.Location.TOP_CENTER, "Đăng nhập thành công");
+        panel.showNotification();
         this.setTitle("Quản lý bán hàng");
         ImageIcon icon = new ImageIcon(getClass().getResource("/pro1041/team_3/icon/logoCircle.png"));
         this.setIconImage(icon.getImage());
         layout = new MigLayout("fill", "0[fill]0", "0[fill]0");
-        main = new MainForm();
+        main = new MainForm(user);
         menu = new MenuLayout();
         menu.getMenu().initMoving(Main.this);
         main.initMoving(Main.this);
@@ -104,7 +108,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void selected(int index) {
                 if (index == 0) {
-                    main.show(new ViewBanHang()); 
+                    main.show(new ViewBanHang(user));
                 } else if (index == 1) {
                     main.show(new ViewQuanLySanPham());
                 } else if (index == 2) {
@@ -161,7 +165,6 @@ public class Main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -182,12 +185,12 @@ public class Main extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Main().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                new Main(null).setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

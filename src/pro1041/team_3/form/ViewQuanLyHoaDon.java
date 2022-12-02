@@ -97,7 +97,6 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         btnXemChiTiet = new pro1041.team_3.swing.ButtonCustom();
 
-        dlHoaDonChiTiet.setPreferredSize(new java.awt.Dimension(1095, 365));
         dlHoaDonChiTiet.setResizable(false);
         dlHoaDonChiTiet.setSize(new java.awt.Dimension(1095, 365));
         dlHoaDonChiTiet.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -167,6 +166,8 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
         jspTbHoaDon.setViewportView(tbHoaDon);
         if (tbHoaDon.getColumnModel().getColumnCount() > 0) {
             tbHoaDon.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tbHoaDon.getColumnModel().getColumn(2).setPreferredWidth(20);
+            tbHoaDon.getColumnModel().getColumn(4).setPreferredWidth(20);
             tbHoaDon.getColumnModel().getColumn(6).setPreferredWidth(10);
         }
 

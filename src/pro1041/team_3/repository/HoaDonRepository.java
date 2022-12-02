@@ -24,7 +24,7 @@ public class HoaDonRepository extends Repository<HoaDon, UUID, HoaDonDto>{
         resCon = " new " + HoaDonDto.class.getName() + "(a.id, a.ma, b.ma, "
                 + "b.hoTen, b.sdt, c.ma, c.hoTen, a.ngayThanhToan, a.hinhThucThanhToan, "
                 + "a.tienMat, a.nganHang, a.maGiaoDich, a.tongTien)";
-        join = " LEFT JOIN a.khachHang b LEFT JOIN a.nhanVien c";
+        join = " LEFT JOIN a.khachHang b LEFT JOIN a.nhanVien c ORDER BY a.ngayThanhToan";
     }   
     
 // Truy vấn bằng Native Query

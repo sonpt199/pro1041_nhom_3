@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import pro1041.team_3.domainModel.GioHangChiTiet;
 import pro1041.team_3.dto.BhChiTietDienThoaiDto;
 import pro1041.team_3.dto.GioHangChiTietDto;
+import pro1041.team_3.dto.GioHangDto;
 import pro1041.team_3.util.HibernateUtil;
 
 /**

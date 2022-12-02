@@ -18,15 +18,18 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public int login(String username, String password) {
+    public NhanVien login(String username, String password) {
         List<NhanVien> lstAccoutn = userRepository.getAll();
         for (NhanVien x : lstAccoutn) {
             if (username.equals(x.getTenDangNhap()) && 
                     password.equals(x.getMatKhau())) {
-                return x.getVaiTro();
+//                if (x.getTrangThaiLamViec() == 1) {
+//                    return x;
+//                }
+                return x;
             }
         }
-        return -1;
+        return null;
     }
     
 }

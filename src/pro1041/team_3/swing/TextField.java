@@ -1,6 +1,7 @@
 package pro1041.team_3.swing;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -35,6 +36,22 @@ public class TextField extends JTextField {
         this.lineColor = lineColor;
     }
 
+    public Color getLabelColor() {
+        return labelColor;
+    }
+
+    public void setLabelColor(Color labelColor) {
+        this.labelColor = labelColor;
+    }   
+
+    public Color getFocusLostColor() {
+        return focusLostColor;
+    }
+
+    public void setFocusLostColor(Color focusLostColor) {
+        this.focusLostColor = focusLostColor;
+    }
+           
     private final Animator animator;
     private boolean animateHinText = true;
     private float location;
@@ -42,6 +59,8 @@ public class TextField extends JTextField {
     private boolean mouseOver = false;
     private String labelText = "Label";
     private Color lineColor = new Color(3, 155, 216);
+    private Color labelColor = new Color(1, 181, 204);
+    private Color focusLostColor = new Color(1, 181, 204);
 
     public TextField() {
         setBorder(new EmptyBorder(20, 3, 10, 3));
@@ -112,7 +131,7 @@ public class TextField extends JTextField {
         if (mouseOver) {
             g2.setColor(lineColor);
         } else {
-            g2.setColor(new Color(150, 150, 150));
+            g2.setColor(focusLostColor);
         }
         g2.fillRect(2, height - 1, width - 4, 1);
         createHintText(g2);
@@ -122,7 +141,7 @@ public class TextField extends JTextField {
 
     private void createHintText(Graphics2D g2) {
         Insets in = getInsets();
-        g2.setColor(new Color(1, 181, 204));
+        g2.setColor(labelColor);
         FontMetrics ft = g2.getFontMetrics();
         Rectangle2D r2 = ft.getStringBounds(labelText, g2);
         double height = getHeight() - in.top - in.bottom;

@@ -18,8 +18,8 @@ public class MessageAlert extends SweetAlert {
         txtMessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(310, 270));
-        setSize(new java.awt.Dimension(310, 270));
+        setPreferredSize(new java.awt.Dimension(390, 300));
+        setSize(new java.awt.Dimension(390, 300));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));

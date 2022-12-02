@@ -51,9 +51,27 @@ public class Combobox<E> extends JComboBox<E> {
         this.lineColor = lineColor;
     }
 
+    public Color getLabelColor() {
+        return labelColor;
+    }
+
+    public void setLabelColor(Color labelColor) {
+        this.labelColor = labelColor;
+    }    
+
+    public Color getFocusLostColor() {
+        return focusLostColor;
+    }
+
+    public void setFocusLostColor(Color focusLostColor) {
+        this.focusLostColor = focusLostColor;
+    }    
+    
     private String labeText = "Label";
     private Color lineColor = new Color(3, 155, 216);
     private boolean mouseOver;
+    private Color labelColor = new Color(0, 0, 0);
+    private Color focusLostColor = new Color(0, 0, 0);
 
     public Combobox() {
         setBackground(Color.WHITE);
@@ -78,7 +96,7 @@ public class Combobox<E> extends JComboBox<E> {
         private boolean animateHinText = true;
         private float location;
         private boolean show;
-        private Combobox combo;
+        private Combobox combo;        
 
         public ComboUI(Combobox combo) {
             this.combo = combo;
@@ -137,7 +155,7 @@ public class Combobox<E> extends JComboBox<E> {
             TimingTarget target = new TimingTargetAdapter() {
                 @Override
                 public void begin() {
-                    animateHinText = getSelectedIndex() == -1;
+                    animateHinText = false;
                 }
 
                 @Override
@@ -193,7 +211,7 @@ public class Combobox<E> extends JComboBox<E> {
             if (mouseOver) {
                 g2.setColor(lineColor);
             } else {
-                g2.setColor(new Color(150, 150, 150));
+                g2.setColor(focusLostColor);
             }
             g2.fillRect(2, height - 1, width - 4, 1);
             createHintText(g2);
@@ -203,7 +221,7 @@ public class Combobox<E> extends JComboBox<E> {
 
         private void createHintText(Graphics2D g2) {
             Insets in = getInsets();
-            g2.setColor(new Color(1, 181, 204));
+            g2.setColor(labelColor);
             FontMetrics ft = g2.getFontMetrics();
             Rectangle2D r2 = ft.getStringBounds(combo.getLabeText(), g2);
             double height = getHeight() - in.top - in.bottom;
