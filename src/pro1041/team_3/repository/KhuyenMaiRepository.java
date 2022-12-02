@@ -39,11 +39,39 @@ public class KhuyenMaiRepository extends Repository<KhuyenMai, UUID, KhuyenMaiDt
         }
     }
 
-    public List<KhuyenMai> findNgayTuongLai() {
+    public List<KhuyenMaiDto> findNgayTuongLai() {
         try {
-            List<KhuyenMai> lst;
+            List<KhuyenMaiDto> lst;
             session = HibernateUtil.getSession();
-            String hql = "SELECT a FROM " + className + " a WHERE a.ngayBatDau > " + new java.sql.Date(new java.util.Date().getTime());
+            String hql = "SELECT "+ resCon +" FROM " + className + " a WHERE GETDATE() < a.ngayBatDau";
+            Query query = session.createQuery(hql);
+            lst = query.getResultList();
+            return lst;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public List<KhuyenMaiDto> findKMDangDienRa() {
+        try {
+            List<KhuyenMaiDto> lst;
+            session = HibernateUtil.getSession();
+            String hql = "SELECT "+ resCon +" FROM " + className + " a WHERE a.ngayBatDau <= GETDATE() and GETDATE() <= a.ngayKetThuc";
+            Query query = session.createQuery(hql);
+            lst = query.getResultList();
+            return lst;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public List<KhuyenMaiDto> findKMKetThuc() {
+        try {
+            List<KhuyenMaiDto> lst;
+            session = HibernateUtil.getSession();
+            String hql = "SELECT "+ resCon +" FROM " + className + " a WHERE GETDATE() > a.ngayKetThuc";
             Query query = session.createQuery(hql);
             lst = query.getResultList();
             return lst;

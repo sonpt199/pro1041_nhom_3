@@ -77,6 +77,72 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
         }
     }
     
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByDienThoai(String tenDienThoai){
+        try {
+            List<ChiTietDienThoaiResponse> lst;
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
+                    + "and a.dienThoai.ten =: ten";
+            Query query = session.createQuery(hql);
+            query.setParameter("ten", tenDienThoai);
+            lst = query.getResultList();
+            return lst;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByHang(String tenHang){
+        try {
+            List<ChiTietDienThoaiResponse> lst;
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
+                    + "and a.hang.ten =: ten";
+            Query query = session.createQuery(hql);
+            query.setParameter("ten", tenHang);
+            lst = query.getResultList();
+            return lst;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByMauSac(String tenMauSac){
+        try {
+            List<ChiTietDienThoaiResponse> lst;
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
+                    + "and a.mauSac.ten =: ten";
+            Query query = session.createQuery(hql);
+            query.setParameter("ten", tenMauSac);
+            lst = query.getResultList();
+            return lst;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByTinhTrang(int tinhTrang){
+        try {
+            List<ChiTietDienThoaiResponse> lst;
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
+                    + "and a.tinhTrang =: tinhTrang";
+            Query query = session.createQuery(hql);
+            query.setParameter("tinhTrang", tinhTrang);
+            lst = query.getResultList();
+            return lst;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    
     public List<ChiTietDienThoaiResponse> getAllDienThoaiNotInKM(UUID id) {
         try {
             List<ChiTietDienThoaiResponse> lst;
@@ -85,6 +151,78 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
                     + "and a.id not in (select b.chiTietDienThoai.id from DienThoaiKhuyenMai b where b.khuyenMai.id =: id)";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
+            lst = query.getResultList();
+            return lst;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByDienThoai(UUID id, String tenDienThoai) {
+        try {
+            List<ChiTietDienThoaiResponse> lst;
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
+                    + "and (a.id not in (select b.chiTietDienThoai.id from DienThoaiKhuyenMai b where b.khuyenMai.id =: id)) "
+                    + "and a.dienThoai.ten =: ten";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id);
+            query.setParameter("ten", tenDienThoai);
+            lst = query.getResultList();
+            return lst;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByHang(UUID id, String tenHang) {
+        try {
+            List<ChiTietDienThoaiResponse> lst;
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
+                    + "and (a.id not in (select b.chiTietDienThoai.id from DienThoaiKhuyenMai b where b.khuyenMai.id =: id)) "
+                    + "and a.hang.ten =: ten";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id);
+            query.setParameter("ten", tenHang);
+            lst = query.getResultList();
+            return lst;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByMauSac(UUID id, String tenMauSac) {
+        try {
+            List<ChiTietDienThoaiResponse> lst;
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
+                    + "and (a.id not in (select b.chiTietDienThoai.id from DienThoaiKhuyenMai b where b.khuyenMai.id =: id)) "
+                    + "and a.mauSac.ten =: ten";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id);
+            query.setParameter("ten", tenMauSac);
+            lst = query.getResultList();
+            return lst;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByTinhTrang(UUID id, int tinhTrang) {
+        try {
+            List<ChiTietDienThoaiResponse> lst;
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
+                    + "and (a.id not in (select b.chiTietDienThoai.id from DienThoaiKhuyenMai b where b.khuyenMai.id =: id)) "
+                    + "and a.tinhTrang =: tinhTrang";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id);
+            query.setParameter("tinhTrang", tinhTrang);
             lst = query.getResultList();
             return lst;
         } catch (Exception e) {

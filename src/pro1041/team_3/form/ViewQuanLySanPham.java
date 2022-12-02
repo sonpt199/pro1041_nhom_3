@@ -54,6 +54,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         this.dienThoaiKhuyenMaiServiceImpl = new DienThoaiKhuyenMaiServiceImpl();
         this.khuyenMaiServiceImpl = new KhuyenMaiServiceImpl();
         this.list = this.chiTietDTImpl.getAllResponse();
+        this.tinhTrangCuPanel.setVisible(false);
         this.loadCbbDienThoai();
         this.loadCbbHang();
         this.loadCbbMauSac();
@@ -84,8 +85,10 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     public void loadTable(List<ChiTietDienThoaiResponse> lst) {
         DefaultTableModel model = (DefaultTableModel) this.tblChiTietDienThoai.getModel();
         model.setRowCount(0);
+        int index = 1;
         for (ChiTietDienThoaiResponse x : lst) {
-            model.addRow(x.toDataRow());
+            model.addRow(x.toDataRow(index));
+            index++;
         }
     }
 
@@ -100,6 +103,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         this.cbbDienThoai.setSelectedIndex(0);
         this.cbbHang.setSelectedIndex(0);
         this.cbbMauSac.setSelectedIndex(0);
+        this.cbbTinhTrangCu.setSelectedIndex(0);
         this.rdoCon.setSelected(true);
         this.rdoMoi.setSelected(true);
         _hinhAnh = null;
@@ -130,6 +134,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         Integer ram = -1;
         Integer sl = -1;
         Integer baoHanh = -1;
+        Integer tinhTrangPhamTram = -1;
         try {
             giaBan = new BigDecimal(giaBanStr);
             if (giaBan.compareTo(BigDecimal.ZERO) == -1) {
@@ -166,6 +171,13 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
             return null;
         }
 
+        if (tinhTrang == 1) {
+            tinhTrangPhamTram = 100;
+        } else {
+            String giaTriTinhTrangCu = this.cbbTinhTrangCu.getSelectedItem().toString();
+            tinhTrangPhamTram = Integer.parseInt(giaTriTinhTrangCu);
+        }
+
         ChiTietDienThoai chiTietDienThoai = new ChiTietDienThoai();
         chiTietDienThoai.setBoNho(boNho);
         chiTietDienThoai.setDienThoai(dienThoai);
@@ -173,9 +185,9 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         chiTietDienThoai.setHang(hang);
         chiTietDienThoai.setImei(imei);
         chiTietDienThoai.setMauSac(mauSac);
-        chiTietDienThoai.setMoTa(mota == null ? " " : mota);
+        chiTietDienThoai.setMoTa(mota == null ? null : mota);
         chiTietDienThoai.setRam(ram);
-        chiTietDienThoai.setTinhTrang(tinhTrang);
+        chiTietDienThoai.setTinhTrang(tinhTrangPhamTram);
         chiTietDienThoai.setTrangThai(trangThai);
         chiTietDienThoai.setThoiGianBaoHanh(baoHanh);
         return chiTietDienThoai;
@@ -223,6 +235,10 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         txtMoTa = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         cbbTrangThai = new javax.swing.JComboBox<>();
+        tinhTrangCuPanel = new javax.swing.JPanel();
+        cbbTinhTrangCu = new pro1041.team_3.swing.ComboBoxSuggestion();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblChiTietDienThoai = new pro1041.team_3.swing.config.Table();
         jPanel3 = new javax.swing.JPanel();
@@ -260,48 +276,58 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 cbbDienThoaiActionPerformed(evt);
             }
         });
-        jPanel1.add(cbbDienThoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 120, 190, 30));
+        jPanel1.add(cbbDienThoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 120, 190, 30));
 
         jLabel21.setFont(new java.awt.Font("Nunito", 1, 13)); // NOI18N
         jLabel21.setText("Màu sắc");
-        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, -1, -1));
+        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 230, -1, -1));
 
         cbbMauSac.setFont(new java.awt.Font("Segoe UI", 0, 13));
         cbbMauSac.setModel(new javax.swing.DefaultComboBoxModel<MauSac>());
-        jPanel1.add(cbbMauSac, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 220, 190, 30));
+        jPanel1.add(cbbMauSac, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 220, 190, 30));
 
         btnDienThoai.setBackground(new java.awt.Color(0, 255, 255));
         btnDienThoai.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btnDienThoai.setText("Edit");
-        jPanel1.add(btnDienThoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 170, 70, -1));
+        jPanel1.add(btnDienThoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 170, 70, -1));
 
         btnHang.setBackground(new java.awt.Color(0, 255, 255));
         btnHang.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btnHang.setText("Edit");
-        jPanel1.add(btnHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 120, 70, 30));
+        jPanel1.add(btnHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 120, 70, 30));
 
         jLabel17.setFont(new java.awt.Font("Nunito", 1, 13)); // NOI18N
         jLabel17.setText("Trạng thái");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 330, -1, -1));
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 330, -1, -1));
 
         buttonGroup1.add(rdoMoi);
         rdoMoi.setFont(new java.awt.Font("Nunito", 1, 13)); // NOI18N
         rdoMoi.setText("Mới");
-        jPanel1.add(rdoMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 280, -1, -1));
+        rdoMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoMoiActionPerformed(evt);
+            }
+        });
+        jPanel1.add(rdoMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 280, -1, -1));
 
         buttonGroup1.add(rdoCu);
         rdoCu.setFont(new java.awt.Font("Nunito", 1, 13)); // NOI18N
         rdoCu.setText("Cũ");
-        jPanel1.add(rdoCu, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 280, -1, -1));
+        rdoCu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoCuActionPerformed(evt);
+            }
+        });
+        jPanel1.add(rdoCu, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 280, -1, -1));
 
         buttonGroup2.add(rdoLoi);
         rdoLoi.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         rdoLoi.setText("Sản phẩm lỗi");
-        jPanel1.add(rdoLoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 320, -1, -1));
+        jPanel1.add(rdoLoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 320, -1, -1));
 
         jLabel19.setFont(new java.awt.Font("Nunito", 1, 13)); // NOI18N
         jLabel19.setText("Tình trạng");
-        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 280, -1, -1));
+        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 280, -1, -1));
 
         buttonGroup2.add(rdoCon);
         rdoCon.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
@@ -311,12 +337,13 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 rdoConActionPerformed(evt);
             }
         });
-        jPanel1.add(rdoCon, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 320, -1, -1));
+        jPanel1.add(rdoCon, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 320, -1, -1));
 
         buttonGroup2.add(rdoHet);
         rdoHet.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         rdoHet.setText("Đã bán");
-        jPanel1.add(rdoHet, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 320, -1, -1));
+        rdoHet.setEnabled(false);
+        jPanel1.add(rdoHet, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 320, -1, -1));
 
         cbbHang.setFont(new java.awt.Font("Segoe UI", 0, 13));
         cbbHang.setModel(new javax.swing.DefaultComboBoxModel<Hang>());
@@ -325,24 +352,24 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 cbbHangActionPerformed(evt);
             }
         });
-        jPanel1.add(cbbHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, 190, 30));
+        jPanel1.add(cbbHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 170, 190, 30));
 
         btnMauSac.setBackground(new java.awt.Color(0, 255, 255));
         btnMauSac.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btnMauSac.setText("Edit");
-        jPanel1.add(btnMauSac, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 220, 70, -1));
+        jPanel1.add(btnMauSac, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 220, 70, -1));
 
         jLabel13.setFont(new java.awt.Font("Nunito", 1, 13)); // NOI18N
         jLabel13.setText("Hãng điện thoại");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 180, -1, 20));
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 180, -1, 20));
 
         jLabel18.setFont(new java.awt.Font("Nunito", 1, 13)); // NOI18N
         jLabel18.setText("Điện thoại");
-        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 130, -1, -1));
+        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 130, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel8.setText("VND");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 80, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 80, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
         jLabel9.setText("Mã CT điện thoại");
@@ -350,7 +377,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
         jLabel10.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
         jLabel10.setText("Giá bán");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 70, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
         jLabel15.setText("RAM");
@@ -358,20 +385,20 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
         txtGiaBan.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         txtGiaBan.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(90, 183, 210)));
-        jPanel1.add(txtGiaBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 70, 190, 30));
+        jPanel1.add(txtGiaBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 70, 190, 30));
 
         txtMa.setBackground(new java.awt.Color(243, 243, 243));
         txtMa.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         txtMa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 0, new java.awt.Color(56, 183, 210)));
-        jPanel1.add(txtMa, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 230, 30));
+        jPanel1.add(txtMa, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 220, 30));
 
         txtImei.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         txtImei.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(90, 183, 210)));
-        jPanel1.add(txtImei, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 230, 30));
+        jPanel1.add(txtImei, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 220, 30));
 
         txtRom.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         txtRom.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(90, 183, 210)));
-        jPanel1.add(txtRom, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 230, 30));
+        jPanel1.add(txtRom, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 220, 30));
 
         jLabel11.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
         jLabel11.setText("Imei");
@@ -383,7 +410,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
         txtBaoHanh.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         txtBaoHanh.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(90, 183, 210)));
-        jPanel1.add(txtBaoHanh, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 230, 30));
+        jPanel1.add(txtBaoHanh, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 160, 30));
 
         jLabel14.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
         jLabel14.setText("Bảo hành");
@@ -391,7 +418,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
         txtRam.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         txtRam.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(90, 183, 210)));
-        jPanel1.add(txtRam, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 230, 30));
+        jPanel1.add(txtRam, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 220, 30));
 
         jLabel16.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
         jLabel16.setText("Mô tả");
@@ -399,7 +426,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
         txtMoTa.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         txtMoTa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(90, 183, 210)));
-        jPanel1.add(txtMoTa, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 230, 30));
+        jPanel1.add(txtMoTa, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 220, 30));
 
         jLabel5.setFont(new java.awt.Font("Nunito", 1, 13)); // NOI18N
         jLabel5.setText("Tìm kiếm");
@@ -413,18 +440,33 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         });
         jPanel1.add(cbbTrangThai, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 22, 170, 30));
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 1000, 360));
+        tinhTrangCuPanel.setBackground(new java.awt.Color(252, 255, 255));
+
+        cbbTinhTrangCu.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99" }));
+        tinhTrangCuPanel.add(cbbTinhTrangCu);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setText("%");
+        tinhTrangCuPanel.add(jLabel1);
+
+        jPanel1.add(tinhTrangCuPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 270, 170, 40));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jLabel2.setText("Tháng");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 330, -1, -1));
+
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 370));
 
         tblChiTietDienThoai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Mã ", "Điện thoại", "Hãng", "Giá bán", "Màu sắc", "Imei", "Ram", "Rom", "Tình trạng", "Trạng thái", "Mô tả", "Bảo hành"
+                "STT ", "Mã", "Điện thoại", "Hãng", "Giá bán", "Màu sắc", "Imei", "Ram", "Rom", "Tình trạng", "Trạng thái", "Mô tả", "Bảo hành"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -442,19 +484,21 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblChiTietDienThoai);
         if (tblChiTietDienThoai.getColumnModel().getColumnCount() > 0) {
-            tblChiTietDienThoai.getColumnModel().getColumn(0).setPreferredWidth(10);
-            tblChiTietDienThoai.getColumnModel().getColumn(1).setPreferredWidth(65);
-            tblChiTietDienThoai.getColumnModel().getColumn(2).setPreferredWidth(50);
-            tblChiTietDienThoai.getColumnModel().getColumn(3).setPreferredWidth(55);
+            tblChiTietDienThoai.getColumnModel().getColumn(0).setPreferredWidth(5);
+            tblChiTietDienThoai.getColumnModel().getColumn(1).setPreferredWidth(10);
+            tblChiTietDienThoai.getColumnModel().getColumn(2).setPreferredWidth(65);
+            tblChiTietDienThoai.getColumnModel().getColumn(3).setPreferredWidth(45);
             tblChiTietDienThoai.getColumnModel().getColumn(4).setPreferredWidth(55);
-            tblChiTietDienThoai.getColumnModel().getColumn(6).setPreferredWidth(10);
+            tblChiTietDienThoai.getColumnModel().getColumn(5).setPreferredWidth(50);
+            tblChiTietDienThoai.getColumnModel().getColumn(6).setPreferredWidth(70);
             tblChiTietDienThoai.getColumnModel().getColumn(7).setPreferredWidth(10);
-            tblChiTietDienThoai.getColumnModel().getColumn(8).setPreferredWidth(45);
-            tblChiTietDienThoai.getColumnModel().getColumn(9).setPreferredWidth(50);
-            tblChiTietDienThoai.getColumnModel().getColumn(11).setPreferredWidth(35);
+            tblChiTietDienThoai.getColumnModel().getColumn(8).setPreferredWidth(10);
+            tblChiTietDienThoai.getColumnModel().getColumn(9).setPreferredWidth(35);
+            tblChiTietDienThoai.getColumnModel().getColumn(10).setPreferredWidth(35);
+            tblChiTietDienThoai.getColumnModel().getColumn(12).setPreferredWidth(30);
         }
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 1240, 310));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 1130, 390));
 
         jPanel3.setBackground(new java.awt.Color(252, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(153, 153, 153)));
@@ -491,17 +535,22 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         });
         jPanel3.add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 100, 40));
 
-        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 20, 170, 300));
+        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 20, 170, 300));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtTimCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTimCaretUpdate
         // TODO add your handling code here:
         try {
             String text = this.txtTim.getText().trim();
+            if (text.length() == 0) {
+                list = this.chiTietDTImpl.getAllResponse();
+                this.loadTable(list);
+            } else {
+                list = this.chiTietDTImpl.findBy(text);
+                this.loadTable(list);
+            }
             list = this.chiTietDTImpl.findBy(text);
-
             this.loadTable(list);
-            this.txtTim.setText("");
         } catch (Exception e) {
             e.printStackTrace();
             return;
@@ -621,31 +670,35 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     private void tblChiTietDienThoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChiTietDienThoaiMouseClicked
         // TODO add your handling code here:
         int row = this.tblChiTietDienThoai.getSelectedRow();
-        String ma = this.tblChiTietDienThoai.getValueAt(row, 0).toString();
-        String dienThoai = this.tblChiTietDienThoai.getValueAt(row, 1).toString();
-        String hang = this.tblChiTietDienThoai.getValueAt(row, 2).toString();
-        String giaBan = this.tblChiTietDienThoai.getValueAt(row, 3).toString();
-        String mauSac = this.tblChiTietDienThoai.getValueAt(row, 4).toString();
-        String imei = this.tblChiTietDienThoai.getValueAt(row, 5).toString();
-        String ram = this.tblChiTietDienThoai.getValueAt(row, 6).toString();
-        String rom = this.tblChiTietDienThoai.getValueAt(row, 7).toString();
-        String tinhTrang = this.tblChiTietDienThoai.getValueAt(row, 8).toString();
-        String trangThai = this.tblChiTietDienThoai.getValueAt(row, 9).toString();
-        String moTa = this.tblChiTietDienThoai.getValueAt(row, 10).toString();
-        String baoHanh = this.tblChiTietDienThoai.getValueAt(row, 11).toString();
-        this.txtRom.setText(rom);
-        this.txtGiaBan.setText(giaBan);
-        this.txtImei.setText(imei);
-        this.txtMa.setText(ma);
-        this.txtMoTa.setText(moTa == null ? "" : moTa);
-        this.txtRam.setText(ram);
-        this.txtBaoHanh.setText(baoHanh);
+
+        list = this.chiTietDTImpl.getAllResponse();
+        ChiTietDienThoaiResponse ctdtr = this.list.get(row);
+
+//        String ma = this.tblChiTietDienThoai.getValueAt(row, 0).toString();
+//        String dienThoai = this.tblChiTietDienThoai.getValueAt(row, 1).toString();
+//        String hang = this.tblChiTietDienThoai.getValueAt(row, 2).toString();
+//        String giaBan = this.tblChiTietDienThoai.getValueAt(row, 3).toString();
+//        String mauSac = this.tblChiTietDienThoai.getValueAt(row, 4).toString();
+//        String imei = this.tblChiTietDienThoai.getValueAt(row, 5).toString();
+//        String ram = this.tblChiTietDienThoai.getValueAt(row, 6).toString();
+//        String rom = this.tblChiTietDienThoai.getValueAt(row, 7).toString();
+//        String tinhTrang = this.tblChiTietDienThoai.getValueAt(row, 8).toString();
+//        String trangThai = this.tblChiTietDienThoai.getValueAt(row, 9).toString();
+//        String moTa = this.tblChiTietDienThoai.getValueAt(row, 10).toString();
+//        String baoHanh = this.tblChiTietDienThoai.getValueAt(row, 11).toString();
+        this.txtRom.setText(ctdtr.getBoNho() + "");
+        this.txtGiaBan.setText(ctdtr.getDonGia() + "");
+        this.txtImei.setText(ctdtr.getImei());
+        this.txtMa.setText(ctdtr.getMa());
+        this.txtMoTa.setText(ctdtr.getMoTa() == null ? "_" : ctdtr.getMoTa());
+        this.txtRam.setText(ctdtr.getRam() + "");
+        this.txtBaoHanh.setText(ctdtr.getThoiGianBaoHanh() + "");
 
         int slDT = this.cbbDienThoai.getItemCount();
         for (int i = 0; i < slDT; i++) {
             DienThoai dt = cbbDienThoai.getItemAt(i);
 
-            if (dt.getTen().equalsIgnoreCase(dienThoai)) {
+            if (dt.getTen().equalsIgnoreCase(ctdtr.getDienThoai())) {
                 cbbDienThoai.setSelectedIndex(i);
             }
         }
@@ -653,7 +706,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         for (int i = 0; i < slHang; i++) {
             Hang hg = cbbHang.getItemAt(i);
 
-            if (hg.getTen().equalsIgnoreCase(hang)) {
+            if (hg.getTen().equalsIgnoreCase(ctdtr.getHang())) {
                 cbbHang.setSelectedIndex(i);
             }
         }
@@ -661,23 +714,26 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         for (int i = 0; i < slms; i++) {
             MauSac ms = cbbMauSac.getItemAt(i);
 
-            if (ms.getTen().equalsIgnoreCase(mauSac)) {
+            if (ms.getTen().equalsIgnoreCase(ctdtr.getMauSac())) {
                 cbbMauSac.setSelectedIndex(i);
             }
         }
 
-        if (trangThai.equals("Đang bán")) {
+        if (ctdtr.getTrangThai() == 0) {
             this.rdoCon.setSelected(true);
-        } else if (trangThai.equals("Đã bán")) {
+        } else if (ctdtr.getTrangThai() == 1) {
             this.rdoHet.setSelected(true);
         } else {
             this.rdoLoi.setSelected(true);
         }
 
-        if (tinhTrang.equals("Mới")) {
+        if (ctdtr.getTinhTrang() == 100) {
             this.rdoMoi.setSelected(true);
+            this.tinhTrangCuPanel.setVisible(false);
         } else {
             this.rdoCu.setSelected(true);
+            this.tinhTrangCuPanel.setVisible(true);
+            this.cbbTinhTrangCu.setSelectedItem(ctdtr.getTinhTrang() + "");
         }
 
     }//GEN-LAST:event_tblChiTietDienThoaiMouseClicked
@@ -703,6 +759,24 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbbTrangThaiActionPerformed
 
+    private void rdoCuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoCuActionPerformed
+        // TODO add your handling code here:
+        if (this.rdoCu.isSelected() == true) {
+            this.tinhTrangCuPanel.setVisible(true);
+        } else if (this.rdoMoi.isSelected() == true) {
+            this.tinhTrangCuPanel.setVisible(false);
+        }
+    }//GEN-LAST:event_rdoCuActionPerformed
+
+    private void rdoMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoMoiActionPerformed
+        // TODO add your handling code here:
+        if (this.rdoCu.isSelected() == true) {
+            this.tinhTrangCuPanel.setVisible(true);
+        } else if (this.rdoMoi.isSelected() == true) {
+            this.tinhTrangCuPanel.setVisible(false);
+        }
+    }//GEN-LAST:event_rdoMoiActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDienThoai;
@@ -716,7 +790,9 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     private javax.swing.JComboBox<DienThoai> cbbDienThoai;
     private javax.swing.JComboBox<Hang> cbbHang;
     private javax.swing.JComboBox<MauSac> cbbMauSac;
+    private pro1041.team_3.swing.ComboBoxSuggestion cbbTinhTrangCu;
     private javax.swing.JComboBox<String> cbbTrangThai;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -727,6 +803,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -741,6 +818,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     private javax.swing.JRadioButton rdoLoi;
     private javax.swing.JRadioButton rdoMoi;
     private pro1041.team_3.swing.config.Table tblChiTietDienThoai;
+    private javax.swing.JPanel tinhTrangCuPanel;
     private javax.swing.JTextField txtBaoHanh;
     private javax.swing.JTextField txtGiaBan;
     private javax.swing.JTextField txtImei;

@@ -97,20 +97,22 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
 
     @Override
     public List<KhuyenMaiDto> findNgayTuongLai() {
-        _lstKM = new ArrayList<>();
-        List<KhuyenMai> list = khuyenMaiRepository.findNgayTuongLai();
-        for (KhuyenMai x : list) {
-            _lstKM.add(new KhuyenMaiDto(x.getId(), x.getMa(), x.getTen(),
-                    new java.sql.Date(x.getNgayBatDau().getTime()), new java.sql.Date(x.getNgayKetThuc().getTime()),
-                    x.getGiaTriPhanTram(), x.getGiaTriTienMat()));
-
-        }
-        return _lstKM;
+        return this.khuyenMaiRepository.findNgayTuongLai();
     }
 
     @Override
     public KhuyenMai findById(UUID id) {
         return this.khuyenMaiRepository.findById(id);
+    }
+
+    @Override
+    public List<KhuyenMaiDto> findKMDangDienRa() {
+        return this.khuyenMaiRepository.findKMDangDienRa();
+    }
+
+    @Override
+    public List<KhuyenMaiDto> findKMKetThuc() {
+        return this.khuyenMaiRepository.findKMKetThuc();
     }
 
 }

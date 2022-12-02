@@ -47,11 +47,11 @@ public class ChiTietDienThoaiResponse {
     
     private Integer thoiGianBaoHanh;
     
-    public Object[] toDataRow() {
-        return new Object[]{ma, dienThoai, hang, donGia, mauSac, imei, ram, boNho, tinhTrang == 1 ? "Mới" : "Cũ", trangThai == 0 ? "Đang bán" : trangThai == 1 ? "Đã bán" : "Sản phẩm lỗi", moTa == null ? " " : moTa, thoiGianBaoHanh};
+    public Object[] toDataRow(int index) {
+        return new Object[]{index, ma, dienThoai, hang, donGia, mauSac, imei, ram, boNho, tinhTrang + "%", trangThai == 0 ? "Đang bán" : trangThai == 1 ? "Đã bán" : "Sản phẩm lỗi", moTa == null ? "_" : moTa, thoiGianBaoHanh};
     }
     
-    public Object[] toDataRowKM() {
-        return new Object[]{ma, dienThoai, tinhTrang == 1 ? "Mới" : "Cũ", imei, false};
+    public Object[] toDataRowKM(int index) {
+        return new Object[]{index, ma, dienThoai, hang, mauSac, tinhTrang + "%", boNho, imei};
     }
 }

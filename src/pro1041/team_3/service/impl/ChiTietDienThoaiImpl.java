@@ -197,5 +197,45 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService{
     public List<ChiTietDienThoaiResponse> getAllDienThoaiNotInKM(UUID id) {
         return chiTietDienThoaiRepository.getAllDienThoaiNotInKM(id);
     }
+
+    @Override
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByDienThoai(String tenDienThoai) {
+        return chiTietDienThoaiRepository.getAllCTDienThoaiByDienThoai(tenDienThoai);
+    }
+
+    @Override
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByHang(String tenHang) {
+        return chiTietDienThoaiRepository.getAllCTDienThoaiByHang(tenHang);
+    }
+
+    @Override
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByMauSac(String tenMauSac) {
+        return chiTietDienThoaiRepository.getAllCTDienThoaiByMauSac(tenMauSac);
+    }
+
+    @Override
+    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByDienThoai(UUID id, String tenDienThoai) {
+        return chiTietDienThoaiRepository.getAllCTDTNotInKMByDienThoai(id, tenDienThoai);
+    }
+
+    @Override
+    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByHang(UUID id, String tenHang) {
+        return chiTietDienThoaiRepository.getAllCTDTNotInKMByHang(id, tenHang);
+    }
+
+    @Override
+    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByMauSac(UUID id, String tenMauSac) {
+        return chiTietDienThoaiRepository.getAllCTDTNotInKMByMauSac(id, tenMauSac);
+    }
+
+    @Override
+    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByTinhTrang(UUID id, int tinhTrang) {
+        return chiTietDienThoaiRepository.getAllCTDTNotInKMByTinhTrang(id, tinhTrang);
+    }
+
+    @Override
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByTinhTrang(int tinhTrang) {
+        return chiTietDienThoaiRepository.getAllCTDienThoaiByTinhTrang(tinhTrang);
+    }
     
 }
