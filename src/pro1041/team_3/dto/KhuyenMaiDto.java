@@ -29,7 +29,7 @@ public class KhuyenMaiDto {
     private Float giaTriPhanTram;
     private BigDecimal giaTriTienMat;
 
-    public Object[] toDataRow() {
+    public Object[] toDataRow(int index) {
         Date dateNow = new Date();
         String trangThai = "Đang diễn ra";
         BigDecimal mucKhuyenMai = new BigDecimal(0);
@@ -50,6 +50,6 @@ public class KhuyenMaiDto {
             mucKhuyenMaiStr = mucKhuyenMai + " %";
         }
 
-        return new Object[]{maKhuyenMai, tenKhuyenMai, ngayBatDau, ngayKetThuc, mucKhuyenMaiStr, trangThai};
+        return new Object[]{index, maKhuyenMai, tenKhuyenMai, ngayBatDau, ngayKetThuc, mucKhuyenMaiStr, trangThai};
     }
 }

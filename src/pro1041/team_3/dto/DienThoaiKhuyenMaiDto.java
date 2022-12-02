@@ -30,7 +30,7 @@ public class DienThoaiKhuyenMaiDto {
 
     
     
-    public Object[] toDataRow() {
-        return new Object[]{maChiTietDienThoai, tenDienThoai, hangDienThoai, mauSac, imei, giaBan, giaConLai};
+    public Object[] toDataRow(int index) {
+        return new Object[]{index, maChiTietDienThoai, tenDienThoai, hangDienThoai, mauSac, imei, giaBan, giaConLai};
     }
 }

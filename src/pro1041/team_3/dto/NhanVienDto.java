@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class NhanVienDto {
     private UUID id;
+    private String ma;
     private String tendangnhap;
     private String hoten;
     private Integer gioitinh;
@@ -21,9 +22,10 @@ public class NhanVienDto {
     private String diachi;
     private String email;
     private String matkhau;
+    private Integer trangThaiLamViec;
     private Integer vaitro;
     
     public Object[] toDataRow() {
-        return new Object[]{id, tendangnhap, hoten, gioitinh, sdt, diachi, email, matkhau, vaitro};
+        return new Object[]{ma, tendangnhap, hoten, gioitinh, sdt, diachi, email, matkhau,trangThaiLamViec, vaitro};
     }
 }

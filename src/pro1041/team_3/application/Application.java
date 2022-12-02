@@ -12,7 +12,7 @@ import pro1041.team_3.main.Main;
  */
 public class Application {
     public static void main(String[] args) {
-        Main main = new Main();
-        main.setVisible(true);
+//        Main main = new Main();
+//        main.setVisible(true);
     }
 }

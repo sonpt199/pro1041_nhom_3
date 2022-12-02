@@ -22,7 +22,7 @@ public class Header extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cmdMenu = new pro1041.team_3.swing.Button();
+        cmdMenu = new pro1041.team_3.swing.ButtonDateChooser();
 
         cmdMenu.setBackground(new java.awt.Color(250, 250, 250));
         cmdMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/menu.png"))); // NOI18N
@@ -83,6 +83,6 @@ public class Header extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private pro1041.team_3.swing.Button cmdMenu;
+    private pro1041.team_3.swing.ButtonDateChooser cmdMenu;
     // End of variables declaration//GEN-END:variables
 }

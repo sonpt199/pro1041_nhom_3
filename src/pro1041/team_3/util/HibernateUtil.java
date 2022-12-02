@@ -9,8 +9,14 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 import pro1041.team_3.domainModel.ChiTietDienThoai;
 import pro1041.team_3.domainModel.DienThoai;
+import pro1041.team_3.domainModel.DienThoaiKhuyenMai;
+import pro1041.team_3.domainModel.GioHang;
+import pro1041.team_3.domainModel.GioHangChiTiet;
 import pro1041.team_3.domainModel.Hang;
+import pro1041.team_3.domainModel.HoaDon;
+import pro1041.team_3.domainModel.HoaDonChiTiet;
 import pro1041.team_3.domainModel.KhachHang;
+import pro1041.team_3.domainModel.KhuyenMai;
 import pro1041.team_3.domainModel.MauSac;
 import pro1041.team_3.domainModel.NhanVien;
 
@@ -42,6 +48,12 @@ public class HibernateUtil {
         conf.addAnnotatedClass(Hang.class);
         conf.addAnnotatedClass(KhachHang.class);
         conf.addAnnotatedClass(ChiTietDienThoai.class);
+        conf.addAnnotatedClass(HoaDon.class);
+        conf.addAnnotatedClass(HoaDonChiTiet.class);
+        conf.addAnnotatedClass(KhuyenMai.class);
+        conf.addAnnotatedClass(DienThoaiKhuyenMai.class);
+        conf.addAnnotatedClass(GioHang.class);
+        conf.addAnnotatedClass(GioHangChiTiet.class);
         conf.setProperties(properties);
 
         ServiceRegistry registry = new StandardServiceRegistryBuilder()

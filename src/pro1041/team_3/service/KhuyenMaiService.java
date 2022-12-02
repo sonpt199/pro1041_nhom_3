@@ -16,6 +16,10 @@ public interface KhuyenMaiService {
     public List<KhuyenMaiDto> findKhuyenMai(String key);
 
     public List<KhuyenMaiDto> findNgayTuongLai();
+    
+    List<KhuyenMaiDto> findKMDangDienRa();
+    
+    List<KhuyenMaiDto> findKMKetThuc();
 
     String insert(KhuyenMai khuyenMai);
 

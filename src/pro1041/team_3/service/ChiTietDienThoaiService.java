@@ -31,5 +31,21 @@ public interface ChiTietDienThoaiService {
     List<ChiTietDienThoaiResponse> sapXep2(String loai, String chieu);
     
     List<ChiTietDienThoaiResponse> getAllDienThoaiNotInKM(UUID id);
+    
+    List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByDienThoai(UUID id, String tenDienThoai);
+    
+    List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByHang(UUID id, String tenHang);
+    
+    List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByMauSac(UUID id, String tenMauSac);
+    
+    List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByTinhTrang(UUID id, int tinhTrang);
+    
+    List<ChiTietDienThoaiResponse> getAllCTDienThoaiByDienThoai(String tenDienThoai);
+    
+    List<ChiTietDienThoaiResponse> getAllCTDienThoaiByHang(String tenHang);
+    
+    List<ChiTietDienThoaiResponse> getAllCTDienThoaiByMauSac(String tenMauSac);
+    
+    List<ChiTietDienThoaiResponse> getAllCTDienThoaiByTinhTrang(int tinhTrang);
 
 }

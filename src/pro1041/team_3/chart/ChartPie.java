@@ -7,6 +7,8 @@ import java.awt.RenderingHints;
 import java.util.List;
 
 public class ChartPie extends javax.swing.JPanel {
+    
+    private List<ModelChartPie> model;
 
     public List<ModelChartPie> getModel() {
         return model;
@@ -16,8 +18,6 @@ public class ChartPie extends javax.swing.JPanel {
         this.model = model;
         initData();
     }
-
-    private List<ModelChartPie> model;
 
     public ChartPie() {
         initComponents();

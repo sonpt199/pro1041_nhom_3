@@ -30,6 +30,9 @@ public class NhanVien implements Serializable{
     @Column(name = "id")
     private UUID id;
     
+    @Column(name = "ma")
+    private String ma;
+    
     @Column(name = "ten_dang_nhap")
     private String tenDangNhap;
     
@@ -50,6 +53,9 @@ public class NhanVien implements Serializable{
     
     @Column(name = "mat_khau")
     private String matKhau;
+    
+    @Column(name = "trang_thai_lam_viec")
+    private Integer trangThaiLamViec;
     
     @Column(name = "vai_tro")
     private Integer vaiTro;

@@ -10,15 +10,28 @@ import pro1041.team_3.dto.NhanVienDto;
  * @author trangntph19494
  */
 public interface NhanVienService {
+
     List<NhanVienDto> getAllReponse();
-    
+
     String insert(NhanVien user);
-    
+
     String update(NhanVien user);
-    
+
     String delete(UUID id);
-    
+
     List<NhanVien> getAll();
-    
+
     List<NhanVienDto> findByTenDangNhap(String keyWord);
+
+    boolean updateTrangThai(String ma);
+
+    boolean khoiPhucTrangThai(String ma);
+
+    List<NhanVienDto> getAllByTrangThai0();
+
+    List<NhanVienDto> getAllByTrangThai1();
+
+    List<NhanVienDto> findNhanVien(String key);
+    
+    List<NhanVienDto> findNhanVienNghiViec(String key);
 }

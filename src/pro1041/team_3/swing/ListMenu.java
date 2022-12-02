@@ -1,6 +1,7 @@
 package pro1041.team_3.swing;
 
-import pro1041.team_3.event.EventMenuSelected;
+import pro1041.team_3.swing.config.MenuItem;
+import pro1041.team_3.swing.eventInterface.EventMenuSelected;
 import pro1041.team_3.model.Model_Menu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;

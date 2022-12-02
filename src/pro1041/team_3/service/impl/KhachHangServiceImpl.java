@@ -175,4 +175,10 @@ public class KhachHangServiceImpl implements KhachHangService {
         return _lstKhachHang;
     }
 
+
+    @Override
+    public KhachHang findBySdt(String keyWord) {
+        return khachHangRepository.findBySdt(keyWord);
+    }
+
 }
