@@ -7,7 +7,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pro1041.team_3.domainModel.ChiTietDienThoai;
@@ -56,6 +58,23 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         listSPKM = this.chiTietDienThoaiImpl.getAllTrangThai(0);
         loadTableKM(list1);
         txtMa.setEditable(false);
+        //Set Icon
+        ImageIcon iconDialog = new ImageIcon(getClass().getResource("/pro1041/team_3/icon/logoCircle.png"));
+        dlThemDienThoaiVaoKm.setTitle("Thêm điện thoại vào đợt khuyến mại");
+        dlThemDienThoaiVaoKm.setIconImage(iconDialog.getImage());
+        dlChonSanPhamKm.setTitle("Chọn điện thoại được áp dụng khuyến mại");
+        dlChonSanPhamKm.setIconImage(iconDialog.getImage());
+        //Set Scroll Table
+        tblAllSpChiTiet.fixTable(jspTblAllSpChiTiet);
+        tblDienThoaiChon.fixTable(jspTblDienThoaiChon);
+        tblDienThoaiThem.fixTable(jspTblDienThoaiThem);
+        tblKhuyenMai.fixTable(jspTblKhuyenMai);
+        
+        //Mặc định thời gian
+        tpThoiGianBatDau.now();
+        tpThoiGianKetThuc.now();
+//        txtNgayBD.setText("");
+//        txtNgayKT.setText("");
     }
 
     private void clear() {
@@ -134,7 +153,7 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
     }
 
     public void loadTableSPKM(List<ChiTietDienThoaiResponse> lst) {
-        DefaultTableModel model = (DefaultTableModel) tblAllSpKM.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblDienThoaiChon.getModel();
         model.setRowCount(0);
         int index = 1;
         for (ChiTietDienThoaiResponse x : lst) {
@@ -144,7 +163,7 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
     }
 
     public void loadTableDienThoai(List<ChiTietDienThoaiResponse> lst) {
-        DefaultTableModel model = (DefaultTableModel) tblDienThoai.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblDienThoaiThem.getModel();
         model.setRowCount(0);
         int index = 1;
         for (ChiTietDienThoaiResponse x : lst) {
@@ -157,18 +176,28 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         UUID id = UUID.randomUUID();
         String ma = txtMa.getText().trim();
         String ten = txtTen.getText().trim();
-        String ngayBD = txtNgayBD.getText().trim();
-        String ngayKT = txtNgayKT.getText().trim();
+        String ngayBDStr = txtNgayBD.getText().trim();
+        String ngayKTStr = txtNgayKT.getText().trim();
         String mucKM = txtMucKM.getText().trim();
+        String thoiGianBatDauStr = txtThoiGianBD.getText();
+        String thoiGianKetThucStr = txtThoiGianKT.getText();
         float gia = 0;
         Float phanTram = null;
         Float tienMat = null;
-        Date ngay1 = null;
-        Date ngay2 = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date ngayBatDau = null;
+        Date ngayKetThuc = null;
+        SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm aa", Locale.US);
+        SimpleDateFormat sdfCongChuoi = new SimpleDateFormat("kk:mm");
+        SimpleDateFormat sdfInput = new SimpleDateFormat("dd-MM-yyyy kk:mm");       
         try {
-            ngay1 = sdf.parse(ngayBD);
-            ngay2 = sdf.parse(ngayKT);
+            Date thoiGianBatDau = sdfTime.parse(thoiGianBatDauStr);
+            Date thoiGianKetThuc = sdfTime.parse(thoiGianKetThucStr);
+            String ngayBatDauInput = ngayBDStr + " " + sdfCongChuoi.format(thoiGianBatDau);
+            String ngayKetThucInput = ngayKTStr + " " + sdfCongChuoi.format(thoiGianKetThuc);
+            ngayBatDau = sdfInput.parse(ngayBatDauInput);
+            ngayKetThuc = sdfInput.parse(ngayKetThucInput);
+            System.out.println(ngayBatDau.toLocaleString());
+            System.out.println(ngayKetThuc.toLocaleString());
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(this, "Không đúng định dạng ngày");
             ex.printStackTrace();
@@ -195,8 +224,8 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         LocalDateTime time = LocalDateTime.now();
         String maKM = "KM" + time.getSecond() + time.getMinute() + time.getHour();
         khuyenMai.setMa(maKM);
-        khuyenMai.setNgayBatDau(ngay1);
-        khuyenMai.setNgayKetThuc(ngay2);
+        khuyenMai.setNgayBatDau(ngayBatDau);
+        khuyenMai.setNgayKetThuc(ngayKetThuc);
         khuyenMai.setTen(ten);
         if (tienMat == null) {
             khuyenMai.setGiaTriPhanTram(phanTram);
@@ -212,35 +241,30 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        danhSachSanPham = new javax.swing.JDialog();
-        btnThoai = new javax.swing.JButton();
-        btnThemSPKM = new javax.swing.JButton();
+        dlChonSanPhamKm = new javax.swing.JDialog();
         jPanel6 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        cbbLocDienThoai1 = new pro1041.team_3.swing.ComboBoxSuggestion();
-        jPanel9 = new javax.swing.JPanel();
-        cbbLocHang1 = new pro1041.team_3.swing.ComboBoxSuggestion();
-        jPanel10 = new javax.swing.JPanel();
-        cbbLocMauSac1 = new pro1041.team_3.swing.ComboBoxSuggestion();
-        jPanel11 = new javax.swing.JPanel();
-        cbbLocTinhTrang1 = new pro1041.team_3.swing.ComboBoxSuggestion();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblAllSpKM = new pro1041.team_3.swing.config.Table();
-        DSDienThoai = new javax.swing.JDialog();
+        jspTblDienThoaiChon = new javax.swing.JScrollPane();
+        tblDienThoaiChon = new pro1041.team_3.swing.config.Table();
+        cbbLocDienThoai1 = new pro1041.team_3.swing.Combobox();
+        cbbLocHang1 = new pro1041.team_3.swing.Combobox();
+        cbbLocMauSac1 = new pro1041.team_3.swing.Combobox();
+        cbbLocTinhTrang1 = new pro1041.team_3.swing.Combobox();
+        btnThemSPKM = new pro1041.team_3.swing.ButtonCustom();
+        buttonCustom2 = new pro1041.team_3.swing.ButtonCustom();
+        dlThemDienThoaiVaoKm = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
-        btnThemDienThoaiKM = new javax.swing.JButton();
-        btnThoat = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        cbbLocDienThoai = new pro1041.team_3.swing.ComboBoxSuggestion();
-        jPanel3 = new javax.swing.JPanel();
-        cbbLocHang = new pro1041.team_3.swing.ComboBoxSuggestion();
-        jPanel4 = new javax.swing.JPanel();
-        cbbLocMauSac = new pro1041.team_3.swing.ComboBoxSuggestion();
-        jPanel5 = new javax.swing.JPanel();
-        cbbLocTinhTrang = new pro1041.team_3.swing.ComboBoxSuggestion();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblDienThoai = new pro1041.team_3.swing.config.Table();
-        comboSuggestionUI1 = new pro1041.team_3.swing.ComboSuggestionUI();
+        jspTblDienThoaiThem = new javax.swing.JScrollPane();
+        tblDienThoaiThem = new pro1041.team_3.swing.config.Table();
+        btnThoat = new pro1041.team_3.swing.ButtonCustom();
+        cbbLocDienThoai = new pro1041.team_3.swing.Combobox();
+        btnThemDienThoaiKM = new pro1041.team_3.swing.ButtonCustom();
+        cbbLocHang = new pro1041.team_3.swing.Combobox();
+        cbbLocMauSac = new pro1041.team_3.swing.Combobox();
+        cbbLocTinhTrang = new pro1041.team_3.swing.Combobox();
+        dlChonNgayBatDau = new pro1041.team_3.swing.DateChooser();
+        dlChonNgayKetThuc = new pro1041.team_3.swing.DateChooser();
+        tpThoiGianBatDau = new pro1041.team_3.swing.TimePicker();
+        tpThoiGianKetThuc = new pro1041.team_3.swing.TimePicker();
         jLabel1 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         lblLoai = new javax.swing.JLabel();
@@ -251,6 +275,8 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         cbbLoaiKM = new pro1041.team_3.swing.Combobox();
         txtMucKM = new pro1041.team_3.swing.TextField();
         jLabel2 = new javax.swing.JLabel();
+        txtThoiGianKT = new pro1041.team_3.swing.TextField();
+        txtThoiGianBD = new pro1041.team_3.swing.TextField();
         jLabel8 = new javax.swing.JLabel();
         cbbLocKM = new pro1041.team_3.swing.Combobox();
         btnThem = new pro1041.team_3.swing.ButtonCustom();
@@ -258,95 +284,23 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         btnSua = new pro1041.team_3.swing.ButtonCustom();
         btnThemSpKM = new pro1041.team_3.swing.ButtonCustom();
         btnClear = new pro1041.team_3.swing.ButtonCustom();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        jspTblAllSpChiTiet = new javax.swing.JScrollPane();
         tblAllSpChiTiet = new pro1041.team_3.swing.config.Table();
-        jScrollPane6 = new javax.swing.JScrollPane();
+        jspTblKhuyenMai = new javax.swing.JScrollPane();
         tblKhuyenMai = new pro1041.team_3.swing.config.Table();
-        txtTimKhuyenMai = new pro1041.team_3.swing.TextField();
         txtTimDTKM = new pro1041.team_3.swing.TextField();
         jPanel12 = new javax.swing.JPanel();
+        txtTimKhuyenMai = new pro1041.team_3.swing.TextField();
 
-        danhSachSanPham.setMinimumSize(new java.awt.Dimension(730, 570));
-        danhSachSanPham.setPreferredSize(new java.awt.Dimension(730, 570));
-        danhSachSanPham.setSize(new java.awt.Dimension(730, 570));
-        danhSachSanPham.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        dlChonSanPhamKm.setMinimumSize(new java.awt.Dimension(730, 570));
+        dlChonSanPhamKm.setSize(new java.awt.Dimension(750, 600));
+        dlChonSanPhamKm.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnThoai.setBackground(new java.awt.Color(0, 255, 255));
-        btnThoai.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        btnThoai.setText("Thoát");
-        btnThoai.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThoaiActionPerformed(evt);
-            }
-        });
-        danhSachSanPham.getContentPane().add(btnThoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 480, -1, -1));
-
-        btnThemSPKM.setBackground(new java.awt.Color(0, 255, 255));
-        btnThemSPKM.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        btnThemSPKM.setText("Thêm");
-        btnThemSPKM.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThemSPKMActionPerformed(evt);
-            }
-        });
-        danhSachSanPham.getContentPane().add(btnThemSPKM, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 480, -1, -1));
-
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách điện thoại", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Điện thoại", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 13))); // NOI18N
-        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cbbLocDienThoai1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
-        cbbLocDienThoai1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbLocDienThoai1ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(cbbLocDienThoai1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
-
-        jPanel6.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 160, 70));
-
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hãng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 13))); // NOI18N
-        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cbbLocHang1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
-        cbbLocHang1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbLocHang1ActionPerformed(evt);
-            }
-        });
-        jPanel9.add(cbbLocHang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 20, -1, -1));
-
-        jPanel6.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 160, 70));
-
-        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Màu sắc", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 13))); // NOI18N
-        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cbbLocMauSac1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
-        cbbLocMauSac1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbLocMauSac1ActionPerformed(evt);
-            }
-        });
-        jPanel10.add(cbbLocMauSac1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 20, -1, -1));
-
-        jPanel6.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 160, 70));
-
-        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tình trạng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 13))); // NOI18N
-        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cbbLocTinhTrang1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100" }));
-        cbbLocTinhTrang1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbLocTinhTrang1ActionPerformed(evt);
-            }
-        });
-        jPanel11.add(cbbLocTinhTrang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 20, -1, -1));
-
-        jPanel6.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 30, 160, 70));
-
-        tblAllSpKM.setModel(new javax.swing.table.DefaultTableModel(
+        tblDienThoaiChon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null}
             },
@@ -362,101 +316,105 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblAllSpKM);
-        if (tblAllSpKM.getColumnModel().getColumnCount() > 0) {
-            tblAllSpKM.getColumnModel().getColumn(0).setPreferredWidth(10);
-            tblAllSpKM.getColumnModel().getColumn(1).setPreferredWidth(25);
-            tblAllSpKM.getColumnModel().getColumn(3).setPreferredWidth(25);
-            tblAllSpKM.getColumnModel().getColumn(4).setPreferredWidth(25);
-            tblAllSpKM.getColumnModel().getColumn(5).setPreferredWidth(25);
-            tblAllSpKM.getColumnModel().getColumn(6).setPreferredWidth(25);
+        jspTblDienThoaiChon.setViewportView(tblDienThoaiChon);
+        if (tblDienThoaiChon.getColumnModel().getColumnCount() > 0) {
+            tblDienThoaiChon.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tblDienThoaiChon.getColumnModel().getColumn(1).setPreferredWidth(25);
+            tblDienThoaiChon.getColumnModel().getColumn(3).setPreferredWidth(25);
+            tblDienThoaiChon.getColumnModel().getColumn(4).setPreferredWidth(25);
+            tblDienThoaiChon.getColumnModel().getColumn(5).setPreferredWidth(25);
+            tblDienThoaiChon.getColumnModel().getColumn(6).setPreferredWidth(25);
         }
 
-        jPanel6.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 710, 360));
+        jPanel6.add(jspTblDienThoaiChon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 710, 360));
 
-        danhSachSanPham.getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 520));
+        cbbLocDienThoai1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
+        cbbLocDienThoai1.setSelectedIndex(-1);
+        cbbLocDienThoai1.setFocusLostColor(new java.awt.Color(3, 155, 216));
+        cbbLocDienThoai1.setFont(new java.awt.Font("Nunito Light", 1, 12)); // NOI18N
+        cbbLocDienThoai1.setLabeText("Điện thoại");
+        cbbLocDienThoai1.setLabelColor(new java.awt.Color(1, 132, 203));
+        cbbLocDienThoai1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbLocDienThoai1ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(cbbLocDienThoai1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 160, -1));
 
-        DSDienThoai.setMinimumSize(new java.awt.Dimension(730, 570));
-        DSDienThoai.setPreferredSize(new java.awt.Dimension(730, 570));
-        DSDienThoai.setSize(new java.awt.Dimension(730, 570));
-        DSDienThoai.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        cbbLocHang1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
+        cbbLocHang1.setSelectedIndex(-1);
+        cbbLocHang1.setFocusLostColor(new java.awt.Color(3, 155, 216));
+        cbbLocHang1.setFont(new java.awt.Font("Nunito Light", 1, 12)); // NOI18N
+        cbbLocHang1.setLabeText("Hãng");
+        cbbLocHang1.setLabelColor(new java.awt.Color(1, 132, 203));
+        cbbLocHang1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbLocHang1ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(cbbLocHang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, 160, -1));
 
+        cbbLocMauSac1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
+        cbbLocMauSac1.setSelectedIndex(-1);
+        cbbLocMauSac1.setFocusLostColor(new java.awt.Color(3, 155, 216));
+        cbbLocMauSac1.setFont(new java.awt.Font("Nunito Light", 1, 12)); // NOI18N
+        cbbLocMauSac1.setLabeText("Màu sắc");
+        cbbLocMauSac1.setLabelColor(new java.awt.Color(1, 132, 203));
+        cbbLocMauSac1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbLocMauSac1ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(cbbLocMauSac1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, 160, -1));
+
+        cbbLocTinhTrang1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
+        cbbLocTinhTrang1.setSelectedIndex(-1);
+        cbbLocTinhTrang1.setFocusLostColor(new java.awt.Color(3, 155, 216));
+        cbbLocTinhTrang1.setFont(new java.awt.Font("Nunito Light", 1, 12)); // NOI18N
+        cbbLocTinhTrang1.setLabeText("Tình trạng");
+        cbbLocTinhTrang1.setLabelColor(new java.awt.Color(1, 132, 203));
+        cbbLocTinhTrang1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbLocTinhTrang1ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(cbbLocTinhTrang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 40, 160, -1));
+
+        btnThemSPKM.setBackground(new java.awt.Color(1, 181, 204));
+        btnThemSPKM.setForeground(new java.awt.Color(255, 255, 255));
+        btnThemSPKM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/add.png"))); // NOI18N
+        btnThemSPKM.setText("Thêm");
+        btnThemSPKM.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        btnThemSPKM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemSPKMActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnThemSPKM, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 480, 120, -1));
+
+        buttonCustom2.setBackground(new java.awt.Color(153, 153, 153));
+        buttonCustom2.setForeground(new java.awt.Color(255, 255, 255));
+        buttonCustom2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/back.png"))); // NOI18N
+        buttonCustom2.setText("Quay lại");
+        buttonCustom2.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        buttonCustom2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCustom2ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(buttonCustom2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 480, -1, -1));
+
+        dlChonSanPhamKm.getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 540));
+
+        dlThemDienThoaiVaoKm.setMinimumSize(new java.awt.Dimension(730, 570));
+        dlThemDienThoaiVaoKm.setSize(new java.awt.Dimension(750, 580));
+        dlThemDienThoaiVaoKm.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách điện thoại", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnThemDienThoaiKM.setBackground(new java.awt.Color(0, 255, 255));
-        btnThemDienThoaiKM.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        btnThemDienThoaiKM.setText("Thêm");
-        btnThemDienThoaiKM.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThemDienThoaiKMActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnThemDienThoaiKM, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 480, -1, -1));
-
-        btnThoat.setBackground(new java.awt.Color(0, 255, 255));
-        btnThoat.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        btnThoat.setText("Thoát");
-        btnThoat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThoatActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 480, -1, -1));
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Điện thoại", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 13))); // NOI18N
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cbbLocDienThoai.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
-        cbbLocDienThoai.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbLocDienThoaiActionPerformed(evt);
-            }
-        });
-        jPanel2.add(cbbLocDienThoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 20, -1, -1));
-
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 150, 60));
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hãng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 13))); // NOI18N
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cbbLocHang.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
-        cbbLocHang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbLocHangActionPerformed(evt);
-            }
-        });
-        jPanel3.add(cbbLocHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 20, -1, -1));
-
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 150, 60));
-
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Màu sắc", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 13))); // NOI18N
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cbbLocMauSac.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
-        cbbLocMauSac.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbLocMauSacActionPerformed(evt);
-            }
-        });
-        jPanel4.add(cbbLocMauSac, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 20, -1, -1));
-
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 150, 60));
-
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tình trạng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 13))); // NOI18N
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cbbLocTinhTrang.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100" }));
-        cbbLocTinhTrang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbLocTinhTrangActionPerformed(evt);
-            }
-        });
-        jPanel5.add(cbbLocTinhTrang, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 20, -1, -1));
-
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 30, 150, 60));
-
-        tblDienThoai.setModel(new javax.swing.table.DefaultTableModel(
+        tblDienThoaiThem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -472,19 +430,99 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tblDienThoai);
-        if (tblDienThoai.getColumnModel().getColumnCount() > 0) {
-            tblDienThoai.getColumnModel().getColumn(0).setPreferredWidth(3);
-            tblDienThoai.getColumnModel().getColumn(1).setPreferredWidth(25);
-            tblDienThoai.getColumnModel().getColumn(3).setPreferredWidth(20);
-            tblDienThoai.getColumnModel().getColumn(4).setPreferredWidth(20);
-            tblDienThoai.getColumnModel().getColumn(5).setPreferredWidth(20);
-            tblDienThoai.getColumnModel().getColumn(6).setPreferredWidth(15);
+        jspTblDienThoaiThem.setViewportView(tblDienThoaiThem);
+        if (tblDienThoaiThem.getColumnModel().getColumnCount() > 0) {
+            tblDienThoaiThem.getColumnModel().getColumn(0).setPreferredWidth(3);
+            tblDienThoaiThem.getColumnModel().getColumn(1).setPreferredWidth(25);
+            tblDienThoaiThem.getColumnModel().getColumn(3).setPreferredWidth(20);
+            tblDienThoaiThem.getColumnModel().getColumn(4).setPreferredWidth(20);
+            tblDienThoaiThem.getColumnModel().getColumn(5).setPreferredWidth(20);
+            tblDienThoaiThem.getColumnModel().getColumn(6).setPreferredWidth(15);
         }
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 710, 360));
+        jPanel1.add(jspTblDienThoaiThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 710, 360));
 
-        DSDienThoai.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 520));
+        btnThoat.setBackground(new java.awt.Color(153, 153, 153));
+        btnThoat.setForeground(new java.awt.Color(255, 255, 255));
+        btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/back.png"))); // NOI18N
+        btnThoat.setText("Quay lại");
+        btnThoat.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 470, 120, -1));
+
+        cbbLocDienThoai.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
+        cbbLocDienThoai.setSelectedIndex(-1);
+        cbbLocDienThoai.setFocusLostColor(new java.awt.Color(3, 155, 216));
+        cbbLocDienThoai.setLabeText("Điện thoại");
+        cbbLocDienThoai.setLabelColor(new java.awt.Color(1, 132, 203));
+        cbbLocDienThoai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbLocDienThoaiActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cbbLocDienThoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 160, -1));
+
+        btnThemDienThoaiKM.setBackground(new java.awt.Color(1, 181, 204));
+        btnThemDienThoaiKM.setForeground(new java.awt.Color(255, 255, 255));
+        btnThemDienThoaiKM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/add.png"))); // NOI18N
+        btnThemDienThoaiKM.setText("Thêm");
+        btnThemDienThoaiKM.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        btnThemDienThoaiKM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemDienThoaiKMActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnThemDienThoaiKM, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 470, 120, -1));
+
+        cbbLocHang.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
+        cbbLocHang.setSelectedIndex(-1);
+        cbbLocHang.setFocusLostColor(new java.awt.Color(3, 155, 216));
+        cbbLocHang.setLabeText("Hãng");
+        cbbLocHang.setLabelColor(new java.awt.Color(1, 132, 203));
+        cbbLocHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbLocHangActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cbbLocHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, 160, -1));
+
+        cbbLocMauSac.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
+        cbbLocMauSac.setSelectedIndex(-1);
+        cbbLocMauSac.setFocusLostColor(new java.awt.Color(3, 155, 216));
+        cbbLocMauSac.setLabeText("Màu sắc");
+        cbbLocMauSac.setLabelColor(new java.awt.Color(1, 132, 203));
+        cbbLocMauSac.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbLocMauSacActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cbbLocMauSac, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 160, -1));
+
+        cbbLocTinhTrang.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
+        cbbLocTinhTrang.setSelectedIndex(-1);
+        cbbLocTinhTrang.setFocusLostColor(new java.awt.Color(3, 155, 216));
+        cbbLocTinhTrang.setLabeText("Tình trạng");
+        cbbLocTinhTrang.setLabelColor(new java.awt.Color(1, 132, 203));
+        cbbLocTinhTrang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbLocTinhTrangActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cbbLocTinhTrang, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 40, 160, -1));
+
+        dlThemDienThoaiVaoKm.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 530));
+
+        dlChonNgayBatDau.setTextRefernce(txtNgayBD);
+
+        dlChonNgayKetThuc.setTextRefernce(txtNgayKT);
+
+        tpThoiGianBatDau.setDisplayText(txtThoiGianBD);
+
+        tpThoiGianKetThuc.setDisplayText(txtThoiGianKT);
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(1272, 748));
@@ -507,21 +545,25 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
 
         txtMa.setEditable(false);
         txtMa.setBackground(new java.awt.Color(246, 246, 246));
-        txtMa.setFont(new java.awt.Font("Nunito", 0, 13)); // NOI18N
+        txtMa.setFont(new java.awt.Font("Nunito Light", 1, 13)); // NOI18N
+        txtMa.setLabelColor(new java.awt.Color(1, 132, 203));
         txtMa.setLabelText("Mã khuyến mại");
         jPanel8.add(txtMa, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 290, -1));
 
-        txtTen.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtTen.setFont(new java.awt.Font("Nunito Light", 1, 13)); // NOI18N
+        txtTen.setLabelColor(new java.awt.Color(1, 132, 203));
         txtTen.setLabelText("Tên khuyến mại");
         jPanel8.add(txtTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 290, -1));
 
-        txtNgayBD.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtNgayBD.setFont(new java.awt.Font("Nunito Light", 1, 13)); // NOI18N
+        txtNgayBD.setLabelColor(new java.awt.Color(1, 132, 203));
         txtNgayBD.setLabelText("Ngày bắt đầu");
-        jPanel8.add(txtNgayBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 290, -1));
+        jPanel8.add(txtNgayBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 140, -1));
 
-        txtNgayKT.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtNgayKT.setFont(new java.awt.Font("Nunito Light", 1, 13)); // NOI18N
+        txtNgayKT.setLabelColor(new java.awt.Color(1, 132, 203));
         txtNgayKT.setLabelText("Ngày kết thúc");
-        jPanel8.add(txtNgayKT, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 290, -1));
+        jPanel8.add(txtNgayKT, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 140, -1));
 
         cbbLoaiKM.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Theo %", "Theo tiền mặt" }));
         cbbLoaiKM.setLabeText("");
@@ -532,18 +574,42 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         });
         jPanel8.add(cbbLoaiKM, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 180, 40));
 
-        txtMucKM.setFont(new java.awt.Font("Nunito", 0, 13)); // NOI18N
+        txtMucKM.setFont(new java.awt.Font("Nunito Light", 1, 13)); // NOI18N
+        txtMucKM.setLabelColor(new java.awt.Color(1, 132, 203));
         txtMucKM.setLabelText("Mức khuyến mại");
         jPanel8.add(txtMucKM, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 240, -1));
 
-        jLabel2.setFont(new java.awt.Font("Nunito", 0, 13)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Nunito Light", 1, 13)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(3, 155, 216));
         jLabel2.setText("Loại khuyến mại");
         jPanel8.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
 
+        txtThoiGianKT.setEditable(false);
+        txtThoiGianKT.setFont(new java.awt.Font("Nunito Light", 1, 13)); // NOI18N
+        txtThoiGianKT.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtThoiGianKT.setLabelText("");
+        txtThoiGianKT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtThoiGianKTMouseClicked(evt);
+            }
+        });
+        jPanel8.add(txtThoiGianKT, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 140, -1));
+
+        txtThoiGianBD.setEditable(false);
+        txtThoiGianBD.setFont(new java.awt.Font("Nunito Light", 1, 13)); // NOI18N
+        txtThoiGianBD.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtThoiGianBD.setLabelText("");
+        txtThoiGianBD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtThoiGianBDMouseClicked(evt);
+            }
+        });
+        jPanel8.add(txtThoiGianBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 140, -1));
+
         add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 20, 340, 340));
 
-        jLabel8.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(1, 132, 203));
         jLabel8.setText("Lọc trạng thái:");
         add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 40, 100, 40));
 
@@ -572,6 +638,7 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         btnXoa.setForeground(new java.awt.Color(255, 255, 255));
         btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/delete.png"))); // NOI18N
         btnXoa.setText("Xóa SP");
+        btnXoa.setToolTipText("Xóa điện thoại khỏi khuyến mại");
         btnXoa.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -596,6 +663,7 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         btnThemSpKM.setForeground(new java.awt.Color(255, 255, 255));
         btnThemSpKM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/add.png"))); // NOI18N
         btnThemSpKM.setText("Thêm SP");
+        btnThemSpKM.setToolTipText("Thêm điện thoại vào khuyến mại");
         btnThemSpKM.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
         btnThemSpKM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -631,7 +699,7 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(tblAllSpChiTiet);
+        jspTblAllSpChiTiet.setViewportView(tblAllSpChiTiet);
         if (tblAllSpChiTiet.getColumnModel().getColumnCount() > 0) {
             tblAllSpChiTiet.getColumnModel().getColumn(0).setPreferredWidth(5);
             tblAllSpChiTiet.getColumnModel().getColumn(1).setPreferredWidth(55);
@@ -641,7 +709,7 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
             tblAllSpChiTiet.getColumnModel().getColumn(7).setPreferredWidth(50);
         }
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 1130, 340));
+        add(jspTblAllSpChiTiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 1130, 340));
 
         tblKhuyenMai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -664,7 +732,7 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
                 tblKhuyenMaiMouseClicked(evt);
             }
         });
-        jScrollPane6.setViewportView(tblKhuyenMai);
+        jspTblKhuyenMai.setViewportView(tblKhuyenMai);
         if (tblKhuyenMai.getColumnModel().getColumnCount() > 0) {
             tblKhuyenMai.getColumnModel().getColumn(0).setPreferredWidth(8);
             tblKhuyenMai.getColumnModel().getColumn(1).setPreferredWidth(30);
@@ -672,18 +740,10 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
             tblKhuyenMai.getColumnModel().getColumn(5).setPreferredWidth(50);
         }
 
-        add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 760, 270));
-
-        txtTimKhuyenMai.setFont(new java.awt.Font("Nunito", 0, 14)); // NOI18N
-        txtTimKhuyenMai.setLabelText("Tìm kiếm khuyến mại theo mã và tên");
-        txtTimKhuyenMai.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                txtTimKhuyenMaiCaretUpdate(evt);
-            }
-        });
-        add(txtTimKhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 310, 40));
+        add(jspTblKhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 760, 270));
 
         txtTimDTKM.setFont(new java.awt.Font("Nunito", 0, 14)); // NOI18N
+        txtTimDTKM.setLabelColor(new java.awt.Color(1, 132, 203));
         txtTimDTKM.setLabelText("Tìm kiếm sản phẩm khuyến mại theo mã và tên");
         txtTimDTKM.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
@@ -694,269 +754,20 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
 
         jPanel12.setBackground(new java.awt.Color(255, 255, 255));
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách khuyến mại", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito", 1, 14))); // NOI18N
+        jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtTimKhuyenMai.setFont(new java.awt.Font("Nunito", 0, 14)); // NOI18N
+        txtTimKhuyenMai.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtTimKhuyenMai.setLabelText("Tìm kiếm khuyến mại theo mã và tên");
+        txtTimKhuyenMai.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtTimKhuyenMaiCaretUpdate(evt);
+            }
+        });
+        jPanel12.add(txtTimKhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 310, 50));
+
         add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 780, 360));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnThemSPKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPKMActionPerformed
-        // TODO add your handling code here:
-        List<Integer> lst = new ArrayList<>();
-        List<KhuyenMaiReQuestDto> lstKMRequest = new ArrayList<>();
-        int row = tblAllSpKM.getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Mời bạn chọn sản phẩm");
-            return;
-        }
-        int[] arrRow = tblDienThoai.getSelectedRows();
-        for (int i : arrRow) {
-            lst.add(i);
-        }
-        
-//        for (int i = 0; i < tblAllSpKM.getRowCount(); i++) {
-//            Boolean check = (boolean) tblAllSpKM.getValueAt(i, 4);
-//            if (check) {
-//                lst.add(i);
-//            }
-//        }
-
-        for (int i = 0; i < listSPKM.size(); i++) {
-            for (Integer x : lst) {
-                if (i == x) {
-                    KhuyenMai khuyenMai = this.getFormData();
-                    if (khuyenMai == null) {
-                        return;
-                    }
-                    List<DienThoaiKhuyenMaiDto> lstDTKMDienRavaTgLai = dienThoaiKhuyenMaiServiceImpl.findDTKhuyenMaiDienRavaTgLai(listSPKM.get(i).getId());
-                    for (DienThoaiKhuyenMaiDto a : lstDTKMDienRavaTgLai) {
-                        //(StartA < EndB) && (EndA > StartB)
-                        KhuyenMai KM = khuyenMaiImpl.findById(a.getIdKhuyenMai());
-                        if (khuyenMai.getNgayBatDau().getTime() < KM.getNgayKetThuc().getTime()
-                                && khuyenMai.getNgayKetThuc().getTime() > KM.getNgayBatDau().getTime()) {
-                            JOptionPane.showMessageDialog(this, "Điện thoại " + a.getMaChiTietDienThoai() + " đã có khuyến mại " + KM.getTen());
-                            return;
-                        }
-                    }
-                    ChiTietDienThoai chiTietDienThoai = new ChiTietDienThoai();
-                    chiTietDienThoai.setId(listSPKM.get(i).getId());
-                    chiTietDienThoai.setDonGia(listSPKM.get(i).getDonGia());
-
-                    BigDecimal giaBan = chiTietDienThoai.getDonGia();
-                    Float giaphanTram = khuyenMai.getGiaTriPhanTram();
-                    BigDecimal giaTienMat = khuyenMai.getGiaTriTienMat();
-                    BigDecimal giaconLai = null;
-                    if (giaTienMat == null) {
-//                        giaconLai = giaBan - (giaBan * (giaphanTram / 100));
-                        giaconLai = giaBan.subtract(giaBan.multiply(BigDecimal.valueOf(giaphanTram / 100)));
-                    } else if (giaphanTram == null) {
-                        giaconLai = giaBan.subtract(giaTienMat);
-                    }
-                    System.out.println(i);
-                    System.out.println(giaphanTram);
-                    System.out.println(giaTienMat);
-                    System.out.println(giaconLai);
-
-                    KhuyenMaiReQuestDto khuyenMaiReQuestDto = new KhuyenMaiReQuestDto();
-                    khuyenMaiReQuestDto.setMaKhuyenMai(khuyenMai.getMa());
-                    khuyenMaiReQuestDto.setTenKhuyenMai(khuyenMai.getTen());
-                    khuyenMaiReQuestDto.setNgayBatDau(khuyenMai.getNgayBatDau());
-                    khuyenMaiReQuestDto.setNgayKetThuc(khuyenMai.getNgayKetThuc());
-                    khuyenMaiReQuestDto.setGiaTriPhanTram(khuyenMai.getGiaTriPhanTram());
-                    khuyenMaiReQuestDto.setGiaTriTienMat(khuyenMai.getGiaTriTienMat());
-                    khuyenMaiReQuestDto.setChiTietDienThoai(chiTietDienThoai);
-                    khuyenMaiReQuestDto.setGiaBan(giaBan);
-                    khuyenMaiReQuestDto.setGiaConLai(giaconLai);
-
-                    lstKMRequest.add(khuyenMaiReQuestDto);
-
-                }
-            }
-        }
-        String ketQua = dienThoaiKhuyenMaiServiceImpl.insertKMDT(lstKMRequest);
-        if (ketQua.equals("Thêm thành công")) {
-            list1 = khuyenMaiImpl.getAllResponse();
-            clear();
-            loadTableKM(list1);
-            list.clear();
-            loadTableSP(list);
-            danhSachSanPham.setVisible(false);
-
-        }
-        JOptionPane.showMessageDialog(this, ketQua);
-
-    }//GEN-LAST:event_btnThemSPKMActionPerformed
-
-    private void btnThoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoaiActionPerformed
-        // TODO add your handling code here:
-        danhSachSanPham.setVisible(false);
-    }//GEN-LAST:event_btnThoaiActionPerformed
-
-    private void btnThemDienThoaiKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemDienThoaiKMActionPerformed
-        // TODO add your handling code here:
-        int row = this.tblKhuyenMai.getSelectedRow();
-        UUID id = list1.get(row).getIdKhuyenMai();
-        KhuyenMai khuyenMai = this.getFormData();
-        if (khuyenMai == null) {
-            return;
-        }
-        khuyenMai.setId(id);
-        int row1 = tblDienThoai.getSelectedRow();
-        if (row1 == -1) {
-            JOptionPane.showMessageDialog(this, "Mời bạn chọn sản phẩm");
-            return;
-        }
-        List<Integer> lst = new ArrayList<>();
-        int[] arrRow = tblDienThoai.getSelectedRows();
-        for (int i : arrRow) {
-            lst.add(i);
-        }
-        List<KhuyenMaiReQuestDto> lstKMRequest = new ArrayList<>();
-//        for (int i = 0; i < tblDienThoai.getRowCount(); i++) {
-//            Boolean check = (boolean) tblDienThoai.getValueAt(i, 4);
-//            if (check) {
-//                lst.add(i);
-//            }
-//        }
-
-        List<ChiTietDienThoaiResponse> listCTDT = chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id);
-        for (int i = 0; i < listCTDT.size(); i++) {
-            for (Integer x : lst) {
-                if (i == x) {
-                    List<DienThoaiKhuyenMaiDto> lstDTKMDienRavaTgLai = dienThoaiKhuyenMaiServiceImpl.findDTKhuyenMaiDienRavaTgLai(listSPKM.get(i).getId());
-                    for (DienThoaiKhuyenMaiDto a : lstDTKMDienRavaTgLai) {
-                        //(StartA < EndB) && (EndA > StartB)
-                        KhuyenMai KM = khuyenMaiImpl.findById(a.getIdKhuyenMai());
-                        if (khuyenMai.getNgayBatDau().getTime() < KM.getNgayKetThuc().getTime()
-                                && khuyenMai.getNgayKetThuc().getTime() > KM.getNgayBatDau().getTime()) {
-                            JOptionPane.showMessageDialog(this, "Điện thoại " + a.getMaChiTietDienThoai() + " đã có khuyến mại " + KM.getTen());
-                            return;
-                        }
-                    }
-                    ChiTietDienThoai chiTietDienThoai = new ChiTietDienThoai();
-                    chiTietDienThoai.setId(listCTDT.get(i).getId());
-                    chiTietDienThoai.setDonGia(listCTDT.get(i).getDonGia());
-
-                    BigDecimal giaBan = chiTietDienThoai.getDonGia();
-                    Float giaphanTram = khuyenMai.getGiaTriPhanTram();
-                    BigDecimal giaTienMat = khuyenMai.getGiaTriTienMat();
-                    BigDecimal giaconLai = null;
-                    if (giaTienMat == null) {
-//                        giaconLai = giaBan - (giaBan * (giaphanTram / 100));
-                        giaconLai = giaBan.subtract(giaBan.multiply(BigDecimal.valueOf(giaphanTram / 100)));
-                    } else if (giaphanTram == null) {
-                        giaconLai = giaBan.subtract(giaTienMat);
-                    }
-
-                    KhuyenMaiReQuestDto khuyenMaiReQuestDto = new KhuyenMaiReQuestDto();
-                    khuyenMaiReQuestDto.setMaKhuyenMai(khuyenMai.getMa());
-                    khuyenMaiReQuestDto.setTenKhuyenMai(khuyenMai.getTen());
-                    khuyenMaiReQuestDto.setNgayBatDau(khuyenMai.getNgayBatDau());
-                    khuyenMaiReQuestDto.setNgayKetThuc(khuyenMai.getNgayKetThuc());
-                    khuyenMaiReQuestDto.setGiaTriPhanTram(khuyenMai.getGiaTriPhanTram());
-                    khuyenMaiReQuestDto.setGiaTriTienMat(khuyenMai.getGiaTriTienMat());
-                    khuyenMaiReQuestDto.setChiTietDienThoai(chiTietDienThoai);
-                    khuyenMaiReQuestDto.setGiaBan(giaBan);
-                    khuyenMaiReQuestDto.setGiaConLai(giaconLai);
-
-                    lstKMRequest.add(khuyenMaiReQuestDto);
-                }
-            }
-        }
-
-        String ketQua = dienThoaiKhuyenMaiServiceImpl.insertSanPhamKM(khuyenMai, lstKMRequest);
-        if (ketQua.equals("Thêm thành công")) {
-
-            list1 = khuyenMaiImpl.getAllResponse();
-            clear();
-            loadTableKM(list1);
-            list.clear();
-            loadTableSP(list);
-            DSDienThoai.setVisible(false);
-        }
-        JOptionPane.showMessageDialog(this, ketQua);
-    }//GEN-LAST:event_btnThemDienThoaiKMActionPerformed
-
-    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
-        // TODO add your handling code here:
-        DSDienThoai.setVisible(false);
-    }//GEN-LAST:event_btnThoatActionPerformed
-
-    private void cbbLocDienThoai1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocDienThoai1ActionPerformed
-        // TODO add your handling code here:
-        String text = this.cbbLocDienThoai1.getSelectedItem().toString();
-        if (cbbLocDienThoai1.getSelectedIndex() == 0) {
-            listSPKM = this.chiTietDienThoaiImpl.getAllTrangThai(0);
-            this.loadTableSPKM(listSPKM);
-        } else {
-            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByDienThoai(text);
-            this.loadTableSPKM(listSPKM);
-        }
-
-    }//GEN-LAST:event_cbbLocDienThoai1ActionPerformed
-
-    private void cbbLocHang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocHang1ActionPerformed
-        // TODO add your handling code here:
-        String text = this.cbbLocHang1.getSelectedItem().toString();
-        if (cbbLocHang1.getSelectedIndex() == 0) {
-            listSPKM = this.chiTietDienThoaiImpl.getAllTrangThai(0);
-            this.loadTableSPKM(listSPKM);
-        } else {
-            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByHang(text);
-            this.loadTableSPKM(listSPKM);
-        }
-    }//GEN-LAST:event_cbbLocHang1ActionPerformed
-
-    private void cbbLocMauSac1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocMauSac1ActionPerformed
-        // TODO add your handling code here:
-        String text = this.cbbLocMauSac1.getSelectedItem().toString();
-        if (cbbLocMauSac1.getSelectedIndex() == 0) {
-            listSPKM = this.chiTietDienThoaiImpl.getAllTrangThai(0);
-            this.loadTableSPKM(listSPKM);
-        } else {
-            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByMauSac(text);
-            this.loadTableSPKM(listSPKM);
-        }
-    }//GEN-LAST:event_cbbLocMauSac1ActionPerformed
-
-    private void cbbLocDienThoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocDienThoaiActionPerformed
-        // TODO add your handling code here:
-        int row = this.tblKhuyenMai.getSelectedRow();
-        UUID id = list1.get(row).getIdKhuyenMai();
-        String text = this.cbbLocDienThoai.getSelectedItem().toString();
-        if (cbbLocDienThoai.getSelectedIndex() == 0) {
-            listSPKM = this.chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id);
-            this.loadTableDienThoai(listSPKM);
-        } else {
-            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMByDienThoai(id, text);
-            this.loadTableDienThoai(listSPKM);
-        }
-    }//GEN-LAST:event_cbbLocDienThoaiActionPerformed
-
-    private void cbbLocHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocHangActionPerformed
-        // TODO add your handling code here:
-        int row = this.tblKhuyenMai.getSelectedRow();
-        UUID id = list1.get(row).getIdKhuyenMai();
-        String text = this.cbbLocHang.getSelectedItem().toString();
-        if (cbbLocHang.getSelectedIndex() == 0) {
-            listSPKM = this.chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id);
-            this.loadTableDienThoai(listSPKM);
-        } else {
-            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMByHang(id, text);
-            this.loadTableDienThoai(listSPKM);
-        }
-    }//GEN-LAST:event_cbbLocHangActionPerformed
-
-    private void cbbLocMauSacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocMauSacActionPerformed
-        // TODO add your handling code here:
-        int row = this.tblKhuyenMai.getSelectedRow();
-        UUID id = list1.get(row).getIdKhuyenMai();
-        String text = this.cbbLocMauSac.getSelectedItem().toString();
-        if (cbbLocMauSac.getSelectedIndex() == 0) {
-            listSPKM = this.chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id);
-            this.loadTableDienThoai(listSPKM);
-        } else {
-            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMByMauSac(id, text);
-            this.loadTableDienThoai(listSPKM);
-        }
-    }//GEN-LAST:event_cbbLocMauSacActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
@@ -964,8 +775,8 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         this.loadCbbHang1();
         this.loadCbbMauSac1();
         this.loadTableSPKM(chiTietDienThoaiImpl.getAllTrangThai(0));
-        danhSachSanPham.setVisible(true);
-        danhSachSanPham.setLocationRelativeTo(null);
+        dlChonSanPhamKm.setVisible(true);
+        dlChonSanPhamKm.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
@@ -1016,7 +827,7 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         }
         int row2 = this.tblAllSpChiTiet.getSelectedRow();
         if (row2 == -1) {
-            JOptionPane.showMessageDialog(this, "Bạn cần chọn một điện thoại khuyến mại");
+            JOptionPane.showMessageDialog(this, "Bạn cần chọn một điện thoại trong đợt khuyến mại để xóa");
             return;
         }
         int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa bản ghi này không?");
@@ -1065,8 +876,8 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         this.loadCbbHang();
         this.loadCbbMauSac();
         this.loadTableDienThoai(chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id));
-        DSDienThoai.setVisible(true);
-        DSDienThoai.setLocationRelativeTo(null);
+        dlThemDienThoaiVaoKm.setVisible(true);
+        dlThemDienThoaiVaoKm.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnThemSpKMActionPerformed
 
     private void tblKhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhuyenMaiMouseClicked
@@ -1075,11 +886,12 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         if (row == -1) {
             return;
         }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         KhuyenMaiDto x = list1.get(row);
         this.txtMa.setText(x.getMaKhuyenMai());
         this.txtTen.setText(x.getTenKhuyenMai());
-        this.txtNgayBD.setText(x.getNgayBatDau().toString());
-        this.txtNgayKT.setText(x.getNgayKetThuc().toString());
+        this.txtNgayBD.setText(sdf.format(x.getNgayBatDau()));
+        this.txtNgayKT.setText(sdf.format(x.getNgayKetThuc()));
 
         if (x.getGiaTriPhanTram() == null) {
             txtMucKM.setText(x.getGiaTriTienMat().toString());
@@ -1126,27 +938,46 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtTimDTKMCaretUpdate
 
-    private void cbbLocTinhTrangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocTinhTrangActionPerformed
-        // TODO add your handling code here:
-        int row = this.tblKhuyenMai.getSelectedRow();
-        UUID id = list1.get(row).getIdKhuyenMai();
-        String text = this.cbbLocTinhTrang.getSelectedItem().toString();
-        
-        if (cbbLocTinhTrang.getSelectedIndex() == 0) {
-            listSPKM = this.chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id);
-            this.loadTableDienThoai(listSPKM);
+    private void cbbLocDienThoai1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocDienThoai1ActionPerformed
+        // CBB lọc điện thoại khi chọn Điện thoại vào KM
+        String text = this.cbbLocDienThoai1.getSelectedItem().toString();
+        if (cbbLocDienThoai1.getSelectedIndex() == 0) {
+            listSPKM = this.chiTietDienThoaiImpl.getAllTrangThai(0);
+            this.loadTableSPKM(listSPKM);
         } else {
-            Integer tinhTrang = Integer.parseInt(text);
-            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMByTinhTrang(id, tinhTrang);
-            this.loadTableDienThoai(listSPKM);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByDienThoai(text);
+            this.loadTableSPKM(listSPKM);
         }
-        
-    }//GEN-LAST:event_cbbLocTinhTrangActionPerformed
+    }//GEN-LAST:event_cbbLocDienThoai1ActionPerformed
+
+    private void cbbLocHang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocHang1ActionPerformed
+        // CBB lọc hãng khi chọn Điện thoại vào KM
+        String text = this.cbbLocHang1.getSelectedItem().toString();
+        if (cbbLocHang1.getSelectedIndex() == 0) {
+            listSPKM = this.chiTietDienThoaiImpl.getAllTrangThai(0);
+            this.loadTableSPKM(listSPKM);
+        } else {
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByHang(text);
+            this.loadTableSPKM(listSPKM);
+        }
+    }//GEN-LAST:event_cbbLocHang1ActionPerformed
+
+    private void cbbLocMauSac1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocMauSac1ActionPerformed
+        // CBB lọc màu sắc khi chọn Điện thoại vào KM
+        String text = this.cbbLocMauSac1.getSelectedItem().toString();
+        if (cbbLocMauSac1.getSelectedIndex() == 0) {
+            listSPKM = this.chiTietDienThoaiImpl.getAllTrangThai(0);
+            this.loadTableSPKM(listSPKM);
+        } else {
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByMauSac(text);
+            this.loadTableSPKM(listSPKM);
+        }
+    }//GEN-LAST:event_cbbLocMauSac1ActionPerformed
 
     private void cbbLocTinhTrang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocTinhTrang1ActionPerformed
-        // TODO add your handling code here:
+        // CBB lọc tình trạng khi chọn Điện thoại vào KM
         String text = this.cbbLocTinhTrang1.getSelectedItem().toString();
-        
+
         if (cbbLocTinhTrang1.getSelectedIndex() == 0) {
             listSPKM = this.chiTietDienThoaiImpl.getAllTrangThai(0);
             this.loadTableSPKM(listSPKM);
@@ -1157,58 +988,306 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbbLocTinhTrang1ActionPerformed
 
+    private void btnThemSPKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPKMActionPerformed
+        // BTN Thêm khuyến mại sau khi chọn SP được khuyến mại
+        List<Integer> lst = new ArrayList<>();
+        List<KhuyenMaiReQuestDto> lstKMRequest = new ArrayList<>();
+        int row = tblDienThoaiChon.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Mời bạn chọn sản phẩm");
+            return;
+        }
+        int[] arrRow = tblDienThoaiChon.getSelectedRows();
+        for (int i : arrRow) {
+            lst.add(i);
+        }
+
+//        for (int i = 0; i < tblAllSpKM.getRowCount(); i++) {
+//            Boolean check = (boolean) tblAllSpKM.getValueAt(i, 4);
+//            if (check) {
+//                lst.add(i);
+//            }
+//        }
+        for (int i = 0; i < listSPKM.size(); i++) {
+            for (Integer x : lst) {
+                if (i == x) {
+                    KhuyenMai khuyenMai = this.getFormData();
+                    if (khuyenMai == null) {
+                        return;
+                    }
+                    List<DienThoaiKhuyenMaiDto> lstDTKMDienRavaTgLai = dienThoaiKhuyenMaiServiceImpl.findDTKhuyenMaiDienRavaTgLai(listSPKM.get(i).getId());
+                    for (DienThoaiKhuyenMaiDto a : lstDTKMDienRavaTgLai) {
+                        //(StartA < EndB) && (EndA > StartB)
+                        KhuyenMai KM = khuyenMaiImpl.findById(a.getIdKhuyenMai());
+                        if (khuyenMai.getNgayBatDau().getTime() < KM.getNgayKetThuc().getTime()
+                                && khuyenMai.getNgayKetThuc().getTime() > KM.getNgayBatDau().getTime()) {
+                            JOptionPane.showMessageDialog(this, "Điện thoại " + a.getMaChiTietDienThoai() + " đã có khuyến mại " + KM.getTen());
+                            lstKMRequest.clear();
+                            return;
+                        }
+                    }
+                    ChiTietDienThoai chiTietDienThoai = new ChiTietDienThoai();
+                    chiTietDienThoai.setId(listSPKM.get(i).getId());
+                    chiTietDienThoai.setDonGia(listSPKM.get(i).getDonGia());
+
+                    BigDecimal giaBan = chiTietDienThoai.getDonGia();
+                    Float giaphanTram = khuyenMai.getGiaTriPhanTram();
+                    BigDecimal giaTienMat = khuyenMai.getGiaTriTienMat();
+                    BigDecimal giaconLai = null;
+                    if (giaTienMat == null) {
+//                        giaconLai = giaBan - (giaBan * (giaphanTram / 100));
+                        giaconLai = giaBan.subtract(giaBan.multiply(BigDecimal.valueOf(giaphanTram / 100)));
+                    } else if (giaphanTram == null) {
+                        giaconLai = giaBan.subtract(giaTienMat);
+                    }
+                    System.out.println(i);
+                    System.out.println(giaphanTram);
+                    System.out.println(giaTienMat);
+                    System.out.println(giaconLai);
+
+                    KhuyenMaiReQuestDto khuyenMaiReQuestDto = new KhuyenMaiReQuestDto();
+                    khuyenMaiReQuestDto.setMaKhuyenMai(khuyenMai.getMa());
+                    khuyenMaiReQuestDto.setTenKhuyenMai(khuyenMai.getTen());
+                    khuyenMaiReQuestDto.setNgayBatDau(khuyenMai.getNgayBatDau());
+                    khuyenMaiReQuestDto.setNgayKetThuc(khuyenMai.getNgayKetThuc());
+                    khuyenMaiReQuestDto.setGiaTriPhanTram(khuyenMai.getGiaTriPhanTram());
+                    khuyenMaiReQuestDto.setGiaTriTienMat(khuyenMai.getGiaTriTienMat());
+                    khuyenMaiReQuestDto.setChiTietDienThoai(chiTietDienThoai);
+                    khuyenMaiReQuestDto.setGiaBan(giaBan);
+                    khuyenMaiReQuestDto.setGiaConLai(giaconLai);
+
+                    lstKMRequest.add(khuyenMaiReQuestDto);
+
+                }
+            }
+        }
+        String ketQua = dienThoaiKhuyenMaiServiceImpl.insertKMDT(lstKMRequest);
+        if (ketQua.equals("Thêm thành công")) {
+            list1 = khuyenMaiImpl.getAllResponse();
+            clear();
+            loadTableKM(list1);
+            list.clear();
+            loadTableSP(list);
+            dlChonSanPhamKm.setVisible(false);
+
+        }
+        JOptionPane.showMessageDialog(this, ketQua);
+
+    }//GEN-LAST:event_btnThemSPKMActionPerformed
+
+    private void buttonCustom2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCustom2ActionPerformed
+        // BTN Close
+        dlChonSanPhamKm.setVisible(false);
+    }//GEN-LAST:event_buttonCustom2ActionPerformed
+
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+        // TODO add your handling code here:
+        dlThemDienThoaiVaoKm.setVisible(false);
+    }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void btnThemDienThoaiKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemDienThoaiKMActionPerformed
+        // BTN Thêm điện thoại vào KM sau khi chọn điện thoại
+        int row = this.tblKhuyenMai.getSelectedRow();
+        UUID id = list1.get(row).getIdKhuyenMai();
+        KhuyenMai khuyenMai = this.getFormData();
+        if (khuyenMai == null) {
+            return;
+        }
+        khuyenMai.setId(id);
+        int row1 = tblDienThoaiThem.getSelectedRow();
+        if (row1 == -1) {
+            JOptionPane.showMessageDialog(this, "Mời bạn chọn sản phẩm");
+            return;
+        }
+        List<Integer> lst = new ArrayList<>();
+        int[] arrRow = tblDienThoaiThem.getSelectedRows();
+        for (int i : arrRow) {
+            lst.add(i);
+        }
+        List<KhuyenMaiReQuestDto> lstKMRequest = new ArrayList<>();
+//        for (int i = 0; i < tblDienThoai.getRowCount(); i++) {
+//            Boolean check = (boolean) tblDienThoai.getValueAt(i, 4);
+//            if (check) {
+//                lst.add(i);
+//            }
+//        }
+
+        List<ChiTietDienThoaiResponse> listCTDT = chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id);
+        for (int i = 0; i < listCTDT.size(); i++) {
+            for (Integer x : lst) {
+                if (i == x) {
+                    List<DienThoaiKhuyenMaiDto> lstDTKMDienRavaTgLai = dienThoaiKhuyenMaiServiceImpl.findDTKhuyenMaiDienRavaTgLai(listSPKM.get(i).getId());
+                    for (DienThoaiKhuyenMaiDto a : lstDTKMDienRavaTgLai) {
+                        //(StartA < EndB) && (EndA > StartB)
+                        KhuyenMai KM = khuyenMaiImpl.findById(a.getIdKhuyenMai());
+                        if (khuyenMai.getNgayBatDau().getTime() < KM.getNgayKetThuc().getTime()
+                                && khuyenMai.getNgayKetThuc().getTime() > KM.getNgayBatDau().getTime()) {
+                            JOptionPane.showMessageDialog(this, "Điện thoại " + a.getMaChiTietDienThoai() + " đã có khuyến mại " + KM.getTen());
+                            lstKMRequest.clear();
+                            return;
+                        }
+                    }
+                    ChiTietDienThoai chiTietDienThoai = new ChiTietDienThoai();
+                    chiTietDienThoai.setId(listCTDT.get(i).getId());
+                    chiTietDienThoai.setDonGia(listCTDT.get(i).getDonGia());
+
+                    BigDecimal giaBan = chiTietDienThoai.getDonGia();
+                    Float giaphanTram = khuyenMai.getGiaTriPhanTram();
+                    BigDecimal giaTienMat = khuyenMai.getGiaTriTienMat();
+                    BigDecimal giaconLai = null;
+                    if (giaTienMat == null) {
+//                        giaconLai = giaBan - (giaBan * (giaphanTram / 100));
+                        giaconLai = giaBan.subtract(giaBan.multiply(BigDecimal.valueOf(giaphanTram / 100)));
+                    } else if (giaphanTram == null) {
+                        giaconLai = giaBan.subtract(giaTienMat);
+                    }
+
+                    KhuyenMaiReQuestDto khuyenMaiReQuestDto = new KhuyenMaiReQuestDto();
+                    khuyenMaiReQuestDto.setMaKhuyenMai(khuyenMai.getMa());
+                    khuyenMaiReQuestDto.setTenKhuyenMai(khuyenMai.getTen());
+                    khuyenMaiReQuestDto.setNgayBatDau(khuyenMai.getNgayBatDau());
+                    khuyenMaiReQuestDto.setNgayKetThuc(khuyenMai.getNgayKetThuc());
+                    khuyenMaiReQuestDto.setGiaTriPhanTram(khuyenMai.getGiaTriPhanTram());
+                    khuyenMaiReQuestDto.setGiaTriTienMat(khuyenMai.getGiaTriTienMat());
+                    khuyenMaiReQuestDto.setChiTietDienThoai(chiTietDienThoai);
+                    khuyenMaiReQuestDto.setGiaBan(giaBan);
+                    khuyenMaiReQuestDto.setGiaConLai(giaconLai);
+
+                    lstKMRequest.add(khuyenMaiReQuestDto);
+                }
+            }
+        }
+
+        String ketQua = dienThoaiKhuyenMaiServiceImpl.insertSanPhamKM(khuyenMai, lstKMRequest);
+        if (ketQua.equals("Thêm thành công")) {
+
+            list1 = khuyenMaiImpl.getAllResponse();
+            clear();
+            loadTableKM(list1);
+            list.clear();
+            loadTableSP(list);
+            dlThemDienThoaiVaoKm.setVisible(false);
+        }
+        JOptionPane.showMessageDialog(this, ketQua);
+    }//GEN-LAST:event_btnThemDienThoaiKMActionPerformed
+
+    private void cbbLocDienThoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocDienThoaiActionPerformed
+        // CBB lọc điện thoại khi thêm Điện thoại vào KM
+        int row = this.tblKhuyenMai.getSelectedRow();
+        UUID id = list1.get(row).getIdKhuyenMai();
+        String text = this.cbbLocDienThoai.getSelectedItem().toString();
+        if (cbbLocDienThoai.getSelectedIndex() == 0) {
+            listSPKM = this.chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id);
+            this.loadTableDienThoai(listSPKM);
+        } else {
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMByDienThoai(id, text);
+            this.loadTableDienThoai(listSPKM);
+        }
+    }//GEN-LAST:event_cbbLocDienThoaiActionPerformed
+
+    private void cbbLocHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocHangActionPerformed
+        // CBB lọc hãng khi thêm Điện thoại vào KM
+        int row = this.tblKhuyenMai.getSelectedRow();
+        UUID id = list1.get(row).getIdKhuyenMai();
+        String text = this.cbbLocHang.getSelectedItem().toString();
+        if (cbbLocHang.getSelectedIndex() == 0) {
+            listSPKM = this.chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id);
+            this.loadTableDienThoai(listSPKM);
+        } else {
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMByHang(id, text);
+            this.loadTableDienThoai(listSPKM);
+        }
+    }//GEN-LAST:event_cbbLocHangActionPerformed
+
+    private void cbbLocMauSacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocMauSacActionPerformed
+        // CBB lọc màu sắc khi thêm Điện thoại vào KM
+        int row = this.tblKhuyenMai.getSelectedRow();
+        UUID id = list1.get(row).getIdKhuyenMai();
+        String text = this.cbbLocMauSac.getSelectedItem().toString();
+        if (cbbLocMauSac.getSelectedIndex() == 0) {
+            listSPKM = this.chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id);
+            this.loadTableDienThoai(listSPKM);
+        } else {
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMByMauSac(id, text);
+            this.loadTableDienThoai(listSPKM);
+        }
+    }//GEN-LAST:event_cbbLocMauSacActionPerformed
+
+    private void cbbLocTinhTrangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocTinhTrangActionPerformed
+        // CBB lọc Màu sắc khi thêm Điện thoại vào KM
+        int row = this.tblKhuyenMai.getSelectedRow();
+        UUID id = list1.get(row).getIdKhuyenMai();
+        String text = this.cbbLocTinhTrang.getSelectedItem().toString();
+
+        if (cbbLocTinhTrang.getSelectedIndex() == 0) {
+            listSPKM = this.chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id);
+            this.loadTableDienThoai(listSPKM);
+        } else {
+            Integer tinhTrang = Integer.parseInt(text);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMByTinhTrang(id, tinhTrang);
+            this.loadTableDienThoai(listSPKM);
+        }
+    }//GEN-LAST:event_cbbLocTinhTrangActionPerformed
+
+    private void txtThoiGianBDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtThoiGianBDMouseClicked
+        // TXT Thời gian bắt đầu đầu click
+        tpThoiGianBatDau.showPopup(this, (getWidth() - tpThoiGianBatDau.getPreferredSize().width) / 2, (getHeight() - tpThoiGianBatDau.getPreferredSize().height) / 2);
+    }//GEN-LAST:event_txtThoiGianBDMouseClicked
+
+    private void txtThoiGianKTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtThoiGianKTMouseClicked
+        // TXT Thời gian kết thúc đầu click
+        tpThoiGianKetThuc.showPopup(this, (getWidth() - tpThoiGianKetThuc.getPreferredSize().width) / 2, (getHeight() - tpThoiGianKetThuc.getPreferredSize().height) / 2);
+    }//GEN-LAST:event_txtThoiGianKTMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDialog DSDienThoai;
     private pro1041.team_3.swing.ButtonCustom btnClear;
     private pro1041.team_3.swing.ButtonCustom btnSua;
     private pro1041.team_3.swing.ButtonCustom btnThem;
-    private javax.swing.JButton btnThemDienThoaiKM;
-    private javax.swing.JButton btnThemSPKM;
+    private pro1041.team_3.swing.ButtonCustom btnThemDienThoaiKM;
+    private pro1041.team_3.swing.ButtonCustom btnThemSPKM;
     private pro1041.team_3.swing.ButtonCustom btnThemSpKM;
-    private javax.swing.JButton btnThoai;
-    private javax.swing.JButton btnThoat;
+    private pro1041.team_3.swing.ButtonCustom btnThoat;
     private pro1041.team_3.swing.ButtonCustom btnXoa;
+    private pro1041.team_3.swing.ButtonCustom buttonCustom2;
     private pro1041.team_3.swing.Combobox cbbLoaiKM;
-    private pro1041.team_3.swing.ComboBoxSuggestion cbbLocDienThoai;
-    private pro1041.team_3.swing.ComboBoxSuggestion cbbLocDienThoai1;
-    private pro1041.team_3.swing.ComboBoxSuggestion cbbLocHang;
-    private pro1041.team_3.swing.ComboBoxSuggestion cbbLocHang1;
+    private pro1041.team_3.swing.Combobox cbbLocDienThoai;
+    private pro1041.team_3.swing.Combobox cbbLocDienThoai1;
+    private pro1041.team_3.swing.Combobox cbbLocHang;
+    private pro1041.team_3.swing.Combobox cbbLocHang1;
     private pro1041.team_3.swing.Combobox cbbLocKM;
-    private pro1041.team_3.swing.ComboBoxSuggestion cbbLocMauSac;
-    private pro1041.team_3.swing.ComboBoxSuggestion cbbLocMauSac1;
-    private pro1041.team_3.swing.ComboBoxSuggestion cbbLocTinhTrang;
-    private pro1041.team_3.swing.ComboBoxSuggestion cbbLocTinhTrang1;
-    private pro1041.team_3.swing.ComboSuggestionUI comboSuggestionUI1;
-    private javax.swing.JDialog danhSachSanPham;
+    private pro1041.team_3.swing.Combobox cbbLocMauSac;
+    private pro1041.team_3.swing.Combobox cbbLocMauSac1;
+    private pro1041.team_3.swing.Combobox cbbLocTinhTrang;
+    private pro1041.team_3.swing.Combobox cbbLocTinhTrang1;
+    private pro1041.team_3.swing.DateChooser dlChonNgayBatDau;
+    private pro1041.team_3.swing.DateChooser dlChonNgayKetThuc;
+    private javax.swing.JDialog dlChonSanPhamKm;
+    private javax.swing.JDialog dlThemDienThoaiVaoKm;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jspTblAllSpChiTiet;
+    private javax.swing.JScrollPane jspTblDienThoaiChon;
+    private javax.swing.JScrollPane jspTblDienThoaiThem;
+    private javax.swing.JScrollPane jspTblKhuyenMai;
     private javax.swing.JLabel lblLoai;
     private pro1041.team_3.swing.config.Table tblAllSpChiTiet;
-    private pro1041.team_3.swing.config.Table tblAllSpKM;
-    private pro1041.team_3.swing.config.Table tblDienThoai;
+    private pro1041.team_3.swing.config.Table tblDienThoaiChon;
+    private pro1041.team_3.swing.config.Table tblDienThoaiThem;
     private pro1041.team_3.swing.config.Table tblKhuyenMai;
+    private pro1041.team_3.swing.TimePicker tpThoiGianBatDau;
+    private pro1041.team_3.swing.TimePicker tpThoiGianKetThuc;
     private pro1041.team_3.swing.TextField txtMa;
     private pro1041.team_3.swing.TextField txtMucKM;
     private pro1041.team_3.swing.TextField txtNgayBD;
     private pro1041.team_3.swing.TextField txtNgayKT;
     private pro1041.team_3.swing.TextField txtTen;
+    private pro1041.team_3.swing.TextField txtThoiGianBD;
+    private pro1041.team_3.swing.TextField txtThoiGianKT;
     private pro1041.team_3.swing.TextField txtTimDTKM;
     private pro1041.team_3.swing.TextField txtTimKhuyenMai;
     // End of variables declaration//GEN-END:variables

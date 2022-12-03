@@ -71,7 +71,7 @@ public class DienThoaiKhuyenMaiServiceImpl implements DienThoaiKhuyenMaiService 
             dtkm.setChiTietDienThoai(x.getChiTietDienThoai());
             dtkm.setKhuyenMai(khuyenMai);
             dtkm.setDonGia(x.getGiaBan());
-            dtkm.setGiaConLai(x.getGiaConLai());
+            dtkm.setGiaConLai(x.getGiaConLai());            
             lstDtKM.add(dtkm);
         }
         if (!dienThoaiKhuyenMaiRepository.saveAll(lstDtKM)) {
