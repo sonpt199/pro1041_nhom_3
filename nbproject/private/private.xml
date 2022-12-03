@@ -6,9 +6,7 @@
             <file>file:/D:/DUAN1/QLBH_0112/src/pro1041/team_3/form/ViewQuanLyNhanVien.java</file>
         </group>
         <group name="abc">
-            <file>file:/D:/FPT%20POLY/Ky%204/PRO1041_DA1/workspace/pro1041_nhom_3/src/pro1041/team_3/repository/KhuyenMaiRepository.java</file>
-            <file>file:/D:/FPT%20POLY/Ky%204/PRO1041_DA1/workspace/pro1041_nhom_3/src/pro1041/team_3/form/ViewQuanLyKhuyenMai.java</file>
-            <file>file:/D:/FPT%20POLY/Ky%204/PRO1041_DA1/workspace/pro1041_nhom_3/src/pro1041/team_3/service/impl/KhuyenMaiServiceImpl.java</file>
+            <file>file:/D:/FPT%20POLY/Ky%204/PRO1041_DA1/workspace/pro1041_nhom_3/src/pro1041/team_3/util/HibernateUtil.java</file>
             <file>file:/D:/FPT%20POLY/Ky%204/PRO1041_DA1/workspace/pro1041_nhom_3/src/pro1041/team_3/form/ViewBanHang.java</file>
         </group>
     </open-files>
