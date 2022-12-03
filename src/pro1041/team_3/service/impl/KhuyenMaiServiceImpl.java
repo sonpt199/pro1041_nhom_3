@@ -26,14 +26,15 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
 
     @Override
     public List<KhuyenMaiDto> getAllResponse() {
-        _lstKM = new ArrayList<>();
-        List<KhuyenMai> list = khuyenMaiRepository.getAll();
-        for (KhuyenMai x : list) {
-            _lstKM.add(new KhuyenMaiDto(x.getId(), x.getMa(), x.getTen(),
-                    new java.sql.Date(x.getNgayBatDau().getTime()), new java.sql.Date(x.getNgayKetThuc().getTime()),
-                    x.getGiaTriPhanTram(), x.getGiaTriTienMat()));
-        }
-        return _lstKM;
+//        _lstKM = new ArrayList<>();
+//        List<KhuyenMai> list = khuyenMaiRepository.getAll();
+//        for (KhuyenMai x : list) {
+//            _lstKM.add(new KhuyenMaiDto(x.getId(), x.getMa(), x.getTen(),
+//                    new java.sql.Date(x.getNgayBatDau().getTime()), new java.sql.Date(x.getNgayKetThuc().getTime()),
+//                    x.getGiaTriPhanTram(), x.getGiaTriTienMat()));
+//        }
+//        return _lstKM;
+        return khuyenMaiRepository.getAllResponse();
     }
 
     @Override
