@@ -72,6 +72,7 @@ public class DienThoaiKhuyenMaiServiceImpl implements DienThoaiKhuyenMaiService 
             dtkm.setKhuyenMai(khuyenMai);
             dtkm.setDonGia(x.getGiaBan());
             dtkm.setGiaConLai(x.getGiaConLai());
+            dtkm.setTrangThai(0);
             lstDtKM.add(dtkm);
         }
         if (!dienThoaiKhuyenMaiRepository.saveAll(lstDtKM)) {
@@ -94,6 +95,7 @@ public class DienThoaiKhuyenMaiServiceImpl implements DienThoaiKhuyenMaiService 
             dtkm.setKhuyenMai(khuyenMai);
             dtkm.setDonGia(x.getGiaBan());
             dtkm.setGiaConLai(x.getGiaConLai());
+            dtkm.setTrangThai(0);
             lstDtKM.add(dtkm);
         }
         if (!dienThoaiKhuyenMaiRepository.saveAll(lstDtKM)) {

@@ -267,7 +267,6 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         jPanel12 = new javax.swing.JPanel();
 
         danhSachSanPham.setMinimumSize(new java.awt.Dimension(730, 570));
-        danhSachSanPham.setPreferredSize(new java.awt.Dimension(730, 570));
         danhSachSanPham.setSize(new java.awt.Dimension(730, 570));
         danhSachSanPham.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -377,7 +376,6 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         danhSachSanPham.getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 520));
 
         DSDienThoai.setMinimumSize(new java.awt.Dimension(730, 570));
-        DSDienThoai.setPreferredSize(new java.awt.Dimension(730, 570));
         DSDienThoai.setSize(new java.awt.Dimension(730, 570));
         DSDienThoai.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -706,7 +704,7 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Mời bạn chọn sản phẩm");
             return;
         }
-        int[] arrRow = tblDienThoai.getSelectedRows();
+        int[] arrRow = tblAllSpKM.getSelectedRows();
         for (int i : arrRow) {
             lst.add(i);
         }
@@ -749,10 +747,10 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
                     } else if (giaphanTram == null) {
                         giaconLai = giaBan.subtract(giaTienMat);
                     }
-                    System.out.println(i);
-                    System.out.println(giaphanTram);
-                    System.out.println(giaTienMat);
-                    System.out.println(giaconLai);
+//                    System.out.println(i);
+//                    System.out.println(giaphanTram);
+//                    System.out.println(giaTienMat);
+//                    System.out.println(giaconLai);
 
                     KhuyenMaiReQuestDto khuyenMaiReQuestDto = new KhuyenMaiReQuestDto();
                     khuyenMaiReQuestDto.setMaKhuyenMai(khuyenMai.getMa());
@@ -855,7 +853,7 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
                     khuyenMaiReQuestDto.setChiTietDienThoai(chiTietDienThoai);
                     khuyenMaiReQuestDto.setGiaBan(giaBan);
                     khuyenMaiReQuestDto.setGiaConLai(giaconLai);
-
+                    
                     lstKMRequest.add(khuyenMaiReQuestDto);
                 }
             }
