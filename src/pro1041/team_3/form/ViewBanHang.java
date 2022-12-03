@@ -273,6 +273,8 @@ public class ViewBanHang extends javax.swing.JPanel {
         BigDecimal tienThua = tienKhachDua.add(nganHang).subtract(tongTien);
         if (tienThua.compareTo(BigDecimal.ZERO) == 1) {
             txtTienThuaKetHop.setText(moneyFormat.format(tienThua) + "VNĐ");
+        } else {
+            txtTienThuaKetHop.setText("");
         }
     }
 
@@ -1081,7 +1083,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         txtHang.setEditable(false);
         txtHang.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
         txtHang.setLabelColor(new java.awt.Color(1, 132, 203));
-        txtHang.setLabelText("Màu sắc");
+        txtHang.setLabelText("Hãng");
         jPanel1.add(txtHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 220, -1));
 
         textAreaScroll1.setBackground(new java.awt.Color(255, 255, 255));
@@ -1624,6 +1626,8 @@ public class ViewBanHang extends javax.swing.JPanel {
         BigDecimal tienThua = tienKhachDua.subtract(tongTien);
         if (tienThua.compareTo(BigDecimal.ZERO) == 1) {
             txtTienThua.setText(moneyFormat.format(tienThua) + "VNĐ");
+        } else {
+            txtTienThua.setText("");
         }
     }//GEN-LAST:event_txtTienKhachDuaCaretUpdate
 
@@ -1667,6 +1671,8 @@ public class ViewBanHang extends javax.swing.JPanel {
         BigDecimal tienThua = tienNganHang.subtract(tongTien);
         if (tienThua.compareTo(BigDecimal.ZERO) == 1) {
             txtTienThuaNganHang.setText(moneyFormat.format(tienThua) + "VNĐ");
+        } else {
+            txtTienThuaNganHang.setText("");
         }
     }//GEN-LAST:event_txtNganHangCaretUpdate
 
