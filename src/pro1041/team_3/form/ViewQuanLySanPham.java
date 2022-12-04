@@ -11,7 +11,9 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import pro1041.team_3.domainModel.ChiTietDienThoai;
@@ -28,6 +30,8 @@ import pro1041.team_3.service.impl.DienThoaiServiceImpl;
 import pro1041.team_3.service.impl.HangServiceImpl;
 import pro1041.team_3.service.impl.KhuyenMaiServiceImpl;
 import pro1041.team_3.service.impl.MauSacServiceImpl;
+import pro1041.team_3.swing.Notification;
+import pro1041.team_3.swing.jnafilechooser.api.JnaFileChooser;
 
 /**
  *
@@ -250,6 +254,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         btnSua = new pro1041.team_3.swing.ButtonCustom();
         btnExport = new pro1041.team_3.swing.ButtonCustom();
         btnImport = new pro1041.team_3.swing.ButtonCustom();
+        btnTaoQr = new pro1041.team_3.swing.ButtonCustom();
 
         setBackground(new java.awt.Color(250, 255, 255));
         setPreferredSize(new java.awt.Dimension(1294, 709));
@@ -526,7 +531,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 btnThemActionPerformed(evt);
             }
         });
-        jPanel3.add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 100, -1));
+        jPanel3.add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 120, -1));
 
         btnSua.setBackground(new java.awt.Color(1, 181, 204));
         btnSua.setForeground(new java.awt.Color(255, 255, 255));
@@ -538,7 +543,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 btnSuaActionPerformed(evt);
             }
         });
-        jPanel3.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 100, -1));
+        jPanel3.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 120, -1));
 
         btnExport.setBackground(new java.awt.Color(1, 181, 204));
         btnExport.setForeground(new java.awt.Color(255, 255, 255));
@@ -550,7 +555,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 btnExportActionPerformed(evt);
             }
         });
-        jPanel3.add(btnExport, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 100, -1));
+        jPanel3.add(btnExport, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 120, -1));
 
         btnImport.setBackground(new java.awt.Color(1, 181, 204));
         btnImport.setForeground(new java.awt.Color(255, 255, 255));
@@ -562,7 +567,19 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 btnImportActionPerformed(evt);
             }
         });
-        jPanel3.add(btnImport, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 100, -1));
+        jPanel3.add(btnImport, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 120, -1));
+
+        btnTaoQr.setBackground(new java.awt.Color(1, 181, 204));
+        btnTaoQr.setForeground(new java.awt.Color(255, 255, 255));
+        btnTaoQr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/scanQr.png"))); // NOI18N
+        btnTaoQr.setText("Tải QR");
+        btnTaoQr.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnTaoQr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaoQrActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnTaoQr, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 120, -1));
 
         add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 20, 160, 350));
     }// </editor-fold>//GEN-END:initComponents
@@ -806,14 +823,38 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_cbbTrangThaiActionPerformed
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
-        // TODO add your handling code here:
+        //BTN Import Excel
     }//GEN-LAST:event_btnImportActionPerformed
+
+    private void btnTaoQrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoQrActionPerformed
+        //BTN Tạo QR
+        int row = tblChiTietDienThoai.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Mời chọn một điện thoại để tải mã QR");
+            return;
+        }
+        JnaFileChooser jfc = new JnaFileChooser();
+        jfc.setMode(JnaFileChooser.Mode.Directories);
+        if (!jfc.showOpenDialog((JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this))) {
+            return;
+        }
+        ChiTietDienThoaiResponse ctdt = list.get(row);
+        String mess = chiTietDTImpl.exportQr(jfc.getSelectedFile().getAbsolutePath(), ctdt.getId());
+        if (mess.equals("Tải thành công")) {
+            Notification panel = new Notification((JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this), 
+                    Notification.Type.SUCCESS, Notification.Location.TOP_CENTER, "Tải thành công");
+            panel.showNotification();
+        } else {
+            JOptionPane.showMessageDialog(this, mess);
+        }
+    }//GEN-LAST:event_btnTaoQrActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private pro1041.team_3.swing.ButtonCustom btnExport;
     private pro1041.team_3.swing.ButtonCustom btnImport;
     private pro1041.team_3.swing.ButtonCustom btnSua;
+    private pro1041.team_3.swing.ButtonCustom btnTaoQr;
     private pro1041.team_3.swing.ButtonCustom btnThem;
     private pro1041.team_3.swing.ButtonCustom btnThem1;
     private pro1041.team_3.swing.ButtonCustom buttonCustom4;

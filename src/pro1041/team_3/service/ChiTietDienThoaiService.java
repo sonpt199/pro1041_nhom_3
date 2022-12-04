@@ -47,5 +47,7 @@ public interface ChiTietDienThoaiService {
     List<ChiTietDienThoaiResponse> getAllCTDienThoaiByMauSac(String tenMauSac);
     
     List<ChiTietDienThoaiResponse> getAllCTDienThoaiByTinhTrang(int tinhTrang);
+    
+     String exportQr(String pathFolder, UUID idChiTietDienThoai);
 
 }
