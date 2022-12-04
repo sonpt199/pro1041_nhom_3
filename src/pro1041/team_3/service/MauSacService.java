@@ -7,7 +7,7 @@ import java.util.UUID;
 
 /**
  *
- * @author sonpt_ph19600
+ * @author vanntph19604
  */
 public interface MauSacService {
 
@@ -17,7 +17,9 @@ public interface MauSacService {
 
     String update(MauSac mausac);
 
-    String delete(UUID id);
+    String delete(String ma);
 
     List<MauSac> getAll();
+    
+    List<MauSacDto> findByName(String keyWord);
 }

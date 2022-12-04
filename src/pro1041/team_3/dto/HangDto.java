@@ -18,4 +18,10 @@ public class HangDto {
     private UUID id;
     private String ma;
     private String ten;
+    
+    public Object[] toDataRow(int index) {
+        return new Object[]{
+            index, ma, ten
+        };
+    }
 }

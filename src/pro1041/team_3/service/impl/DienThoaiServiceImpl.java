@@ -3,6 +3,7 @@ package pro1041.team_3.service.impl;
 import java.util.List;
 import java.util.UUID;
 import pro1041.team_3.domainModel.DienThoai;
+import pro1041.team_3.dto.ChiTietDienThoaiDto;
 import pro1041.team_3.dto.DienThoaiDto;
 import pro1041.team_3.repository.DienThoaiRepository;
 import pro1041.team_3.service.DienThoaiService;
@@ -60,10 +61,15 @@ public class DienThoaiServiceImpl implements DienThoaiService{
     }
 
     @Override
-    public String delete(UUID id) {
-        DienThoai dienThoaiFind = repos.findById(id);
+    public String delete(String ma) {
+        DienThoai dienThoaiFind = repos.findByMa(ma);
+        ChiTietDienThoaiDto ctdtdto = repos.checkDTTrongCtdt(dienThoaiFind.getId());
+        
         if (dienThoaiFind == null) {
             return "Khong tim thay";
+        }
+        if (ctdtdto != null) {
+            return "Dien thoai da ton tai trong chi tiet dien thoai";
         }
         boolean delete = repos.detele(dienThoaiFind);
         if (delete) {
@@ -76,6 +82,11 @@ public class DienThoaiServiceImpl implements DienThoaiService{
     @Override
     public List<DienThoai> getAll() {
         return repos.getAll();
+    }
+
+    @Override
+    public List<DienThoaiDto> findByName(String keyWord) {
+        return repos.findByName(keyWord);
     }
     
 }

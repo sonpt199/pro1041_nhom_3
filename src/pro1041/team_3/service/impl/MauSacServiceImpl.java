@@ -6,10 +6,11 @@ import pro1041.team_3.repository.MauSacRepository;
 import pro1041.team_3.service.MauSacService;
 import java.util.List;
 import java.util.UUID;
+import pro1041.team_3.dto.ChiTietDienThoaiDto;
 
 /**
  *
- * @author sonpt_ph19600
+ * @author vanntph19604
  */
 public class MauSacServiceImpl implements MauSacService {
 
@@ -61,10 +62,14 @@ public class MauSacServiceImpl implements MauSacService {
     }
 
     @Override
-    public String delete(UUID id) {
-        MauSac mausacFind = repos.findById(id);
+    public String delete(String ma) {
+        MauSac mausacFind = repos.findByMa(ma);
+        ChiTietDienThoaiDto ctdtdto = repos.checkMSTrongCtdt(mausacFind.getId());
         if (mausacFind == null) {
             return "Không tìm thấy";
+        }
+        if (ctdtdto != null) {
+            return "Mau sac da ton tai trong chi tiet dien thoai";
         }
         boolean delete = repos.detele(mausacFind);
         if (delete) {
@@ -83,6 +88,11 @@ public class MauSacServiceImpl implements MauSacService {
     public static void main(String[] args) {
         MauSacService a = new MauSacServiceImpl();
         System.out.println(a.getAllResponse().size());
+    }
+
+    @Override
+    public List<MauSacDto> findByName(String keyWord) {
+        return repos.findByName(keyWord);
     }
 
 }

@@ -12,7 +12,7 @@ import pro1041.team_3.service.HangService;
 
 /**
  *
- * @author hanhltph27725
+ * @author vanntph19604
  */
 public class HangServiceImpl implements HangService {
 
@@ -44,8 +44,11 @@ public class HangServiceImpl implements HangService {
     public String insert(Hang hangResponse) {
         hangResponse.setId(null);
         LocalDateTime time = LocalDateTime.now();
-        String maHang = "Hang" + time.getSecond() + time.getMinute() + time.getHour();
-        hangResponse.setMa(maHang);
+//        String maHang = "Hang" + time.getSecond() + time.getMinute() + time.getHour();
+//        hangResponse.setMa(maHang);
+        if (hangResponse.getMa().trim().isEmpty()) {
+            return "Mã không được trống";
+        }
         if (hangResponse.getTen().trim().isEmpty()) {
             return "Tên không được trống";
         }
@@ -62,9 +65,9 @@ public class HangServiceImpl implements HangService {
     }
 
     @Override
-    public String delete(UUID id) {
-        Hang hangDT = hangRepository.findById(id);
-        ChiTietDienThoaiDto chiTietDienThoaiDto = hangRepository.checkHangTrongCtdt(id);
+    public String delete(String ma) {
+        Hang hangDT = hangRepository.findByMa(ma);
+        ChiTietDienThoaiDto chiTietDienThoaiDto = hangRepository.checkHangTrongCtdt(hangDT.getId());
         if (hangDT == null) {
             return "Không tìm thấy";
         }
