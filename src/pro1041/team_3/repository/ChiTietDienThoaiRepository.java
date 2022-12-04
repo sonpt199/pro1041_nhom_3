@@ -1,6 +1,7 @@
 package pro1041.team_3.repository;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.Query;
@@ -229,6 +230,21 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             e.printStackTrace();
             return null;
         }
+    }
+    
+    public ChiTietDienThoaiResponse getResponseById(UUID id) {
+        ChiTietDienThoaiResponse ctdt = null;
+        try {
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.id = :id" ;
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id);
+            ctdt = (ChiTietDienThoaiResponse) query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return ctdt;
     }
     
 }
