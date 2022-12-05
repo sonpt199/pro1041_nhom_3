@@ -9,7 +9,7 @@ import pro1041.team_3.dto.HangDto;
 
 /**
  *
- * @author hanhltph27725
+ * @author vanntph19604
  */
 public interface HangService {
 
@@ -19,7 +19,7 @@ public interface HangService {
 
     String insert(Hang hang);
 
-    String delete(UUID id);
+    String delete(String ma);
 
     String update(Hang hang);
 

@@ -17,8 +17,10 @@ public interface DienThoaiService {
     
     String update(DienThoai dienthoai);
     
-    String delete(UUID id);
+    String delete(String ma);
     
     List<DienThoai> getAll();
+    
+    List<DienThoaiDto> findByName(String keyWord);
     
 }

@@ -119,6 +119,11 @@ public class ViewQuanLyKhachHang extends javax.swing.JPanel {
         txtMa.setEditable(false);
         txtMa.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
         txtMa.setLabelText("Mã khách hàng");
+        txtMa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMaActionPerformed(evt);
+            }
+        });
         jPanel1.add(txtMa, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 260, -1));
 
         txtTen.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
@@ -370,6 +375,10 @@ public class ViewQuanLyKhachHang extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }//GEN-LAST:event_txtTimCaretUpdate
+
+    private void txtMaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
