@@ -22,5 +22,10 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService{
     public List<HoaDonChiTietDto> getAllByIdHoaDon(UUID idHoaDon) {
         return hoaDonChiTietRepository.getAllByIdHoaDon(idHoaDon);
     }
+
+    @Override
+    public List<HoaDonChiTietDto> getAllByMaHoaDon(String maHoaDon) {
+        return hoaDonChiTietRepository.getAllByMaHoaDon(maHoaDon);
+    }
     
 }

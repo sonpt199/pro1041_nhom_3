@@ -36,7 +36,6 @@ public class KhachHangServiceImpl implements KhachHangService {
 
     @Override
     public ArrayList<KhachHangDto> getAll() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         _lstKhachHang = new ArrayList<>();
         List<KhachHang> listKh = khachHangRepository.getAll();
         for (KhachHang x : listKh) {
