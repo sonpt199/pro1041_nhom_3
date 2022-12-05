@@ -7,6 +7,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,7 +16,9 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -55,9 +58,9 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
 
     @Override
     public void insert(ChiTietDienThoai chiTietDT) {
-        LocalDateTime time = LocalDateTime.now();
-        String ma = "CTDT" + time.getSecond() + time.getMinute() + time.getHour();
-        chiTietDT.setMa(ma);
+//        LocalDateTime time = LocalDateTime.now();
+//        String ma = "CTDT" + time.getSecond() + time.getMinute() + time.getHour();
+//        chiTietDT.setMa(ma);
         this.chiTietDienThoaiRepository.saveOrUpdate(chiTietDT);
     }
 
@@ -160,7 +163,7 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
                 cell1.setCellValue(x.getId().toString());
 
                 Cell cell2 = row.createCell(1);
-                cell2.setCellValue(x.getMa());
+                cell2.setCellValue(x.getDienThoai().getMa());
 
                 Cell cell3 = row.createCell(2);
                 cell3.setCellValue(x.getMauSac().getTen());
@@ -288,4 +291,9 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
         return "Tải thành công";
     }
 
+    @Override
+    public ChiTietDienThoaiResponse checkImei(String imei) {
+        return chiTietDienThoaiRepository.checkImei(imei);
+    }
+    
 }

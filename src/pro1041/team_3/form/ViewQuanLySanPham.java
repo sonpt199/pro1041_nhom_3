@@ -122,8 +122,8 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
             index++;
         }
     }
-    
-    public void loadTableHang(List<HangDto> lstHang){
+
+    public void loadTableHang(List<HangDto> lstHang) {
         DefaultTableModel modelHang = (DefaultTableModel) this.tblHang.getModel();
         modelHang.setRowCount(0);
         int index = 1;
@@ -132,8 +132,8 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
             index++;
         }
     }
-    
-    public void loadTableMS(List<MauSacDto> lst){
+
+    public void loadTableMS(List<MauSacDto> lst) {
         DefaultTableModel modelMS = (DefaultTableModel) this.tblMS.getModel();
         modelMS.setRowCount(0);
         int index = 1;
@@ -164,18 +164,21 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     public void clearFormDT() {
         this.txtMaDT.setText("");
         this.txtTenDT.setText("");
+        txtTimKiemDT.setText("");
     }
-    
-    public void clearFormHang(){
+
+    public void clearFormHang() {
         this.txtMaHangDT.setText("");
         this.txtTenHangDT.setText("");
+        txtTimKiemHang.setText("");
     }
-    
-    public void clearFormMS(){
+
+    public void clearFormMS() {
         this.txtMaMS.setText("");
         this.txtTenMS.setText("");
+        txtTimKiemMS.setText("");
     }
-    
+
     public ChiTietDienThoai getFormData() {
         LocalDateTime time = LocalDateTime.now();
         String ma = "CTDT" + time.getSecond() + time.getMinute() + time.getHour();
@@ -263,42 +266,24 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     public DienThoai getFormDataDT() {
         String maDT = this.txtMaDT.getText().trim();
         String tenDT = this.txtTenDT.getText().trim();
-
-        if (maDT.length() == 0 || tenDT.length() == 0) {
-            JOptionPane.showMessageDialog(this, "Không được để trống");
-            return null;
-        }
-
         DienThoai dt = new DienThoai();
         dt.setMa(maDT);
         dt.setTen(tenDT);
         return dt;
     }
-    
-    public Hang getFormDataHang(){
+
+    public Hang getFormDataHang() {
         String maHang = this.txtMaHangDT.getText().trim();
         String tenHang = this.txtTenHangDT.getText().trim();
-        
-        if (maHang.length() == 0 || tenHang.length() == 0) {
-            JOptionPane.showMessageDialog(this, "Không được để trống");
-            return null;
-        }
-        
         Hang hang = new Hang();
         hang.setMa(maHang);
         hang.setTen(tenHang);
         return hang;
     }
-    
-    public MauSac getFormDataMS(){
+
+    public MauSac getFormDataMS() {
         String maMS = this.txtMaMS.getText().trim();
         String tenMS = this.txtTenMS.getText().trim();
-
-        if (maMS.length() == 0 || tenMS.length() == 0) {
-            JOptionPane.showMessageDialog(this, "Không được để trống");
-            return null;
-        }
-
         MauSac ms = new MauSac();
         ms.setMa(maMS);
         ms.setTen(tenMS);
@@ -406,7 +391,6 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         btnImport = new pro1041.team_3.swing.ButtonCustom();
         btnTaoQr = new pro1041.team_3.swing.ButtonCustom();
 
-        dlEditDienThoai.setPreferredSize(new java.awt.Dimension(700, 630));
         dlEditDienThoai.setSize(new java.awt.Dimension(700, 630));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -434,12 +418,12 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         jPanel2.add(jspTblDanhSachDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 265, 650, 244));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setText("Danh sách dien thoai");
+        jLabel3.setText("Danh sách điện thoại");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 228, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(1, 181, 204));
-        jLabel6.setText("Tìm kiem");
+        jLabel6.setText("Tìm kiếm");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(181, 32, -1, -1));
 
         btnTimKiemDT.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -452,8 +436,9 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         });
         jPanel2.add(btnTimKiemDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 31, -1, -1));
 
+        txtMaDT.setEditable(false);
         txtMaDT.setForeground(new java.awt.Color(102, 102, 102));
-        txtMaDT.setLabelText("Mã dien thoai");
+        txtMaDT.setLabelText("Mã điện thoại");
         txtMaDT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMaDTActionPerformed(evt);
@@ -462,7 +447,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         jPanel2.add(txtMaDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(47, 82, 240, -1));
 
         txtTenDT.setForeground(new java.awt.Color(102, 102, 102));
-        txtTenDT.setLabelText("Tên dien thoai");
+        txtTenDT.setLabelText("Tên điện thoại");
         jPanel2.add(txtTenDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(47, 146, 240, -1));
 
         txtTimKiemDT.setForeground(new java.awt.Color(102, 102, 102));
@@ -495,7 +480,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         btnSuaDT.setBackground(new java.awt.Color(1, 181, 204));
         btnSuaDT.setForeground(new java.awt.Color(255, 255, 255));
         btnSuaDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/edit.png"))); // NOI18N
-        btnSuaDT.setText("Sua");
+        btnSuaDT.setText("Sửa");
         btnSuaDT.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSuaDT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -507,7 +492,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         btnXoaDT.setBackground(new java.awt.Color(255, 0, 0));
         btnXoaDT.setForeground(new java.awt.Color(255, 255, 255));
         btnXoaDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/delete.png"))); // NOI18N
-        btnXoaDT.setText("Xoa");
+        btnXoaDT.setText("Xóa");
         btnXoaDT.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnXoaDT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -539,7 +524,6 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        dlEditHangDT.setPreferredSize(new java.awt.Dimension(700, 630));
         dlEditHangDT.setSize(new java.awt.Dimension(700, 630));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -567,12 +551,12 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         jPanel5.add(jspTblHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 265, 650, 244));
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel22.setText("Danh sách hang");
+        jLabel22.setText("Danh sách hãng điện thoại");
         jPanel5.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 228, -1, -1));
 
         jLabel23.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(1, 181, 204));
-        jLabel23.setText("Tìm kiem");
+        jLabel23.setText("Tìm kiếm");
         jPanel5.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(181, 32, -1, -1));
 
         btnTimKiemHang.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -585,8 +569,9 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         });
         jPanel5.add(btnTimKiemHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 31, -1, -1));
 
+        txtMaHangDT.setEditable(false);
         txtMaHangDT.setForeground(new java.awt.Color(102, 102, 102));
-        txtMaHangDT.setLabelText("Mã hang dien thoai");
+        txtMaHangDT.setLabelText("Mã hãng điện thoại");
         txtMaHangDT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMaHangDTActionPerformed(evt);
@@ -595,7 +580,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         jPanel5.add(txtMaHangDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(47, 82, 240, -1));
 
         txtTenHangDT.setForeground(new java.awt.Color(102, 102, 102));
-        txtTenHangDT.setLabelText("Tên hang dien thoai");
+        txtTenHangDT.setLabelText("Tên hãng điện thoại");
         jPanel5.add(txtTenHangDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(47, 146, 240, -1));
 
         txtTimKiemHang.setForeground(new java.awt.Color(102, 102, 102));
@@ -628,7 +613,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         btnSuaHangDT.setBackground(new java.awt.Color(1, 181, 204));
         btnSuaHangDT.setForeground(new java.awt.Color(255, 255, 255));
         btnSuaHangDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/edit.png"))); // NOI18N
-        btnSuaHangDT.setText("Sua");
+        btnSuaHangDT.setText("Sửa");
         btnSuaHangDT.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSuaHangDT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -640,7 +625,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         btnXoaHangDT.setBackground(new java.awt.Color(255, 0, 0));
         btnXoaHangDT.setForeground(new java.awt.Color(255, 255, 255));
         btnXoaHangDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/delete.png"))); // NOI18N
-        btnXoaHangDT.setText("Xoa");
+        btnXoaHangDT.setText("Xóa");
         btnXoaHangDT.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnXoaHangDT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -672,7 +657,6 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        dlEditMauSac.setPreferredSize(new java.awt.Dimension(700, 630));
         dlEditMauSac.setSize(new java.awt.Dimension(700, 630));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
@@ -700,12 +684,12 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         jPanel6.add(jspTblMS, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 265, 650, 244));
 
         jLabel24.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel24.setText("Danh sách hang");
+        jLabel24.setText("Danh sách màu");
         jPanel6.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 228, -1, -1));
 
         jLabel25.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(1, 181, 204));
-        jLabel25.setText("Tìm kiem");
+        jLabel25.setText("Tìm kiếm");
         jPanel6.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(181, 32, -1, -1));
 
         btnTimKiemHang1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -718,8 +702,9 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         });
         jPanel6.add(btnTimKiemHang1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 31, -1, -1));
 
+        txtMaMS.setEditable(false);
         txtMaMS.setForeground(new java.awt.Color(102, 102, 102));
-        txtMaMS.setLabelText("Mã mau sac");
+        txtMaMS.setLabelText("Mã màu sắc");
         txtMaMS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMaMSActionPerformed(evt);
@@ -728,7 +713,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         jPanel6.add(txtMaMS, new org.netbeans.lib.awtextra.AbsoluteConstraints(47, 82, 240, -1));
 
         txtTenMS.setForeground(new java.awt.Color(102, 102, 102));
-        txtTenMS.setLabelText("Tên mau sac");
+        txtTenMS.setLabelText("Tên màu sắc");
         jPanel6.add(txtTenMS, new org.netbeans.lib.awtextra.AbsoluteConstraints(47, 146, 240, -1));
 
         txtTimKiemMS.setForeground(new java.awt.Color(102, 102, 102));
@@ -761,7 +746,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         btnSuaMS.setBackground(new java.awt.Color(1, 181, 204));
         btnSuaMS.setForeground(new java.awt.Color(255, 255, 255));
         btnSuaMS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/edit.png"))); // NOI18N
-        btnSuaMS.setText("Sua");
+        btnSuaMS.setText("Sửa");
         btnSuaMS.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSuaMS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -773,7 +758,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         btnXoaMS.setBackground(new java.awt.Color(255, 0, 0));
         btnXoaMS.setForeground(new java.awt.Color(255, 255, 255));
         btnXoaMS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/delete.png"))); // NOI18N
-        btnXoaMS.setText("Xoa");
+        btnXoaMS.setText("Xóa");
         btnXoaMS.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnXoaMS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -894,7 +879,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 80, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
-        jLabel9.setText("Mã CT điện thoại");
+        jLabel9.setText("Mã điện thoại");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
@@ -1265,6 +1250,11 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
+        ChiTietDienThoaiResponse chiTietDienThoaiResponse = chiTietDTImpl.checkImei(txtImei.getText().trim());
+        if (chiTietDienThoaiResponse != null) {
+            JOptionPane.showMessageDialog(this, "Trùng Imei");
+            return;
+        }
         ChiTietDienThoai chiTietDienThoai = this.getFormData();
         if (chiTietDienThoai == null) {
             return;
@@ -1289,7 +1279,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
             BigDecimal giaCu = this.list.get(index).getDonGia();
             ChiTietDienThoai ctDT = this.getFormData();
             ctDT.setId(list.get(index).getId());
-            ctDT.setMa(this.txtMa.getText().trim());
+//            ctDT.setMa(this.txtMa.getText().trim());
             if (ctDT == null) {
                 return;
             }
@@ -1449,6 +1439,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         this.clearFormDT();
+        loadTableDT(dienThoaiImpl.getAllResponse());
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnThemDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemDTActionPerformed
@@ -1456,37 +1447,37 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         if (dt == null) {
             return;
         }
-        this.dienThoaiImpl.insert(dt);
-        listDT = this.dienThoaiImpl.getAllResponse();
-        loadTableDT(listDT);
-        this.clearFormDT();
-        JOptionPane.showMessageDialog(this, "Thêm thành công");
+        String ketQua = dienThoaiImpl.insert(dt);
+        if (ketQua.equals("Thêm thành công")) {
+            listDT = this.dienThoaiImpl.getAllResponse();
+            loadTableDT(listDT);
+            loadCbbDienThoai();
+            this.clearFormDT();
+        }
+        JOptionPane.showMessageDialog(this, ketQua);
     }//GEN-LAST:event_btnThemDTActionPerformed
 
     private void btnSuaDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaDTActionPerformed
-        try {
-            int index = tblDienThoai.getSelectedRow();
-            if (index == -1) {
-                JOptionPane.showMessageDialog(this, "Bạn cần chọn một sản phẩm trên danh sách");
-                return;
-            }
-            DienThoai dt = this.getFormDataDT();
-            dt.setId(listDT.get(index).getId());
-            dt.setMa(this.txtMaDT.getText().trim());
-            dt.setTen(this.txtTenDT.getText().trim());
-            if (dt == null) {
-                return;
-            }
-            this.dienThoaiImpl.update(dt);
-            listDT = this.dienThoaiImpl.getAllResponse();
-            loadTableDT(listDT);
-            clearFormDT();
-            JOptionPane.showMessageDialog(this, "Cập nhật thành công");
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Cập nhật thất bại");
+        int index = tblDienThoai.getSelectedRow();
+        if (index == -1) {
+            JOptionPane.showMessageDialog(this, "Bạn cần chọn một điện thoại trên table");
             return;
         }
+        String ma = (String) tblDienThoai.getValueAt(index, 1);
+        DienThoai dt = this.getFormDataDT();
+        if (dt == null) {
+            return;
+        }
+        dt.setMa(ma);
+        String ketQua = dienThoaiImpl.update(dt);
+        if (ketQua.equals("Sửa thành công")) {
+            listDT = this.dienThoaiImpl.getAllResponse();
+            loadTableDT(listDT);
+            loadCbbDienThoai();
+            this.clearFormDT();
+        }
+        JOptionPane.showMessageDialog(this, ketQua);
+
 
     }//GEN-LAST:event_btnSuaDTActionPerformed
 
@@ -1518,6 +1509,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
     private void btnClearHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearHangActionPerformed
         this.clearFormHang();
+        loadTableHang(hangImpl.getAllResponse());
     }//GEN-LAST:event_btnClearHangActionPerformed
 
     private void btnThemHangDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemHangDTActionPerformed
@@ -1525,37 +1517,37 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         if (hang == null) {
             return;
         }
-        this.hangImpl.insert(hang);
-        listHang = this.hangImpl.getAllResponse();
-        loadTableHang(listHang);
-        this.clearFormHang();
-        JOptionPane.showMessageDialog(this, "Thêm thành công");
+        String ketQua = hangImpl.insert(hang);
+        if (ketQua.equals("Thêm thành công")) {
+            listHang = this.hangImpl.getAllResponse();
+            loadTableHang(listHang);
+            loadCbbHang();
+            this.clearFormHang();
+        }
+        JOptionPane.showMessageDialog(this, ketQua);
     }//GEN-LAST:event_btnThemHangDTActionPerformed
 
     private void btnSuaHangDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaHangDTActionPerformed
-        try {
-            int index = tblHang.getSelectedRow();
-            if (index == -1) {
-                JOptionPane.showMessageDialog(this, "Bạn cần chọn một sản phẩm trên danh sách");
-                return;
-            }
-            Hang hang = this.getFormDataHang();
-            hang.setId(listHang.get(index).getId());
-            hang.setMa(this.txtMaHangDT.getText().trim());
-            hang.setTen(this.txtTenHangDT.getText().trim());
-            if (hang == null) {
-                return;
-            }
-            this.hangImpl.update(hang);
-            listHang = this.hangImpl.getAllResponse();
-            loadTableHang(listHang);
-            clearFormHang();
-            JOptionPane.showMessageDialog(this, "Cập nhật thành công");
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Cập nhật thất bại");
+
+        int index = tblHang.getSelectedRow();
+        if (index == -1) {
+            JOptionPane.showMessageDialog(this, "Bạn cần chọn một hãng trên table");
             return;
         }
+        String ma = (String) tblHang.getValueAt(index, 1);
+        Hang hang = getFormDataHang();
+        if (hang == null) {
+            return;
+        }
+        hang.setMa(ma);
+        String ketQua = hangImpl.update(hang);
+        if (ketQua.equals("Sửa thành công")) {
+            listHang = this.hangImpl.getAllResponse();
+            loadTableHang(listHang);
+            loadCbbHang();
+            this.clearFormHang();
+        }
+        JOptionPane.showMessageDialog(this, ketQua);
 
     }//GEN-LAST:event_btnSuaHangDTActionPerformed
 
@@ -1581,18 +1573,19 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     private void btnXoaDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaDTActionPerformed
         int row = this.tblDienThoai.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Hay chon 1 dong de xoa");
+            JOptionPane.showMessageDialog(this, "Bạn cần chọn một điện thoại trên table");
             return;
         }
-        int c = JOptionPane.showConfirmDialog(this, "Ban co muon xoa ban ghi nay khong");
+        int c = JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa bản ghi này không");
         if (c != JOptionPane.YES_OPTION) {
             return;
         }
         String ma = (String) tblDienThoai.getValueAt(row, 1);
         String ketqua = dienThoaiImpl.delete(ma);
-        if (ketqua.equals("Xoa thanh cong")) {
+        if (ketqua.equals("Xóa thành công")) {
             listDT = dienThoaiImpl.getAllResponse();
             loadTableDT(listDT);
+            loadCbbDienThoai();
             clearFormDT();
         }
         JOptionPane.showMessageDialog(this, ketqua);
@@ -1601,18 +1594,19 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     private void btnXoaHangDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaHangDTActionPerformed
         int row = this.tblHang.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Hay chon 1 dong de xoa");
+            JOptionPane.showMessageDialog(this, "Bạn cần chọn một hãng trên table");
             return;
         }
-        int c = JOptionPane.showConfirmDialog(this, "Ban co muon xoa ban ghi nay khong");
+        int c = JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa bản ghi này không");
         if (c != JOptionPane.YES_OPTION) {
             return;
         }
         String ma = (String) tblHang.getValueAt(row, 1);
         String ketqua = hangImpl.delete(ma);
-        if (ketqua.equals("Xoa thanh cong")) {
+        if (ketqua.equals("Xóa thành công")) {
             listHang = hangImpl.getAllResponse();
             loadTableHang(listHang);
+            loadCbbHang();
             clearFormHang();
         }
         JOptionPane.showMessageDialog(this, ketqua);
@@ -1628,7 +1622,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     private void btnTimKiemHang1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTimKiemHang1MouseClicked
         String keyWord = txtTimKiemMS.getText().trim();
         if (keyWord.isBlank()) {
-            JOptionPane.showMessageDialog(this, "Mời nhập tên mau sac để tìm kiếm");
+            JOptionPane.showMessageDialog(this, "Mời nhập tên màu sắc để tìm kiếm");
             return;
         }
         List<MauSacDto> lstFind = mauSacImpl.findByName(keyWord);
@@ -1654,49 +1648,49 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
     private void btnClearMSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearMSActionPerformed
         this.clearFormMS();
+        loadTableMS(mauSacImpl.getAllResponse());
     }//GEN-LAST:event_btnClearMSActionPerformed
 
     private void btnSuaMSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaMSActionPerformed
-        try {
-            int index = tblMS.getSelectedRow();
-            if (index == -1) {
-                JOptionPane.showMessageDialog(this, "Bạn cần chọn một sản phẩm trên danh sách");
-                return;
-            }
-            MauSac ms = this.getFormDataMS();
-            ms.setId(listMS.get(index).getId());
-            ms.setMa(this.txtMaMS.getText().trim());
-            ms.setTen(this.txtTenMS.getText().trim());
-            if (ms == null) {
-                return;
-            }
-            this.mauSacImpl.update(ms);
-            listMS = this.mauSacImpl.getAllResponse();
-            loadTableMS(listMS);
-            clearFormMS();
-            JOptionPane.showMessageDialog(this, "Cập nhật thành công");
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Cập nhật thất bại");
+
+        int index = tblMS.getSelectedRow();
+        if (index == -1) {
+            JOptionPane.showMessageDialog(this, "Bạn cần chọn một màu sắc trên table");
             return;
         }
+        String ma = (String) tblMS.getValueAt(index, 1);
+        MauSac mauSac = getFormDataMS();
+        if (mauSac == null) {
+            return;
+        }
+        mauSac.setMa(ma);
+        String ketQua = mauSacImpl.update(mauSac);
+        if (ketQua.equals("Sửa thành công")) {
+            listMS = this.mauSacImpl.getAllResponse();
+            loadTableMS(listMS);
+            loadCbbMauSac();
+            this.clearFormMS();
+        }
+        JOptionPane.showMessageDialog(this, ketQua);
+
     }//GEN-LAST:event_btnSuaMSActionPerformed
 
     private void btnXoaMSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaMSActionPerformed
         int row = this.tblMS.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Hay chon 1 dong de xoa");
+            JOptionPane.showMessageDialog(this, "Bạn cần chọn một màu sắc trên table");
             return;
         }
-        int c = JOptionPane.showConfirmDialog(this, "Ban co muon xoa ban ghi nay khong");
+        int c = JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa bản ghi này không");
         if (c != JOptionPane.YES_OPTION) {
             return;
         }
         String ma = (String) tblMS.getValueAt(row, 1);
         String ketqua = mauSacImpl.delete(ma);
-        if (ketqua.equals("Xoa thanh cong")) {
+        if (ketqua.equals("Xóa thành công")) {
             listMS = mauSacImpl.getAllResponse();
             loadTableMS(listMS);
+            loadCbbMauSac();
             clearFormMS();
         }
         JOptionPane.showMessageDialog(this, ketqua);
@@ -1707,11 +1701,14 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         if (ms == null) {
             return;
         }
-        this.mauSacImpl.insert(ms);
-        listMS= this.mauSacImpl.getAllResponse();
-        loadTableMS(listMS);
-        this.clearFormMS();
-        JOptionPane.showMessageDialog(this, "Thêm thành công");
+        String ketQua = mauSacImpl.insert(ms);
+        if (ketQua.equals("Thêm thành công")) {
+            listMS = this.mauSacImpl.getAllResponse();
+            loadTableMS(listMS);
+            loadCbbMauSac();
+            this.clearFormMS();
+        }
+        JOptionPane.showMessageDialog(this, ketQua);
     }//GEN-LAST:event_btnThemMSActionPerformed
 
     private void buttonCustom6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCustom6ActionPerformed

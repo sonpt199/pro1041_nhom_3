@@ -25,7 +25,7 @@ import pro1041.team_3.form.ViewQuanLyKhuyenMai;
 import pro1041.team_3.form.ViewQuanLyNhanVien;
 import pro1041.team_3.form.ViewQuanLySanPham;
 import pro1041.team_3.swing.Notification;
-import pro1041.team_3.util.DailyCheckKhuyenMai;
+//import pro1041.team_3.util.DailyCheckKhuyenMai;
 
 public class Main extends javax.swing.JFrame {
 
@@ -33,11 +33,11 @@ public class Main extends javax.swing.JFrame {
     private final MainForm main;
     private final MenuLayout menu;
     private final Animator animator;
-    private final DailyCheckKhuyenMai daily;
+//    private final DailyCheckKhuyenMai daily;
     public Main(NhanVien user) {
         initComponents();
-        daily = new DailyCheckKhuyenMai();
-        daily.start();
+//        daily = new DailyCheckKhuyenMai();
+//        daily.start();
         Notification panel = new Notification(this, Notification.Type.SUCCESS, Notification.Location.TOP_CENTER, "Đăng nhập thành công");
         panel.showNotification();
         this.setTitle("Quản lý bán hàng");

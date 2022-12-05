@@ -1,5 +1,6 @@
 package pro1041.team_3.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import pro1041.team_3.domainModel.DienThoai;
@@ -12,8 +13,8 @@ import pro1041.team_3.service.DienThoaiService;
  *
  * @author vanntph19604
  */
-public class DienThoaiServiceImpl implements DienThoaiService{
-    
+public class DienThoaiServiceImpl implements DienThoaiService {
+
     private DienThoaiRepository repos;
 
     public DienThoaiServiceImpl() {
@@ -27,36 +28,41 @@ public class DienThoaiServiceImpl implements DienThoaiService{
 
     @Override
     public String insert(DienThoai dienthoai) {
+        dienthoai.setId(null);
+        LocalDateTime time = LocalDateTime.now();
+        String maDT = "DT" + time.getSecond() + time.getMinute() + time.getHour();
+        dienthoai.setMa(maDT);
+        if (dienthoai.getTen().trim().isEmpty()) {
+            return "Tên không được trống";
+        }
         DienThoai dienThoaiFindByMa = repos.findByMa(dienthoai.getMa());
         if (dienThoaiFindByMa != null) {
-            return "Ma khong duoc trung";
+            return "Mã không được trùng";
         }
         dienthoai = repos.saveOrUpdate(dienthoai);
         if (dienthoai != null) {
-            return "Them thanh cong";
+            return "Thêm thành công";
         } else {
-            return "Them that bai";
+            return "Thêm thất bại";
         }
     }
 
     @Override
     public String update(DienThoai dienthoai) {
-        DienThoai dienThoaiFindById = repos.findById(dienthoai.getId());
-        if (dienThoaiFindById == null) {
-            return "Khong tim thay";
-        }
         DienThoai dienThoaiFindByMa = repos.findByMa(dienthoai.getMa());
-        if (dienThoaiFindByMa != null
-                && dienThoaiFindById.equals(dienThoaiFindByMa.getId())) {
-            return "Ma khong duoc trung";
+        if (dienThoaiFindByMa == null) {
+            return "Không tìm thấy";
         }
-        dienThoaiFindById.setMa(dienthoai.getMa());
-        dienThoaiFindById.setTen(dienthoai.getTen());
-        dienthoai = repos.saveOrUpdate(dienThoaiFindById);
+        if (dienthoai.getTen().trim().isEmpty()) {
+            return "Tên không được trống";
+        }
+        dienThoaiFindByMa.setMa(dienthoai.getMa());
+        dienThoaiFindByMa.setTen(dienthoai.getTen());
+        dienthoai = repos.saveOrUpdate(dienThoaiFindByMa);
         if (dienthoai != null) {
-            return "Sua thanh cong";
+            return "Sửa thành công";
         } else {
-            return "Sua that bai";
+            return "Sửa thất bại";
         }
     }
 
@@ -64,18 +70,17 @@ public class DienThoaiServiceImpl implements DienThoaiService{
     public String delete(String ma) {
         DienThoai dienThoaiFind = repos.findByMa(ma);
         ChiTietDienThoaiDto ctdtdto = repos.checkDTTrongCtdt(dienThoaiFind.getId());
-        
         if (dienThoaiFind == null) {
-            return "Khong tim thay";
+            return "Không tìm thấy";
         }
         if (ctdtdto != null) {
-            return "Dien thoai da ton tai trong chi tiet dien thoai";
+            return "Điện thoại đã tồn tại trong bảng chi tiết điện thoại";
         }
         boolean delete = repos.detele(dienThoaiFind);
         if (delete) {
-            return "Xoa thanh cong";
+            return "Xóa thành công";
         } else {
-            return "Xoa that bai";
+            return "Xóa thất bại";
         }
     }
 
@@ -88,5 +93,5 @@ public class DienThoaiServiceImpl implements DienThoaiService{
     public List<DienThoaiDto> findByName(String keyWord) {
         return repos.findByName(keyWord);
     }
-    
+
 }

@@ -21,5 +21,10 @@ public class HoaDonServiceImpl implements HoaDonService{
     public List<HoaDonDto> getAllResponse() {
         return hoaDonRepository.getAllResponse();
     }
+
+    @Override
+    public List<HoaDonDto> findHoaDonByKhachHang(String maKH) {
+        return hoaDonRepository.findHoaDonByKhachHang(maKH);
+    }
     
 }

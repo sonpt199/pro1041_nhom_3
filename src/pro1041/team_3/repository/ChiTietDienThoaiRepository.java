@@ -1,11 +1,12 @@
 package pro1041.team_3.repository;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import pro1041.team_3.domainModel.ChiTietDienThoai;
+import pro1041.team_3.dto.ChiTietDienThoaiDto;
 import pro1041.team_3.dto.ChiTietDienThoaiResponse;
 import pro1041.team_3.util.HibernateUtil;
 
@@ -13,14 +14,14 @@ import pro1041.team_3.util.HibernateUtil;
  *
  * @author trangdttph27721
  */
-public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUID, ChiTietDienThoaiResponse>{
+public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUID, ChiTietDienThoaiResponse> {
 
     public ChiTietDienThoaiRepository() {
         this.className = ChiTietDienThoai.class.getName();
-        this.resCon = "new " + ChiTietDienThoaiResponse.class.getName() +"(a.id, a.ma, a.mauSac.ten, a.dienThoai.ten, a.hang.ten, a.tinhTrang, "
+        this.resCon = "new " + ChiTietDienThoaiResponse.class.getName() + "(a.id, a.dienThoai.ma, a.mauSac.ten, a.dienThoai.ten, a.hang.ten, a.tinhTrang, "
                 + "a.donGia, a.trangThai, a.hinhAnh, a.imei, a.ram, a.boNho, a.moTa, a.thoiGianBaoHanh)";
     }
-    
+
     public List<ChiTietDienThoaiResponse> findBy(String keyWord) {
         try {
             List<ChiTietDienThoaiResponse> lst;
@@ -35,7 +36,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             return null;
         }
     }
-    
+
     public List<ChiTietDienThoaiResponse> sapXep(String chieu) {
         try {
             List<ChiTietDienThoaiResponse> lst;
@@ -49,7 +50,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             return null;
         }
     }
-    
+
     public List<ChiTietDienThoaiResponse> sapXep2(String loai, String chieu) {
         try {
             List<ChiTietDienThoaiResponse> lst;
@@ -77,8 +78,8 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             return null;
         }
     }
-    
-    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByDienThoai(String tenDienThoai){
+
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByDienThoai(String tenDienThoai) {
         try {
             List<ChiTietDienThoaiResponse> lst;
             session = HibernateUtil.getSession();
@@ -93,8 +94,8 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             return null;
         }
     }
-    
-    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByHang(String tenHang){
+
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByHang(String tenHang) {
         try {
             List<ChiTietDienThoaiResponse> lst;
             session = HibernateUtil.getSession();
@@ -109,8 +110,8 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             return null;
         }
     }
-    
-    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByMauSac(String tenMauSac){
+
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByMauSac(String tenMauSac) {
         try {
             List<ChiTietDienThoaiResponse> lst;
             session = HibernateUtil.getSession();
@@ -125,9 +126,8 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             return null;
         }
     }
-    
-    
-    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByTinhTrang(int tinhTrang){
+
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByTinhTrang(int tinhTrang) {
         try {
             List<ChiTietDienThoaiResponse> lst;
             session = HibernateUtil.getSession();
@@ -142,8 +142,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             return null;
         }
     }
-    
-    
+
     public List<ChiTietDienThoaiResponse> getAllDienThoaiNotInKM(UUID id) {
         try {
             List<ChiTietDienThoaiResponse> lst;
@@ -159,7 +158,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             return null;
         }
     }
-    
+
     public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByDienThoai(UUID id, String tenDienThoai) {
         try {
             List<ChiTietDienThoaiResponse> lst;
@@ -177,7 +176,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             return null;
         }
     }
-    
+
     public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByHang(UUID id, String tenHang) {
         try {
             List<ChiTietDienThoaiResponse> lst;
@@ -195,7 +194,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             return null;
         }
     }
-    
+
     public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByMauSac(UUID id, String tenMauSac) {
         try {
             List<ChiTietDienThoaiResponse> lst;
@@ -213,7 +212,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             return null;
         }
     }
-    
+
     public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByTinhTrang(UUID id, int tinhTrang) {
         try {
             List<ChiTietDienThoaiResponse> lst;
@@ -231,12 +230,12 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             return null;
         }
     }
-    
+
     public ChiTietDienThoaiResponse getResponseById(UUID id) {
         ChiTietDienThoaiResponse ctdt = null;
         try {
             session = HibernateUtil.getSession();
-            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.id = :id" ;
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.id = :id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             ctdt = (ChiTietDienThoaiResponse) query.getSingleResult();
@@ -246,5 +245,23 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
         }
         return ctdt;
     }
-    
+
+    public ChiTietDienThoaiResponse checkImei(String imei) {
+        ChiTietDienThoaiResponse chiTietDienThoaiDto = null;
+        try {
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.imei = :imei";
+            TypedQuery<ChiTietDienThoaiResponse> query = session.createQuery(hql, ChiTietDienThoaiResponse.class);
+            query.setParameter("imei", imei);
+            List<ChiTietDienThoaiResponse> lst = query.getResultList();
+            if (!lst.isEmpty()) {
+                chiTietDienThoaiDto = lst.get(0);
+            }
+            return chiTietDienThoaiDto;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

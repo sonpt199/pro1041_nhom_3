@@ -24,10 +24,7 @@ public class ChiTietDienThoai implements Serializable{
     @GeneratedValue
     @Column(name = "id")
     private UUID id;
-    
-    @Column(name = "ma")
-    private String ma;
-    
+        
     @ManyToOne
     @JoinColumn(name = "id_mau_sac")
     private MauSac mauSac;

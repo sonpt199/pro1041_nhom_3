@@ -1,5 +1,6 @@
 package pro1041.team_3.service.impl;
 
+import java.time.LocalDateTime;
 import pro1041.team_3.domainModel.MauSac;
 import pro1041.team_3.dto.MauSacDto;
 import pro1041.team_3.repository.MauSacRepository;
@@ -27,8 +28,14 @@ public class MauSacServiceImpl implements MauSacService {
 
     @Override
     public String insert(MauSac mausac) {
-
+        mausac.setId(null);
+        LocalDateTime time = LocalDateTime.now();
+        String maMau = "M" + time.getSecond() + time.getMinute() + time.getHour();
+        mausac.setMa(maMau);
         MauSac mauSacFindByMa = repos.findByMa(mausac.getMa());
+        if (mausac.getTen().trim().isEmpty()) {
+            return "Tên không được trống";
+        }
         if (mauSacFindByMa != null) {
             return "Mã không được trùng";
         }
@@ -42,14 +49,12 @@ public class MauSacServiceImpl implements MauSacService {
 
     @Override
     public String update(MauSac mausac) {
-        MauSac mauSacFindById = repos.findById(mausac.getId());
+        MauSac mauSacFindById = repos.findByMa(mausac.getMa());
         if (mauSacFindById == null) {
             return "Không tìm thấy";
         }
-        MauSac mauSacFindByMa = repos.findByMa(mausac.getMa());
-        if (mauSacFindByMa != null
-                && mauSacFindById.equals(mauSacFindByMa.getId())) {
-            return "Mã không được trùng";
+        if (mausac.getTen().trim().isEmpty()) {
+            return "Tên không được trống";
         }
         mauSacFindById.setMa(mausac.getMa());
         mauSacFindById.setTen(mausac.getTen());
@@ -69,7 +74,7 @@ public class MauSacServiceImpl implements MauSacService {
             return "Không tìm thấy";
         }
         if (ctdtdto != null) {
-            return "Mau sac da ton tai trong chi tiet dien thoai";
+            return "Màu sắc đã tồn tại trong bảng chi tiết điện thoại";
         }
         boolean delete = repos.detele(mausacFind);
         if (delete) {
@@ -84,7 +89,7 @@ public class MauSacServiceImpl implements MauSacService {
     public List<MauSac> getAll() {
         return repos.getAll();
     }
-    
+
     public static void main(String[] args) {
         MauSacService a = new MauSacServiceImpl();
         System.out.println(a.getAllResponse().size());

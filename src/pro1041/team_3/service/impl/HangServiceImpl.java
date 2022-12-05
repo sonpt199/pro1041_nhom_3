@@ -44,11 +44,8 @@ public class HangServiceImpl implements HangService {
     public String insert(Hang hangResponse) {
         hangResponse.setId(null);
         LocalDateTime time = LocalDateTime.now();
-//        String maHang = "Hang" + time.getSecond() + time.getMinute() + time.getHour();
-//        hangResponse.setMa(maHang);
-        if (hangResponse.getMa().trim().isEmpty()) {
-            return "Mã không được trống";
-        }
+        String maHang = "H" + time.getSecond() + time.getMinute() + time.getHour();
+        hangResponse.setMa(maHang);
         if (hangResponse.getTen().trim().isEmpty()) {
             return "Tên không được trống";
         }
@@ -84,22 +81,14 @@ public class HangServiceImpl implements HangService {
 
     @Override
     public String update(Hang hangResponse) {
-        Hang hangByID = hangRepository.findById(hangResponse.getId());
+        Hang hangByID = hangRepository.findByMa(hangResponse.getMa());
         if (hangByID == null) {
             return "Không tìm thấy";
         }
         if (hangResponse.getTen().trim().isEmpty()) {
             return "Tên không được trống";
         }
-
-        if (!hangResponse.getMa().equals(hangByID.getMa())) {
-            Hang hangByMa = hangRepository.findByMa(hangResponse.getMa());
-            if (hangByMa != null) {
-                return "Mã không được trùng";
-            } else {
-                hangByID.setMa(hangResponse.getMa());
-            }
-        }
+        hangByID.setMa(hangResponse.getMa());
         hangByID.setTen(hangResponse.getTen());
         hangResponse = hangRepository.saveOrUpdate(hangByID);
         if (hangResponse != null) {

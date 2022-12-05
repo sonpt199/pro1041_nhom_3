@@ -64,4 +64,19 @@ public class HoaDonRepository extends Repository<HoaDon, UUID, HoaDonDto> {
 //        }
 //        return list;
 //    }
+    public List<HoaDonDto> findHoaDonByKhachHang(String maKH) {
+        List<HoaDonDto> list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a "
+                    + "LEFT JOIN a.khachHang b LEFT JOIN a.nhanVien c WHERE b.ma = :maKH";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("maKH", maKH);
+            list = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
