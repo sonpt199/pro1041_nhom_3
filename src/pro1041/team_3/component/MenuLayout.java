@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
+import pro1041.team_3.domainModel.NhanVien;
 
 public class MenuLayout extends javax.swing.JPanel {
 

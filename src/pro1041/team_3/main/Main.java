@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
@@ -25,7 +26,7 @@ import pro1041.team_3.form.ViewQuanLyKhuyenMai;
 import pro1041.team_3.form.ViewQuanLyNhanVien;
 import pro1041.team_3.form.ViewQuanLySanPham;
 import pro1041.team_3.swing.Notification;
-import pro1041.team_3.util.DailyCheckKhuyenMai;
+//import pro1041.team_3.util.DailyCheckKhuyenMai;
 
 public class Main extends javax.swing.JFrame {
 
@@ -33,11 +34,12 @@ public class Main extends javax.swing.JFrame {
     private final MainForm main;
     private final MenuLayout menu;
     private final Animator animator;
-    private final DailyCheckKhuyenMai daily;
+//    private final DailyCheckKhuyenMai daily;
+
     public Main(NhanVien user) {
         initComponents();
-        daily = new DailyCheckKhuyenMai();
-        daily.start();
+//        daily = new DailyCheckKhuyenMai();
+//        daily.start();
         Notification panel = new Notification(this, Notification.Type.SUCCESS, Notification.Location.TOP_CENTER, "Đăng nhập thành công");
         panel.showNotification();
         this.setTitle("Quản lý bán hàng");
@@ -53,7 +55,6 @@ public class Main extends javax.swing.JFrame {
         mainPanel.add(main);
         mainPanel.add(menu, "pos -215 0 100% 100%", 0);
         Profile.user = true;
-//        System.out.println(Profile.get());
         TimingTarget target = new TimingTargetAdapter() {
             @Override
             public void timingEvent(float fraction) {
@@ -125,10 +126,18 @@ public class Main extends javax.swing.JFrame {
                 } else if (index == 6) {
                     main.show(new ViewThongKe());
                 } else if (index == 7) {
+                    ViewDangNhap dangNhap = new ViewDangNhap();
+                    dangNhap.setVisible(true);
+                    close();
+                } else if (index == 8) {
                     System.exit(0);
                 }
             }
         });
+    }
+    
+    private void close() {
+        this.dispose();
     }
 
     @SuppressWarnings("unchecked")

@@ -202,7 +202,7 @@ public class ViewBanHang extends javax.swing.JPanel {
 
     private void clearFormInput() {
         txtMaKh.setText("");
-        textField1.setText("");
+        txtTenKhachHang.setText("");
         txtTongTien.setText("");
         txtTienKhachDua.setText("");
         txtTienKhachDuaKetHop.setText("");
@@ -248,8 +248,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         txtTongTien.setText(moneyFormat.format(tongTien).toString() + "VNĐ");
     }
 
-    private void searchKhachHang() {
-        String keyWord = (String) txtTimKiemKhachHang.getText();
+    private void searchKhachHang(String keyWord) {
 //        String keyWord = txtTimKiemKh.getText().trim();
         if (keyWord.isEmpty()) {
             return;
@@ -275,14 +274,11 @@ public class ViewBanHang extends javax.swing.JPanel {
         } else {
             rdDetailNu.setSelected(true);
         }
-        dlDetailKhachHang.setLocationRelativeTo(this);
-        dlDetailKhachHang.setVisible(true);
         khachHang = khachHangFind;
     }
 
     private void searchSanPham() {
         String keyWord = (String) txtTimKiemSanPham.getText();
-//        String keyWord = txtTimKiemSp.getText().trim();
         if (keyWord.isEmpty() || keyWord == null) {
             return;
         }
@@ -460,8 +456,9 @@ public class ViewBanHang extends javax.swing.JPanel {
         rdNuThemKh = new pro1041.team_3.swing.RadioButtonCustom();
         txtThemNgaySinhKh = new pro1041.team_3.swing.TextField();
         txtThemEmailKh = new pro1041.team_3.swing.TextField();
-        txtThemDiaChiKh = new pro1041.team_3.swing.TextField();
         btnThemKhachHang = new pro1041.team_3.swing.ButtonCustom();
+        textAreaScroll2 = new pro1041.team_3.swing.config.TextAreaScroll();
+        txtThemDiaChiKh = new pro1041.team_3.swing.TextArea();
         themNgaySinhKh = new pro1041.team_3.swing.DateChooser();
         grThemGioiTinhKh = new javax.swing.ButtonGroup();
         dlEditDienThoai = new javax.swing.JDialog();
@@ -475,11 +472,11 @@ public class ViewBanHang extends javax.swing.JPanel {
         jspTbGioHang = new javax.swing.JScrollPane();
         tbGioHang = new pro1041.team_3.swing.config.Table();
         jPanel2 = new javax.swing.JPanel();
-        txtTimKiemKH = new javax.swing.JLabel();
+        btnTimKiemKh = new javax.swing.JLabel();
         cbbHtThanhToan = new pro1041.team_3.swing.Combobox();
         txtTimKiemKhachHang = new pro1041.team_3.swing.TextFieldSuggestion();
         txtMaKh = new pro1041.team_3.swing.TextField();
-        textField1 = new pro1041.team_3.swing.TextField();
+        txtTenKhachHang = new pro1041.team_3.swing.TextField();
         txtSdtKhachHang = new pro1041.team_3.swing.TextField();
         txtTongTien = new pro1041.team_3.swing.TextField();
         HinhThucThanhToan = new javax.swing.JPanel();
@@ -814,21 +811,24 @@ public class ViewBanHang extends javax.swing.JPanel {
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        dlThemKhachHang.setSize(new java.awt.Dimension(290, 450));
+        dlThemKhachHang.setPreferredSize(new java.awt.Dimension(300, 510));
+        dlThemKhachHang.setSize(new java.awt.Dimension(300, 510));
 
         jPanel22.setBackground(new java.awt.Color(255, 255, 255));
         jPanel22.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtThemSdtKh.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtThemSdtKh.setLabelColor(new java.awt.Color(1, 132, 203));
         txtThemSdtKh.setLabelText("Số điện thoại");
         jPanel22.add(txtThemSdtKh, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 240, -1));
 
         txtThemTenKh.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtThemTenKh.setLabelColor(new java.awt.Color(1, 132, 203));
         txtThemTenKh.setLabelText("Họ và tên");
         jPanel22.add(txtThemTenKh, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 240, -1));
 
         jPanel23.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel23.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray), "Giới tính", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito", 0, 12))); // NOI18N
+        jPanel23.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray), "Giới tính", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito", 0, 14), new java.awt.Color(1, 132, 203))); // NOI18N
         jPanel23.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         grThemGioiTinhKh.add(rdNamThemKh);
@@ -842,16 +842,14 @@ public class ViewBanHang extends javax.swing.JPanel {
         jPanel22.add(jPanel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 240, 60));
 
         txtThemNgaySinhKh.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtThemNgaySinhKh.setLabelColor(new java.awt.Color(1, 132, 203));
         txtThemNgaySinhKh.setLabelText("Ngày sinh");
         jPanel22.add(txtThemNgaySinhKh, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 240, -1));
 
         txtThemEmailKh.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtThemEmailKh.setLabelText("Địa chỉ");
+        txtThemEmailKh.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtThemEmailKh.setLabelText("Email");
         jPanel22.add(txtThemEmailKh, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 240, -1));
-
-        txtThemDiaChiKh.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtThemDiaChiKh.setLabelText("Địa chỉ");
-        jPanel22.add(txtThemDiaChiKh, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 240, -1));
 
         btnThemKhachHang.setBackground(new java.awt.Color(1, 181, 204));
         btnThemKhachHang.setForeground(new java.awt.Color(255, 255, 255));
@@ -863,17 +861,30 @@ public class ViewBanHang extends javax.swing.JPanel {
                 btnThemKhachHangActionPerformed(evt);
             }
         });
-        jPanel22.add(btnThemKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 370, -1, -1));
+        jPanel22.add(btnThemKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 420, -1, -1));
+
+        textAreaScroll2.setBackground(new java.awt.Color(255, 255, 255));
+        textAreaScroll2.setFont(new java.awt.Font("Nunito", 0, 14)); // NOI18N
+        textAreaScroll2.setLabelColor(new java.awt.Color(1, 132, 203));
+        textAreaScroll2.setLabelText("Mô tả");
+        textAreaScroll2.setLostFocusColor(new java.awt.Color(3, 155, 216));
+
+        txtThemDiaChiKh.setColumns(20);
+        txtThemDiaChiKh.setRows(5);
+        txtThemDiaChiKh.setFont(new java.awt.Font("Nunito", 0, 14)); // NOI18N
+        textAreaScroll2.setViewportView(txtThemDiaChiKh);
+
+        jPanel22.add(textAreaScroll2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, 110));
 
         javax.swing.GroupLayout dlThemKhachHangLayout = new javax.swing.GroupLayout(dlThemKhachHang.getContentPane());
         dlThemKhachHang.getContentPane().setLayout(dlThemKhachHangLayout);
         dlThemKhachHangLayout.setHorizontalGroup(
             dlThemKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+            .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
         );
         dlThemKhachHangLayout.setVerticalGroup(
             dlThemKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+            .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
         );
 
         themNgaySinhKh.setTextRefernce(txtThemNgaySinhKh);
@@ -921,7 +932,6 @@ public class ViewBanHang extends javax.swing.JPanel {
             .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        dlScanQr.setPreferredSize(new java.awt.Dimension(525, 440));
         dlScanQr.setSize(new java.awt.Dimension(525, 440));
         dlScanQr.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -1009,15 +1019,15 @@ public class ViewBanHang extends javax.swing.JPanel {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.gray, java.awt.Color.gray, java.awt.Color.gray, java.awt.Color.gray), "Hóa đơn", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito", 0, 12))); // NOI18N
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtTimKiemKH.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtTimKiemKH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/customSearch.png"))); // NOI18N
-        txtTimKiemKH.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        txtTimKiemKH.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnTimKiemKh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnTimKiemKh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/customSearch.png"))); // NOI18N
+        btnTimKiemKh.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTimKiemKh.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtTimKiemKHMouseClicked(evt);
+                btnTimKiemKhMouseClicked(evt);
             }
         });
-        jPanel2.add(txtTimKiemKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 30, 30));
+        jPanel2.add(btnTimKiemKh, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 30, 30));
 
         cbbHtThanhToan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tiền mặt", "Ngân hàng", "Kết hợp" }));
         cbbHtThanhToan.setSelectedIndex(-1);
@@ -1047,12 +1057,12 @@ public class ViewBanHang extends javax.swing.JPanel {
         txtMaKh.setLabelText("Mã KH");
         jPanel2.add(txtMaKh, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 190, -1));
 
-        textField1.setEditable(false);
-        textField1.setFocusLostColor(new java.awt.Color(1, 132, 203));
-        textField1.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
-        textField1.setLabelColor(new java.awt.Color(1, 132, 203));
-        textField1.setLabelText("Tên khách hàng");
-        jPanel2.add(textField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 260, -1));
+        txtTenKhachHang.setEditable(false);
+        txtTenKhachHang.setFocusLostColor(new java.awt.Color(1, 132, 203));
+        txtTenKhachHang.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtTenKhachHang.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtTenKhachHang.setLabelText("Tên khách hàng");
+        jPanel2.add(txtTenKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 260, -1));
 
         txtSdtKhachHang.setEditable(false);
         txtSdtKhachHang.setFocusLostColor(new java.awt.Color(1, 132, 203));
@@ -1420,7 +1430,7 @@ public class ViewBanHang extends javax.swing.JPanel {
             tienMat = new BigDecimal(tienMatStr);
         } else if (hinhThucThanhToan == 1) {
             maGiaoDich = txtMaGiaoDich.getText().trim();
-            String nganHangStr = txtTongTien.getText().trim();
+            String nganHangStr = txtNganHang.getText().trim();
             if (maGiaoDich.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Mã giao dịch không được để trống");
                 return;
@@ -1492,6 +1502,9 @@ public class ViewBanHang extends javax.swing.JPanel {
                     return;
                 }
             }
+            Notification panel = new Notification((JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this), Notification.Type.SUCCESS, Notification.Location.TOP_CENTER, "Thanh toán thành công");
+            panel.showNotification();
+            return;
         }
         JOptionPane.showMessageDialog(this, mess);
     }//GEN-LAST:event_btnThanhToanActionPerformed
@@ -1602,6 +1615,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         txtBoNho.setText("");
         txtDonGia.setText("");
         txtMoTa.setText("");
+        txtTimKiemSanPham.setText("");
         mapGioHang.put(ctdtFind.getId(), ctdtFind);
         loadTableGioHang();
     }//GEN-LAST:event_btnThemVaoGioHangActionPerformed
@@ -1678,7 +1692,7 @@ public class ViewBanHang extends javax.swing.JPanel {
             khachHang = new KhachHang();
             khachHang.setId(gioHang.getIdKhachHang());
             txtMaKh.setText(gioHang.getMaKhachHang());
-            textField1.setText(gioHang.getTenKhachHang());
+            txtTenKhachHang.setText(gioHang.getTenKhachHang());
             txtSdtKhachHang.setText(gioHang.getSdtKhachHang());
         }
         loadTableGioHang();
@@ -1715,8 +1729,9 @@ public class ViewBanHang extends javax.swing.JPanel {
     private void btnThemKhVaoGhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKhVaoGhActionPerformed
         // BTN thêm khách hàng
         txtMaKh.setText(khachHang.getMa());
-        textField1.setText(khachHang.getHoTen());
+        txtTenKhachHang.setText(khachHang.getHoTen());
         txtSdtKhachHang.setText(khachHang.getSdt());
+        txtTimKiemKhachHang.setText("");
         dlDetailKhachHang.setVisible(false);
     }//GEN-LAST:event_btnThemKhVaoGhActionPerformed
 
@@ -1733,6 +1748,9 @@ public class ViewBanHang extends javax.swing.JPanel {
                 khachHangMoi.setGioiTinh(0);
             } else if (rdNuThemKh.isSelected()) {
                 khachHangMoi.setGioiTinh(1);
+            } else {
+                JOptionPane.showMessageDialog(this, "Mời chọn giới tính");
+                return;
             }
             khachHangMoi.setSdt(txtThemSdtKh.getText().trim());
             khachHangMoi.setDiaChi(txtThemDiaChiKh.getText().trim());
@@ -1743,11 +1761,28 @@ public class ViewBanHang extends javax.swing.JPanel {
         }
         String mess = khachHangService.insert(khachHangMoi);
         if (mess.equals("Thêm thành công")) {
+            dlThemKhachHang.setVisible(false);
             int check = JOptionPane.showConfirmDialog(this, "Bạn có muốn thêm khách hàng này vào giỏ hàng hiện tại?", "Confirm", JOptionPane.OK_OPTION);
+            System.out.println(check);
             if (check == 0) {
-                txtTimKiemKH.setText(khachHangMoi.getSdt());
-                searchKhachHang();
+                searchKhachHang(khachHangMoi.getSdt());
+                txtTenKhachHang.setText(khachHang.getHoTen());
+                txtSdtKhachHang.setText(khachHang.getSdt());
+                txtMaKh.setText(khachHang.getMa());
+                txtThemTenKh.setText("");
+                txtThemSdtKh.setText("");
+                txtThemNgaySinhKh.setText("");
+                txtThemEmailKh.setText("");
+                txtThemDiaChiKh.setText("");
+                grThemGioiTinhKh.clearSelection();
+                txtTimKiemKhachHang.setText("");
+            } else {
+                dlThemKhachHang.setVisible(false);
             }
+            Notification panel = new Notification((JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this), Notification.Type.SUCCESS, Notification.Location.TOP_CENTER, "Thêm khách hàng thành công");
+            panel.showNotification();
+        } else {
+            JOptionPane.showMessageDialog(this, mess);
         }
     }//GEN-LAST:event_btnThemKhachHangActionPerformed
 
@@ -1777,7 +1812,9 @@ public class ViewBanHang extends javax.swing.JPanel {
 
     private void txtTimKiemKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemKhachHangActionPerformed
         // TXT Tìm kiếm khách hàng
-        searchKhachHang();
+        searchKhachHang(txtTimKiemKhachHang.getText().trim());
+        dlDetailKhachHang.setLocationRelativeTo(this);
+        dlDetailKhachHang.setVisible(true);
     }//GEN-LAST:event_txtTimKiemKhachHangActionPerformed
 
     private void cbbHtThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbHtThanhToanActionPerformed
@@ -1798,10 +1835,12 @@ public class ViewBanHang extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbbHtThanhToanActionPerformed
 
-    private void txtTimKiemKHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTimKiemKHMouseClicked
+    private void btnTimKiemKhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTimKiemKhMouseClicked
         // TxtTimKiemKhachHang
-        searchKhachHang();
-    }//GEN-LAST:event_txtTimKiemKHMouseClicked
+        searchKhachHang(txtTimKiemKhachHang.getText().trim());
+        dlDetailKhachHang.setLocationRelativeTo(this);
+        dlDetailKhachHang.setVisible(true);
+    }//GEN-LAST:event_btnTimKiemKhMouseClicked
 
     private void txtTienKhachDuaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhachDuaCaretUpdate
         //TXT Tiền khách đưa type
@@ -1930,6 +1969,7 @@ public class ViewBanHang extends javax.swing.JPanel {
     private pro1041.team_3.swing.ButtonCustom btnThemKhachHang;
     private pro1041.team_3.swing.ButtonCustom btnThemVaoGioHang;
     private javax.swing.JLabel btnTimKiem;
+    private javax.swing.JLabel btnTimKiemKh;
     private pro1041.team_3.swing.ButtonCustom btnTreoGioHang;
     private pro1041.team_3.swing.ButtonCustom btnXoaGioHangTreo;
     private pro1041.team_3.swing.ButtonCustom btnXoaTrongGioHang;
@@ -1987,7 +2027,7 @@ public class ViewBanHang extends javax.swing.JPanel {
     private pro1041.team_3.swing.config.Table tbGioHangChiTietTreo;
     private pro1041.team_3.swing.config.Table tbGioHangTreo;
     private pro1041.team_3.swing.config.TextAreaScroll textAreaScroll1;
-    private pro1041.team_3.swing.TextField textField1;
+    private pro1041.team_3.swing.config.TextAreaScroll textAreaScroll2;
     private pro1041.team_3.swing.DateChooser themNgaySinhKh;
     private javax.swing.JPanel tienMatJPanel;
     private pro1041.team_3.swing.TextField txtBoNho;
@@ -2012,7 +2052,8 @@ public class ViewBanHang extends javax.swing.JPanel {
     private pro1041.team_3.swing.TextField txtNganHangKetHop;
     private pro1041.team_3.swing.TextField txtSdtKhachHang;
     private pro1041.team_3.swing.TextField txtTenDienThoai;
-    private pro1041.team_3.swing.TextField txtThemDiaChiKh;
+    private pro1041.team_3.swing.TextField txtTenKhachHang;
+    private pro1041.team_3.swing.TextArea txtThemDiaChiKh;
     private pro1041.team_3.swing.TextField txtThemEmailKh;
     private pro1041.team_3.swing.TextField txtThemNgaySinhKh;
     private pro1041.team_3.swing.TextField txtThemSdtKh;
@@ -2022,7 +2063,6 @@ public class ViewBanHang extends javax.swing.JPanel {
     private pro1041.team_3.swing.TextField txtTienThua;
     private pro1041.team_3.swing.TextField txtTienThuaKetHop;
     private pro1041.team_3.swing.TextField txtTienThuaNganHang;
-    private javax.swing.JLabel txtTimKiemKH;
     private pro1041.team_3.swing.TextFieldSuggestion txtTimKiemKhachHang;
     private pro1041.team_3.swing.TextFieldSuggestion txtTimKiemSanPham;
     private pro1041.team_3.swing.TextField txtTinhTrang;
