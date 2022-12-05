@@ -17,7 +17,7 @@ import pro1041.team_3.util.HibernateUtil;
  *
  * @author sonpt_ph19600
  */
-public class HoaDonRepository extends Repository<HoaDon, UUID, HoaDonDto>{
+public class HoaDonRepository extends Repository<HoaDon, UUID, HoaDonDto> {
 
     public HoaDonRepository() {
         className = HoaDon.class.getName();
@@ -25,8 +25,23 @@ public class HoaDonRepository extends Repository<HoaDon, UUID, HoaDonDto>{
                 + "b.hoTen, b.sdt, c.ma, c.hoTen, a.ngayThanhToan, a.hinhThucThanhToan, "
                 + "a.tienMat, a.nganHang, a.maGiaoDich, a.tongTien)";
         join = " LEFT JOIN a.khachHang b LEFT JOIN a.nhanVien c ORDER BY a.ngayThanhToan";
-    }   
-    
+    }
+
+    public HoaDonDto findResponseById(UUID id) {
+        try {
+            HoaDonDto entity;
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a LEFT JOIN a.khachHang b LEFT JOIN a.nhanVien c WHERE a.id = :id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id);
+            entity = (HoaDonDto) query.getSingleResult();
+            return entity;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 // Truy vấn bằng Native Query
 //    @Override
 //    public List<HoaDonDto> getAllResponse() {
@@ -49,5 +64,4 @@ public class HoaDonRepository extends Repository<HoaDon, UUID, HoaDonDto>{
 //        }
 //        return list;
 //    }
-    
 }

@@ -15,7 +15,7 @@ import pro1041.team_3.dto.HoaDonRequest;
  */
 public interface BanHangService {
     
-    String thanhToan(List<HoaDonRequest> lstSp);
+    String thanhToan(List<HoaDonRequest> lstSp, String path);
     
     BhChiTietDienThoaiDto bhFindByImei(String keyWord);
     
@@ -26,5 +26,6 @@ public interface BanHangService {
     List<GioHangDto> getGioHangByIdSp(UUID idChiTietDienThoai);
     
     HoaDonDto getHoaDonByIdSp(UUID idChiTietDienThoai);
+    void test();
     
 }
