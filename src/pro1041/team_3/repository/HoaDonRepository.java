@@ -1,6 +1,8 @@
 package pro1041.team_3.repository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -73,6 +75,79 @@ public class HoaDonRepository extends Repository<HoaDon, UUID, HoaDonDto> {
 
             Query query = session.createQuery(hql);
             query.setParameter("maKH", maKH);
+            list = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<HoaDonDto> findHoaDon(String key) {
+        List<HoaDonDto> list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a "
+                    + "LEFT JOIN a.khachHang b LEFT JOIN a.nhanVien c "
+                    + "WHERE a.ma LIKE CONCAT('%', :key, '%')"
+                    + " or b.sdt LIKE CONCAT('%', :key, '%')";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("key", key);
+            list = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<HoaDonDto> locHinhThucThanhToan(Integer httt) {
+        List<HoaDonDto> list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a "
+                    + "LEFT JOIN a.khachHang b LEFT JOIN a.nhanVien c "
+                    + "WHERE a.hinhThucThanhToan = : httt";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("httt", httt);
+            list = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<HoaDonDto> locHoaDonTheoNgay(Date ngay1, Date ngay2) {
+        List<HoaDonDto> list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a "
+                    + "LEFT JOIN a.khachHang b LEFT JOIN a.nhanVien c "
+                    + "WHERE (a.ngayThanhToan  between :ngay1 and :ngay2)"
+                    + " or (a.ngayThanhToan  between :ngay2 and :ngay1)";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("ngay1", ngay1);
+            query.setParameter("ngay2", ngay2);
+            list = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<HoaDonDto> locHoaDonTheoTongTien(BigDecimal tien1, BigDecimal tien2) {
+        List<HoaDonDto> list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a "
+                    + "LEFT JOIN a.khachHang b LEFT JOIN a.nhanVien c "
+                    + "WHERE (a.tongTien  between :tien1 and :tien2)"
+                    + " or (a.tongTien  between :tien2 and :tien1)";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("tien1", tien1);
+            query.setParameter("tien2", tien2);
             list = query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
