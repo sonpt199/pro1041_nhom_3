@@ -1,6 +1,5 @@
 package pro1041.team_3.service;
 
-
 import java.io.File;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +14,7 @@ import pro1041.team_3.dto.ChiTietDienThoaiResponse;
 public interface ChiTietDienThoaiService {
 
     List<ChiTietDienThoaiResponse> getAllResponse();
-    
+
     List<ChiTietDienThoaiResponse> getAllTrangThai(int trangThai);
 
     void insert(ChiTietDienThoai chiTietSP);
@@ -56,6 +55,7 @@ public interface ChiTietDienThoaiService {
     String importFile(File file);
     
     public String exportQr(String pathFolder, UUID idChiTietDienThoai);
-
+    
+    ChiTietDienThoaiResponse checkImei(String imei);
 
 }

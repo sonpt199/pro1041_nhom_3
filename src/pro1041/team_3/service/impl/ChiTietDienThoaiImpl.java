@@ -358,5 +358,10 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
     public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMTrung(Date batDau, Date ketThuc) {
         return chiTietDienThoaiRepository.getAllCTDTNotInKMTrung(batDau, ketThuc);
     }
+    
+        @Override
+    public ChiTietDienThoaiResponse checkImei(String imei) {
+        return chiTietDienThoaiRepository.checkImei(imei);
+    }
 
 }

@@ -17,6 +17,7 @@ import pro1041.team_3.domainModel.NhanVien;
 import pro1041.team_3.dto.BhChiTietDienThoaiDto;
 import pro1041.team_3.dto.GioHangDto;
 import pro1041.team_3.dto.GioHangRequest;
+import pro1041.team_3.dto.HoaDonChiTietDto;
 import pro1041.team_3.dto.HoaDonDto;
 import pro1041.team_3.dto.HoaDonRequest;
 import pro1041.team_3.repository.BanHangRepository;
@@ -26,6 +27,7 @@ import pro1041.team_3.repository.GioHangRepository;
 import pro1041.team_3.repository.HoaDonChiTietRepository;
 import pro1041.team_3.repository.HoaDonRepository;
 import pro1041.team_3.service.BanHangService;
+import pro1041.team_3.util.ExportBill;
 
 /**
  *
@@ -49,7 +51,7 @@ public class BanHangServiceImpl implements BanHangService {
     }
 
     @Override
-    public String thanhToan(List<HoaDonRequest> lstSp) {
+    public String thanhToan(List<HoaDonRequest> lstSp, String path) {
         List<HoaDonChiTiet> lstHoaDonChiTiet = new ArrayList<>();
         LocalDateTime time = LocalDateTime.now();
         String maHd = "HD" + String.valueOf(time.getYear()).substring(2) + time.getMonthValue()
@@ -84,6 +86,12 @@ public class BanHangServiceImpl implements BanHangService {
         if (!hoaDonChiTietRepository.saveAll(lstHoaDonChiTiet)) {
             return "Lỗi hệ thống. Không thể thêm sản phẩm vào hóa đơn";
         }
+        if (path != null) {
+            HoaDonDto hoaDonDone = hoaDonRepository.findResponseById(hoaDon.getId());
+            List<HoaDonChiTietDto> lst = hoaDonChiTietRepository.getAllByIdHoaDon(hoaDon.getId());
+            ExportBill pdf = new ExportBill();
+            pdf.docPDF(hoaDonDone, lst, path);
+        }
         return "Thanh toán thành công";
     }
 
@@ -95,7 +103,7 @@ public class BanHangServiceImpl implements BanHangService {
     @Override
     public DienThoaiKhuyenMai getGiamGia(UUID idChiTietSanPham) {
         return banHangRepository.getGiamGia(idChiTietSanPham);
-    }    
+    }
 
     @Override
     public String treoHoaDon(List<GioHangRequest> lstSp) {
@@ -121,18 +129,21 @@ public class BanHangServiceImpl implements BanHangService {
             lstGioHangChiTiet.add(ghct);
         }
         if (!gioHangChiTietRepository.saveAll(lstGioHangChiTiet)) {
-            return "Lỗi hệ thống. Không t013886005198676hể thêm sản phẩm vào giỏ hàng treo";
+            return "Lỗi hệ thống. Không thể thêm sản phẩm vào giỏ hàng treo";
         }
         return "Treo giỏ hàng thành công";
+    }
+
+    public void test() {
+//        HoaDonDto hoaDon = hoaDonRepository.findResponseById(UUID.fromString("8c64f3cc-7c8e-4027-a8ec-f8221e415903"));
+//        List<HoaDonChiTietDto> lst = hoaDonChiTietRepository.getAllByIdHoaDon(UUID.fromString("8c64f3cc-7c8e-4027-a8ec-f8221e415903"));
+//        ExportBill pdf = new ExportBill();
+//        pdf.docPDF(hoaDon, lst);
     }
 
     @Override
     public List<GioHangDto> getGioHangByIdSp(UUID idChiTietDienThoai) {
         return banHangRepository.getGioHangByIdSp(idChiTietDienThoai);
-    }
-    public static void main(String[] args) {
-        BanHangServiceImpl x = new BanHangServiceImpl();
-        System.out.println(x.getGioHangByIdSp(UUID.fromString("c758277c-f33d-c54f-98a4-e29c4a094c7a")));
     }
 
     @Override
