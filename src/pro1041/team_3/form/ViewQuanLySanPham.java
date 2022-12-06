@@ -393,9 +393,9 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         btnEditHangDT = new pro1041.team_3.swing.ButtonCustom();
         buttonCustom6 = new pro1041.team_3.swing.ButtonCustom();
         cbbTrangThai = new pro1041.team_3.swing.Combobox();
-        cbbDienThoai = new pro1041.team_3.swing.Combobox<DienThoai>();
-        cbbHang = new pro1041.team_3.swing.Combobox<Hang>();
-        cbbMauSac = new pro1041.team_3.swing.Combobox<MauSac>();
+        cbbDienThoai = new pro1041.team_3.swing.ComboBoxSuggestion<DienThoai>();
+        cbbHang = new pro1041.team_3.swing.ComboBoxSuggestion<Hang>();
+        cbbMauSac = new pro1041.team_3.swing.ComboBoxSuggestion<MauSac>();
         jspTblChiTietDienThoai = new javax.swing.JScrollPane();
         tblChiTietDienThoai = new pro1041.team_3.swing.config.Table();
         jPanel3 = new javax.swing.JPanel();
@@ -406,7 +406,6 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         btnImport = new pro1041.team_3.swing.ButtonCustom();
         btnTaoQr = new pro1041.team_3.swing.ButtonCustom();
 
-        dlEditDienThoai.setPreferredSize(new java.awt.Dimension(700, 630));
         dlEditDienThoai.setSize(new java.awt.Dimension(700, 630));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -539,7 +538,6 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        dlEditHangDT.setPreferredSize(new java.awt.Dimension(700, 630));
         dlEditHangDT.setSize(new java.awt.Dimension(700, 630));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -672,7 +670,6 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        dlEditMauSac.setPreferredSize(new java.awt.Dimension(700, 630));
         dlEditMauSac.setSize(new java.awt.Dimension(700, 630));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
@@ -1013,15 +1010,9 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
             }
         });
         jPanel1.add(cbbTrangThai, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 20, 220, 40));
-
-        cbbDienThoai.setLabeText("");
         jPanel1.add(cbbDienThoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 110, 190, 40));
-
-        cbbHang.setLabeText("");
-        jPanel1.add(cbbHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 170, 190, -1));
-
-        cbbMauSac.setLabeText("");
-        jPanel1.add(cbbMauSac, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 230, 190, -1));
+        jPanel1.add(cbbHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 170, 190, 40));
+        jPanel1.add(cbbMauSac, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 228, 190, 40));
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 930, 380));
 
@@ -1191,7 +1182,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         this.txtRom.setText(ctdtr.getBoNho() + "");
         this.txtGiaBan.setText(ctdtr.getDonGia() + "");
         this.txtImei.setText(ctdtr.getImei());
-        this.txtMa.setText(ctdtr.getMa());
+        this.txtMa.setText(ctdtr.getMaDienThoai());
         this.txtMoTa.setText(ctdtr.getMoTa() == null ? "_" : ctdtr.getMoTa());
         this.txtRam.setText(ctdtr.getRam() + "");
         this.txtBaoHanh.setText(ctdtr.getThoiGianBaoHanh() + "");
@@ -1289,7 +1280,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
             BigDecimal giaCu = this.list.get(index).getDonGia();
             ChiTietDienThoai ctDT = this.getFormData();
             ctDT.setId(list.get(index).getId());
-            ctDT.setMa(this.txtMa.getText().trim());
+//            ctDT.setMathis.txtMa.getText().trim());
             if (ctDT == null) {
                 return;
             }
@@ -1370,7 +1361,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_btnExportActionPerformed
 
     private void cbbTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbTrangThaiActionPerformed
-        // TODO add your handling code here:
+        // CBB lọc danh sách sản phẩm theo trạng thái
         if (this.cbbTrangThai.getSelectedIndex() == 0) {
             this.list = this.chiTietDTImpl.getAllResponse();
             loadTable(list);
@@ -1388,6 +1379,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
         //BTN Import Excel
+        
     }//GEN-LAST:event_btnImportActionPerformed
 
     private void btnTaoQrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoQrActionPerformed
@@ -1414,6 +1406,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_btnTaoQrActionPerformed
 
     private void btnEditDienThoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditDienThoaiActionPerformed
+        // BTN hiển thị form edit điện thoại
         dlEditDienThoai.setVisible(true);
         dlEditDienThoai.setLocationRelativeTo(null);
 
@@ -1424,6 +1417,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_txtMaDTActionPerformed
 
     private void btnEditHangDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditHangDTActionPerformed
+        // BTN hiển thị form edit Hãng
         dlEditHangDT.setVisible(true);
         dlEditHangDT.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnEditHangDTActionPerformed
@@ -1750,9 +1744,9 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     private pro1041.team_3.swing.ButtonCustom buttonCustom6;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
-    private pro1041.team_3.swing.Combobox<DienThoai> cbbDienThoai;
-    private pro1041.team_3.swing.Combobox<Hang> cbbHang;
-    private pro1041.team_3.swing.Combobox<MauSac> cbbMauSac;
+    private pro1041.team_3.swing.ComboBoxSuggestion<DienThoai> cbbDienThoai;
+    private pro1041.team_3.swing.ComboBoxSuggestion<Hang> cbbHang;
+    private pro1041.team_3.swing.ComboBoxSuggestion<MauSac> cbbMauSac;
     private pro1041.team_3.swing.ComboBoxSuggestion cbbTinhTrangCu;
     private pro1041.team_3.swing.Combobox cbbTrangThai;
     private javax.swing.JDialog dlEditDienThoai;

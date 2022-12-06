@@ -29,7 +29,7 @@ public class BanHangRepository {
         BhChiTietDienThoaiDto ctdt = null;
         try {
             String dto = "new pro1041.team_3.dto.BhChiTietDienThoaiDto"
-                    + "(a.id, a.ma, a.mauSac.ten, a.dienThoai.ten, a.hang.ten, "
+                    + "(a.id, a.dienThoai.ma, a.mauSac.ten, a.dienThoai.ten, a.hang.ten, "
                     + "a.tinhTrang, a.donGia, a.trangThai, a.imei, "
                     + "a.ram, a.boNho, a.moTa)";
             session = HibernateUtil.getSession();

@@ -20,7 +20,7 @@ public class DienThoaiKhuyenMaiRepository extends Repository<DienThoaiKhuyenMai,
 
     public DienThoaiKhuyenMaiRepository() {
         className = DienThoaiKhuyenMai.class.getName();
-        resCon = "new pro1041.team_3.dto.DienThoaiKhuyenMaiDto(a.khuyenMai.id, a.chiTietDienThoai.id, a.chiTietDienThoai.ma, a.chiTietDienThoai.dienThoai.ten, "
+        resCon = "new pro1041.team_3.dto.DienThoaiKhuyenMaiDto(a.khuyenMai.id, a.chiTietDienThoai.id, a.chiTietDienThoai.dienThoai.ma, a.chiTietDienThoai.dienThoai.ten, "
                 + " a.chiTietDienThoai.hang.ten, a.chiTietDienThoai.mauSac.ten, "
                 + " a.chiTietDienThoai.imei, a.chiTietDienThoai.donGia, a.giaConLai)";
     }
@@ -30,7 +30,7 @@ public class DienThoaiKhuyenMaiRepository extends Repository<DienThoaiKhuyenMai,
         try {
             session = HibernateUtil.getSession();
             String hql = "SELECT new pro1041.team_3.dto.DienThoaiKhuyenMaiDto "
-                    + "(a.khuyenMai.id, a.chiTietDienThoai.id, a.chiTietDienThoai.ma, a.chiTietDienThoai.dienThoai.ten, "
+                    + "(a.khuyenMai.id, a.chiTietDienThoai.id, a.chiTietDienThoai.dienThoai.ma, a.chiTietDienThoai.dienThoai.ten, "
                     + " a.chiTietDienThoai.hang.ten, a.chiTietDienThoai.mauSac.ten, "
                     + " a.chiTietDienThoai.imei, a.chiTietDienThoai.donGia, a.giaConLai) "
                     + "FROM DienThoaiKhuyenMai a WHERE a.khuyenMai.id = :id";
@@ -49,10 +49,10 @@ public class DienThoaiKhuyenMaiRepository extends Repository<DienThoaiKhuyenMai,
             List<DienThoaiKhuyenMaiDto> lst;
             session = HibernateUtil.getSession();
             String hql = "SELECT  new pro1041.team_3.dto.DienThoaiKhuyenMaiDto "
-                    + "(a.khuyenMai.id, a.chiTietDienThoai.id, a.chiTietDienThoai.ma, a.chiTietDienThoai.dienThoai.ten, "
+                    + "(a.khuyenMai.id, a.chiTietDienThoai.id, a.chiTietDienThoai.dienThoai.ma, a.chiTietDienThoai.dienThoai.ten, "
                     + " a.chiTietDienThoai.hang.ten, a.chiTietDienThoai.mauSac.ten, "
                     + " a.chiTietDienThoai.imei, a.chiTietDienThoai.donGia, a.giaConLai) "
-                    + "FROM DienThoaiKhuyenMai a WHERE (a.chiTietDienThoai.ma LIKE CONCAT('%', :key, '%') or a.chiTietDienThoai.dienThoai.ten LIKE CONCAT('%', :key, '%')"
+                    + "FROM DienThoaiKhuyenMai a WHERE (a.chiTietDienThoai.dienThoai.ma LIKE CONCAT('%', :key, '%') or a.chiTietDienThoai.dienThoai.ten LIKE CONCAT('%', :key, '%')"
                     + " or a.chiTietDienThoai.hang.ten LIKE CONCAT('%', :key, '%') or a.chiTietDienThoai.mauSac.ten LIKE CONCAT('%', :key, '%')"
                     + " or a.chiTietDienThoai.imei LIKE CONCAT('%', :key, '%')) and a.khuyenMai.id = :id";
             Query query = session.createQuery(hql);

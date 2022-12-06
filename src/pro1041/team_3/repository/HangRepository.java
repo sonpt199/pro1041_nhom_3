@@ -36,6 +36,21 @@ public class HangRepository extends Repository<Hang, UUID, HangDto> {
             return null;
         }
     }
+    
+    public List<Hang> findByName(String ten) {
+        try {
+            List<Hang> lst;
+            session = HibernateUtil.getSession();
+            String hql = "SELECT a FROM " + className + " a WHERE a.ten LIKE CONCAT('%', :ten, '%')";
+            Query query = session.createQuery(hql);
+            query.setParameter("ten", ten);
+            lst = query.getResultList();
+            return lst;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public ChiTietDienThoaiDto checkHangTrongCtdt(UUID id) {
         ChiTietDienThoaiDto chiTietDienThoaiDto = null;

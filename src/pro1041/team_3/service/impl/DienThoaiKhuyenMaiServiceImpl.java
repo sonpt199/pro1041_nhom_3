@@ -87,13 +87,19 @@ public class DienThoaiKhuyenMaiServiceImpl implements DienThoaiKhuyenMaiService 
 
     @Override
     public String insertSanPhamKM(KhuyenMai khuyenMai, List<KhuyenMaiReQuestDto> list) {
-        List<DienThoaiKhuyenMai> lstDtKM = new ArrayList<>();
+                List<DienThoaiKhuyenMai> lstDtKM = new ArrayList<>();
+        Date dateNow = new Date();
         for (KhuyenMaiReQuestDto x : list) {
             DienThoaiKhuyenMai dtkm = new DienThoaiKhuyenMai();
             dtkm.setChiTietDienThoai(x.getChiTietDienThoai());
             dtkm.setKhuyenMai(khuyenMai);
             dtkm.setDonGia(x.getGiaBan());
             dtkm.setGiaConLai(x.getGiaConLai());
+            if (khuyenMai.getNgayBatDau().getTime() <= dateNow.getTime() && khuyenMai.getNgayKetThuc().getTime() >= dateNow.getTime()) {
+                dtkm.setTrangThai(1);
+            } else if (khuyenMai.getNgayBatDau().getTime() > dateNow.getTime()) {
+                dtkm.setTrangThai(2);
+            }
             lstDtKM.add(dtkm);
         }
         if (!dienThoaiKhuyenMaiRepository.saveAll(lstDtKM)) {

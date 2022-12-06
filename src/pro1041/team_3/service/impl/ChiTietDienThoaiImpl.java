@@ -7,6 +7,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,7 +16,10 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -34,6 +38,9 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import pro1041.team_3.domainModel.DienThoai;
+import pro1041.team_3.domainModel.Hang;
+import pro1041.team_3.domainModel.MauSac;
 import pro1041.team_3.repository.DienThoaiKhuyenMaiRepository;
 
 /**
@@ -57,7 +64,7 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
     public void insert(ChiTietDienThoai chiTietDT) {
         LocalDateTime time = LocalDateTime.now();
         String ma = "CTDT" + time.getSecond() + time.getMinute() + time.getHour();
-        chiTietDT.setMa(ma);
+//        chiTietDT.setMa(ma);
         this.chiTietDienThoaiRepository.saveOrUpdate(chiTietDT);
     }
 
@@ -160,7 +167,7 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
                 cell1.setCellValue(x.getId().toString());
 
                 Cell cell2 = row.createCell(1);
-                cell2.setCellValue(x.getMa());
+                cell2.setCellValue(x.getDienThoai().getMa());
 
                 Cell cell3 = row.createCell(2);
                 cell3.setCellValue(x.getMauSac().getTen());
@@ -172,7 +179,7 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
                 cell5.setCellValue(x.getHang().getTen());
 
                 Cell cell6 = row.createCell(5);
-                cell6.setCellValue(x.getTinhTrang() == 1 ? "Mới" : "Cũ");
+                cell6.setCellValue(x.getTinhTrang()+"");
 
                 Cell cell7 = row.createCell(6);
                 cell7.setCellValue(x.getDonGia() + "");
@@ -207,50 +214,52 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
         return true;
     }
 
+
+//    @Override
+//    public List<ChiTietDienThoaiResponse> getAllDienThoaiNotInKM(UUID id) {
+//        return chiTietDienThoaiRepository.getAllDienThoaiNotInKM(id);
+//    }
+
     @Override
-    public List<ChiTietDienThoaiResponse> getAllDienThoaiNotInKM(UUID id) {
-        return chiTietDienThoaiRepository.getAllDienThoaiNotInKM(id);
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByDienThoai(String tenDienThoai, Date batDau, Date ketThuc) {
+        return chiTietDienThoaiRepository.getAllCTDienThoaiByDienThoai(tenDienThoai, batDau, ketThuc);
     }
 
     @Override
-    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByDienThoai(String tenDienThoai) {
-        return chiTietDienThoaiRepository.getAllCTDienThoaiByDienThoai(tenDienThoai);
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByHang(String tenHang, Date batDau, Date ketThuc) {
+        return chiTietDienThoaiRepository.getAllCTDienThoaiByHang(tenHang, batDau, ketThuc);
     }
 
     @Override
-    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByHang(String tenHang) {
-        return chiTietDienThoaiRepository.getAllCTDienThoaiByHang(tenHang);
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByMauSac(String tenMauSac, Date batDau, Date ketThuc) {
+        return chiTietDienThoaiRepository.getAllCTDienThoaiByMauSac(tenMauSac, batDau, ketThuc);
     }
 
-    @Override
-    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByMauSac(String tenMauSac) {
-        return chiTietDienThoaiRepository.getAllCTDienThoaiByMauSac(tenMauSac);
-    }
+//    @Override
+//    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByDienThoai(UUID id, String tenDienThoai) {
+//        return chiTietDienThoaiRepository.getAllCTDTNotInKMByDienThoai(id, tenDienThoai);
+//    }
+//
+//    @Override
+//    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByHang(UUID id, String tenHang) {
+//        return chiTietDienThoaiRepository.getAllCTDTNotInKMByHang(id, tenHang);
+//    }
+//
+//    @Override
+//    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByMauSac(UUID id, String tenMauSac) {
+//        return chiTietDienThoaiRepository.getAllCTDTNotInKMByMauSac(id, tenMauSac);
+//    }
+//
+//    @Override
+//    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByTinhTrang(UUID id, int tinhTrang) {
+//        return chiTietDienThoaiRepository.getAllCTDTNotInKMByTinhTrang(id, tinhTrang);
+//    }
 
     @Override
-    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByDienThoai(UUID id, String tenDienThoai) {
-        return chiTietDienThoaiRepository.getAllCTDTNotInKMByDienThoai(id, tenDienThoai);
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByTinhTrang(int tinhTrang, Date batDau, Date ketThuc) {
+        return chiTietDienThoaiRepository.getAllCTDienThoaiByTinhTrang(tinhTrang, batDau, ketThuc);
     }
-
-    @Override
-    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByHang(UUID id, String tenHang) {
-        return chiTietDienThoaiRepository.getAllCTDTNotInKMByHang(id, tenHang);
-    }
-
-    @Override
-    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByMauSac(UUID id, String tenMauSac) {
-        return chiTietDienThoaiRepository.getAllCTDTNotInKMByMauSac(id, tenMauSac);
-    }
-
-    @Override
-    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByTinhTrang(UUID id, int tinhTrang) {
-        return chiTietDienThoaiRepository.getAllCTDTNotInKMByTinhTrang(id, tinhTrang);
-    }
-
-    @Override
-    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByTinhTrang(int tinhTrang) {
-        return chiTietDienThoaiRepository.getAllCTDienThoaiByTinhTrang(tinhTrang);
-    }
+    
 
     @Override
     public String exportQr(String pathFolder, UUID idChiTietDienThoai) {
@@ -259,7 +268,7 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
             return "Không tìm thấy điện thoại";
         }
         DecimalFormat moneyFormat = new DecimalFormat("#,###");
-        String data = "Mã điện thoại: " + ctdt.getMa()
+        String data = "Mã điện thoại: " + ctdt.getMaDienThoai()
                 + "\nIMEI: " + ctdt.getImei()
                 + "\nTên điện thoại: " + ctdt.getDienThoai()
                 + "\nHãng: " + ctdt.getHang()
@@ -278,7 +287,7 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
             BitMatrix matrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, 200, 200, hints);
 
             // Write to file image
-            Path path = FileSystems.getDefault().getPath(pathFolder + "\\" + ctdt.getMa() + "-" + ctdt.getDienThoai() + ".png");
+            Path path = FileSystems.getDefault().getPath(pathFolder + "\\" + ctdt.getMaDienThoai()+ "-" + ctdt.getDienThoai() + ".png");
             BufferedImage qrImage = MatrixToImageWriter.toBufferedImage(matrix);
             MatrixToImageWriter.writeToPath(matrix, "PNG", path);
         } catch (Exception ex) {
@@ -286,6 +295,68 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
             return "Lỗi hệ thống. Không thể export";
         }
         return "Tải thành công";
+    }
+
+    @Override
+    public String importFile(File file) {
+        List<ChiTietDienThoai> lstCTDT = new ArrayList<>();
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            Workbook workbook = new XSSFWorkbook(fis);
+            Sheet sheet = workbook.getSheetAt(0);
+            DataFormatter dft = new DataFormatter();
+            Iterator<Row> itegator = sheet.iterator();
+            while (itegator.hasNext()) {
+                Row row = itegator.next();
+                if (row.getRowNum() == 0 || row.getRowNum() == 1) {
+                    continue;
+                }
+                String tenMauSac = row.getCell(0).getStringCellValue();
+                String tenDienThoai = row.getCell(1).getStringCellValue();
+                String tenHang = row.getCell(2).getStringCellValue();
+                String tinhTrang = row.getCell(3).getStringCellValue();
+                String donGia = row.getCell(4).getStringCellValue();
+                String trangThaiStr = row.getCell(5).getStringCellValue();
+                String imei = row.getCell(6).getStringCellValue();
+                String ram = row.getCell(7).getStringCellValue();
+                String boNho = row.getCell(8).getStringCellValue();
+                String moTa = row.getCell(9).getStringCellValue();
+                String thoiGianBaoHanh = row.getCell(10).getStringCellValue();
+                
+                
+                Integer trangThai = -1;
+                if (trangThaiStr.equals("Đang bán")) {
+                    trangThai = 0;
+                } else if (trangThaiStr.equals("Đã bán")) {
+                    trangThai = 1;
+                } else {
+                    trangThai = 2;
+                }
+
+                ChiTietDienThoai ctdt = new ChiTietDienThoai();
+                
+                
+                lstCTDT.add(ctdt);
+            }
+            workbook.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+            return null;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        if (lstCTDT.isEmpty()) {
+            return "File excel trống";
+        }
+        chiTietDienThoaiRepository.saveAll(lstCTDT);
+
+        return "Import thành công";
+    }
+    
+    @Override
+    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMTrung(Date batDau, Date ketThuc) {
+        return chiTietDienThoaiRepository.getAllCTDTNotInKMTrung(batDau, ketThuc);
     }
 
 }

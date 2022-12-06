@@ -21,7 +21,7 @@ public class ChiTietDienThoaiResponse {
     
     private UUID id;
     
-    private String ma;
+    private String maDienThoai;
     
     private String mauSac;
     
@@ -48,10 +48,10 @@ public class ChiTietDienThoaiResponse {
     private Integer thoiGianBaoHanh;
     
     public Object[] toDataRow(int index) {
-        return new Object[]{index, ma, dienThoai, hang, donGia, mauSac, imei, ram, boNho, tinhTrang + "%", trangThai == 0 ? "Đang bán" : trangThai == 1 ? "Đã bán" : "Sản phẩm lỗi", moTa == null ? "_" : moTa, thoiGianBaoHanh};
+        return new Object[]{index, maDienThoai, dienThoai, hang, donGia, mauSac, imei, ram, boNho, tinhTrang + "%", trangThai == 0 ? "Đang bán" : trangThai == 1 ? "Đã bán" : "Sản phẩm lỗi", moTa == null ? "_" : moTa, thoiGianBaoHanh};
     }
     
     public Object[] toDataRowKM(int index) {
-        return new Object[]{index, ma, dienThoai, hang, mauSac, tinhTrang + "%", boNho, imei};
+        return new Object[]{index, maDienThoai, dienThoai, hang, mauSac, tinhTrang + "%", boNho, imei};
     }
 }

@@ -872,10 +872,15 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Khuyến mại này đã dừng hoạt động");
             return;
         }
+        KhuyenMai khuyenMai = this.getFormData();
+        if (khuyenMai == null) {
+            return;
+        }
         this.loadCbbDienThoai();
         this.loadCbbHang();
         this.loadCbbMauSac();
-        this.loadTableDienThoai(chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id));
+        listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMTrung(khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
+        this.loadTableDienThoai(listSPKM);
         dlThemDienThoaiVaoKm.setVisible(true);
         dlThemDienThoaiVaoKm.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnThemSpKMActionPerformed
@@ -940,50 +945,55 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
 
     private void cbbLocDienThoai1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocDienThoai1ActionPerformed
         // CBB lọc điện thoại khi chọn Điện thoại vào KM
+        KhuyenMai khuyenMai = getFormData();
+        
         String text = this.cbbLocDienThoai1.getSelectedItem().toString();
         if (cbbLocDienThoai1.getSelectedIndex() == 0) {
-            listSPKM = this.chiTietDienThoaiImpl.getAllTrangThai(0);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMTrung(khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
             this.loadTableSPKM(listSPKM);
         } else {
-            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByDienThoai(text);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByDienThoai(text, khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
             this.loadTableSPKM(listSPKM);
         }
     }//GEN-LAST:event_cbbLocDienThoai1ActionPerformed
 
     private void cbbLocHang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocHang1ActionPerformed
         // CBB lọc hãng khi chọn Điện thoại vào KM
+        KhuyenMai khuyenMai = getFormData();
         String text = this.cbbLocHang1.getSelectedItem().toString();
         if (cbbLocHang1.getSelectedIndex() == 0) {
-            listSPKM = this.chiTietDienThoaiImpl.getAllTrangThai(0);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMTrung(khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
             this.loadTableSPKM(listSPKM);
         } else {
-            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByHang(text);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByHang(text, khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
             this.loadTableSPKM(listSPKM);
         }
     }//GEN-LAST:event_cbbLocHang1ActionPerformed
 
     private void cbbLocMauSac1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocMauSac1ActionPerformed
         // CBB lọc màu sắc khi chọn Điện thoại vào KM
+        KhuyenMai khuyenMai = getFormData();
         String text = this.cbbLocMauSac1.getSelectedItem().toString();
         if (cbbLocMauSac1.getSelectedIndex() == 0) {
-            listSPKM = this.chiTietDienThoaiImpl.getAllTrangThai(0);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMTrung(khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
             this.loadTableSPKM(listSPKM);
         } else {
-            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByMauSac(text);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByMauSac(text, khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
             this.loadTableSPKM(listSPKM);
         }
     }//GEN-LAST:event_cbbLocMauSac1ActionPerformed
 
     private void cbbLocTinhTrang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocTinhTrang1ActionPerformed
         // CBB lọc tình trạng khi chọn Điện thoại vào KM
+        KhuyenMai khuyenMai = getFormData();
         String text = this.cbbLocTinhTrang1.getSelectedItem().toString();
 
         if (cbbLocTinhTrang1.getSelectedIndex() == 0) {
-            listSPKM = this.chiTietDienThoaiImpl.getAllTrangThai(0);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMTrung(khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
             this.loadTableSPKM(listSPKM);
         } else {
             Integer tinhTrang = Integer.parseInt(text);
-            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByTinhTrang(tinhTrang);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByTinhTrang(tinhTrang, khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
             this.loadTableSPKM(listSPKM);
         }
     }//GEN-LAST:event_cbbLocTinhTrang1ActionPerformed
@@ -1015,17 +1025,17 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
                     if (khuyenMai == null) {
                         return;
                     }
-                    List<DienThoaiKhuyenMaiDto> lstDTKMDienRavaTgLai = dienThoaiKhuyenMaiServiceImpl.findDTKhuyenMaiDienRavaTgLai(listSPKM.get(i).getId());
-                    for (DienThoaiKhuyenMaiDto a : lstDTKMDienRavaTgLai) {
-                        //(StartA < EndB) && (EndA > StartB)
-                        KhuyenMai KM = khuyenMaiImpl.findById(a.getIdKhuyenMai());
-                        if (khuyenMai.getNgayBatDau().getTime() < KM.getNgayKetThuc().getTime()
-                                && khuyenMai.getNgayKetThuc().getTime() > KM.getNgayBatDau().getTime()) {
-                            JOptionPane.showMessageDialog(this, "Điện thoại " + a.getMaChiTietDienThoai() + " đã có khuyến mại " + KM.getTen());
-                            lstKMRequest.clear();
-                            return;
-                        }
-                    }
+//                    List<DienThoaiKhuyenMaiDto> lstDTKMDienRavaTgLai = dienThoaiKhuyenMaiServiceImpl.findDTKhuyenMaiDienRavaTgLai(listSPKM.get(i).getId());
+//                    for (DienThoaiKhuyenMaiDto a : lstDTKMDienRavaTgLai) {
+//                        //(StartA < EndB) && (EndA > StartB)
+//                        KhuyenMai KM = khuyenMaiImpl.findById(a.getIdKhuyenMai());
+//                        if (khuyenMai.getNgayBatDau().getTime() < KM.getNgayKetThuc().getTime()
+//                                && khuyenMai.getNgayKetThuc().getTime() > KM.getNgayBatDau().getTime()) {
+//                            JOptionPane.showMessageDialog(this, "Điện thoại " + a.getMaChiTietDienThoai() + " đã có khuyến mại " + KM.getTen());
+//                            lstKMRequest.clear();
+//                            return;
+//                        }
+//                    }
                     ChiTietDienThoai chiTietDienThoai = new ChiTietDienThoai();
                     chiTietDienThoai.setId(listSPKM.get(i).getId());
                     chiTietDienThoai.setDonGia(listSPKM.get(i).getDonGia());
@@ -1112,7 +1122,7 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
 //            }
 //        }
 
-        List<ChiTietDienThoaiResponse> listCTDT = chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id);
+        List<ChiTietDienThoaiResponse> listCTDT = chiTietDienThoaiImpl.getAllCTDTNotInKMTrung(khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
         for (int i = 0; i < listCTDT.size(); i++) {
             for (Integer x : lst) {
                 if (i == x) {
@@ -1175,12 +1185,13 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         // CBB lọc điện thoại khi thêm Điện thoại vào KM
         int row = this.tblKhuyenMai.getSelectedRow();
         UUID id = list1.get(row).getIdKhuyenMai();
+        KhuyenMai khuyenMai = getFormData();
         String text = this.cbbLocDienThoai.getSelectedItem().toString();
         if (cbbLocDienThoai.getSelectedIndex() == 0) {
-            listSPKM = this.chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMTrung(khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
             this.loadTableDienThoai(listSPKM);
         } else {
-            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMByDienThoai(id, text);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByDienThoai(text, khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
             this.loadTableDienThoai(listSPKM);
         }
     }//GEN-LAST:event_cbbLocDienThoaiActionPerformed
@@ -1190,11 +1201,12 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         int row = this.tblKhuyenMai.getSelectedRow();
         UUID id = list1.get(row).getIdKhuyenMai();
         String text = this.cbbLocHang.getSelectedItem().toString();
+        KhuyenMai khuyenMai = getFormData();
         if (cbbLocHang.getSelectedIndex() == 0) {
-            listSPKM = this.chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMTrung(khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
             this.loadTableDienThoai(listSPKM);
         } else {
-            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMByHang(id, text);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByHang(text, khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
             this.loadTableDienThoai(listSPKM);
         }
     }//GEN-LAST:event_cbbLocHangActionPerformed
@@ -1204,11 +1216,12 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         int row = this.tblKhuyenMai.getSelectedRow();
         UUID id = list1.get(row).getIdKhuyenMai();
         String text = this.cbbLocMauSac.getSelectedItem().toString();
+        KhuyenMai khuyenMai = getFormData();
         if (cbbLocMauSac.getSelectedIndex() == 0) {
-            listSPKM = this.chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMTrung(khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
             this.loadTableDienThoai(listSPKM);
         } else {
-            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMByMauSac(id, text);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByMauSac(text, khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
             this.loadTableDienThoai(listSPKM);
         }
     }//GEN-LAST:event_cbbLocMauSacActionPerformed
@@ -1218,13 +1231,13 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         int row = this.tblKhuyenMai.getSelectedRow();
         UUID id = list1.get(row).getIdKhuyenMai();
         String text = this.cbbLocTinhTrang.getSelectedItem().toString();
-
+        KhuyenMai khuyenMai = getFormData();
         if (cbbLocTinhTrang.getSelectedIndex() == 0) {
-            listSPKM = this.chiTietDienThoaiImpl.getAllDienThoaiNotInKM(id);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMTrung(khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
             this.loadTableDienThoai(listSPKM);
         } else {
             Integer tinhTrang = Integer.parseInt(text);
-            listSPKM = this.chiTietDienThoaiImpl.getAllCTDTNotInKMByTinhTrang(id, tinhTrang);
+            listSPKM = this.chiTietDienThoaiImpl.getAllCTDienThoaiByTinhTrang(tinhTrang, khuyenMai.getNgayBatDau(), khuyenMai.getNgayKetThuc());
             this.loadTableDienThoai(listSPKM);
         }
     }//GEN-LAST:event_cbbLocTinhTrangActionPerformed

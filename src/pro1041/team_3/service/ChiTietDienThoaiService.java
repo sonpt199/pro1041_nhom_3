@@ -1,6 +1,8 @@
 package pro1041.team_3.service;
 
 
+import java.io.File;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import pro1041.team_3.domainModel.ChiTietDienThoai;
@@ -30,24 +32,30 @@ public interface ChiTietDienThoaiService {
 
     List<ChiTietDienThoaiResponse> sapXep2(String loai, String chieu);
     
-    List<ChiTietDienThoaiResponse> getAllDienThoaiNotInKM(UUID id);
+ 
+//    List<ChiTietDienThoaiResponse> getAllDienThoaiNotInKM(UUID id);
+//
+//    List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByDienThoai(UUID id, String tenDienThoai);
+//
+//    List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByHang(UUID id, String tenHang);
+//
+//    List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByMauSac(UUID id, String tenMauSac);
+//
+//    List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByTinhTrang(UUID id, int tinhTrang);
+
+    List<ChiTietDienThoaiResponse> getAllCTDienThoaiByDienThoai(String tenDienThoai, Date batDau, Date ketThuc);
+
+    List<ChiTietDienThoaiResponse> getAllCTDienThoaiByHang(String tenHang, Date batDau, Date ketThuc);
+
+    List<ChiTietDienThoaiResponse> getAllCTDienThoaiByMauSac(String tenMauSac, Date batDau, Date ketThuc);
+
+    List<ChiTietDienThoaiResponse> getAllCTDienThoaiByTinhTrang(int tinhTrang, Date batDau, Date ketThuc);
+
+    List<ChiTietDienThoaiResponse> getAllCTDTNotInKMTrung(Date batDau, Date ketThuc);
+
+    String importFile(File file);
     
-    List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByDienThoai(UUID id, String tenDienThoai);
-    
-    List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByHang(UUID id, String tenHang);
-    
-    List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByMauSac(UUID id, String tenMauSac);
-    
-    List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByTinhTrang(UUID id, int tinhTrang);
-    
-    List<ChiTietDienThoaiResponse> getAllCTDienThoaiByDienThoai(String tenDienThoai);
-    
-    List<ChiTietDienThoaiResponse> getAllCTDienThoaiByHang(String tenHang);
-    
-    List<ChiTietDienThoaiResponse> getAllCTDienThoaiByMauSac(String tenMauSac);
-    
-    List<ChiTietDienThoaiResponse> getAllCTDienThoaiByTinhTrang(int tinhTrang);
-    
-     String exportQr(String pathFolder, UUID idChiTietDienThoai);
+    public String exportQr(String pathFolder, UUID idChiTietDienThoai);
+
 
 }
