@@ -112,6 +112,8 @@ public class ViewBanHang extends javax.swing.JPanel {
         dlThemKhachHang.setTitle("Thêm khách hàng");
         dlThemKhachHang.setIconImage(iconDialogThemKh.getImage());
         jpnGiamGia.setVisible(false);
+        dlScanQr.setTitle("Scan QR");
+        dlScanQr.setIconImage(iconDialog.getImage());
 
 //        Setting Scrollbar cho Table
         tbGioHang.fixTable(jspTbGioHang);
@@ -173,7 +175,10 @@ public class ViewBanHang extends javax.swing.JPanel {
                         String[] arrResult = resultText.split("\\n");
                         System.out.println(arrResult[1]);
                         txtTimKiemSanPham.setText(arrResult[1].substring(6));
+                        dlScanQr.setVisible(false);
                         searchSanPham();
+                        webcam.close();
+                        capture.stop();
                     }
 
                 } while (true);
@@ -811,7 +816,6 @@ public class ViewBanHang extends javax.swing.JPanel {
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        dlThemKhachHang.setPreferredSize(new java.awt.Dimension(300, 510));
         dlThemKhachHang.setSize(new java.awt.Dimension(300, 510));
 
         jPanel22.setBackground(new java.awt.Color(255, 255, 255));
@@ -880,11 +884,11 @@ public class ViewBanHang extends javax.swing.JPanel {
         dlThemKhachHang.getContentPane().setLayout(dlThemKhachHangLayout);
         dlThemKhachHangLayout.setHorizontalGroup(
             dlThemKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+            .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
         dlThemKhachHangLayout.setVerticalGroup(
             dlThemKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+            .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
         );
 
         themNgaySinhKh.setTextRefernce(txtThemNgaySinhKh);
@@ -1230,7 +1234,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         txtGiaBan.setEditable(false);
         txtGiaBan.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
         txtGiaBan.setLabelColor(new java.awt.Color(1, 132, 203));
-        txtGiaBan.setLabelText("Màu sắc");
+        txtGiaBan.setLabelText("Giá bán");
         jpnGiamGia.add(txtGiaBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 220, -1));
 
         jPanel1.add(jpnGiamGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 240, 50));
