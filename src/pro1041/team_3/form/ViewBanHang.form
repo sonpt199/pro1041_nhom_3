@@ -794,9 +794,6 @@
     </Container>
     <Container class="javax.swing.JDialog" name="dlThemKhachHang">
       <Properties>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[300, 510]"/>
-        </Property>
         <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[300, 510]"/>
         </Property>
@@ -1904,7 +1901,7 @@
                 <Property name="labelColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cb" green="84" red="1" type="rgb"/>
                 </Property>
-                <Property name="labelText" type="java.lang.String" value="M&#xe0;u s&#x1eaf;c"/>
+                <Property name="labelText" type="java.lang.String" value="Gi&#xe1; b&#xe1;n"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
