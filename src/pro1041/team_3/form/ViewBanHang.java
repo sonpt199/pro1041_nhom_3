@@ -1563,7 +1563,6 @@ public class ViewBanHang extends javax.swing.JPanel {
                 mapGioHang.remove(x.getKey());
             }
         }
-        System.out.println(mapGioHang.size());
         loadTableGioHang();
     }//GEN-LAST:event_btnXoaTrongGioHangActionPerformed
 
