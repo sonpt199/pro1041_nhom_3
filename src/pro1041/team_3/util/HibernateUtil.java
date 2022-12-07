@@ -68,6 +68,10 @@ public class HibernateUtil {
         }
         return SESSION;
     }
+    
+    public static Session getSessionForThread(){        
+        return FACTORY.openSession();
+    }
 
     public static void main(String[] args) {
         SESSION = FACTORY.openSession();
