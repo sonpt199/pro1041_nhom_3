@@ -90,7 +90,9 @@ public class BanHangServiceImpl implements BanHangService {
             HoaDonDto hoaDonDone = hoaDonRepository.findResponseById(hoaDon.getId());
             List<HoaDonChiTietDto> lst = hoaDonChiTietRepository.getAllByIdHoaDon(hoaDon.getId());
             ExportBill pdf = new ExportBill();
-            pdf.docPDF(hoaDonDone, lst, path);
+            if (!pdf.docPDF(hoaDonDone, lst, path)) {
+                return "Không thể xuất PDF hóa đơn";
+            }
         }
         return "Thanh toán thành công";
     }
