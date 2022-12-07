@@ -15,7 +15,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import pro1041.team_3.domainModel.HoaDon;
 import pro1041.team_3.dto.HoaDonChiTietDto;
@@ -24,6 +26,8 @@ import pro1041.team_3.service.HoaDonChiTietService;
 import pro1041.team_3.service.HoaDonService;
 import pro1041.team_3.service.impl.HoaDonChiTietServiceImpl;
 import pro1041.team_3.service.impl.HoaDonServiceImpl;
+import pro1041.team_3.swing.Notification;
+import pro1041.team_3.swing.jnafilechooser.api.JnaFileChooser;
 
 public class ViewQuanLyHoaDon extends javax.swing.JPanel {
 
@@ -120,6 +124,7 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
         txtTien2 = new pro1041.team_3.swing.TextField();
         btnLocTien = new pro1041.team_3.swing.ButtonCustom();
         jLabel1 = new javax.swing.JLabel();
+        btnXuatPdf = new pro1041.team_3.swing.ButtonCustom();
 
         dlHoaDonChiTiet.setResizable(false);
         dlHoaDonChiTiet.setSize(new java.awt.Dimension(1095, 365));
@@ -296,7 +301,7 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
                 btnXemChiTietActionPerformed(evt);
             }
         });
-        jPanel2.add(btnXemChiTiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, 116, -1));
+        jPanel2.add(btnXemChiTiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 116, -1));
 
         txtTimKiem.setFont(new java.awt.Font("Nunito SemiBold", 0, 12)); // NOI18N
         txtTimKiem.setLabelColor(new java.awt.Color(1, 132, 203));
@@ -304,6 +309,11 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
         txtTimKiem.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 txtTimKiemCaretUpdate(evt);
+            }
+        });
+        txtTimKiem.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txtTimKiemPropertyChange(evt);
             }
         });
         jPanel2.add(txtTimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 130, -1));
@@ -372,7 +382,7 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
                 btnLocNgayActionPerformed(evt);
             }
         });
-        jPanel2.add(btnLocNgay, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, 116, -1));
+        jPanel2.add(btnLocNgay, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 70, 116, -1));
 
         txtTien1.setFont(new java.awt.Font("Nunito SemiBold", 0, 12)); // NOI18N
         txtTien1.setLabelColor(new java.awt.Color(1, 132, 203));
@@ -403,12 +413,23 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
                 btnLocTienActionPerformed(evt);
             }
         });
-        jPanel2.add(btnLocTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 160, 116, -1));
+        jPanel2.add(btnLocTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, 116, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("-");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 20, -1));
+
+        btnXuatPdf.setBackground(new java.awt.Color(1, 181, 204));
+        btnXuatPdf.setForeground(new java.awt.Color(255, 255, 255));
+        btnXuatPdf.setText("Xuất PDF");
+        btnXuatPdf.setFont(new java.awt.Font("Nunito", 1, 12)); // NOI18N
+        btnXuatPdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXuatPdfActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnXuatPdf, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, 116, -1));
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 20, 460, 230));
     }// </editor-fold>//GEN-END:initComponents
@@ -475,15 +496,6 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
         // TXT Thời gian bắt đầu đầu click
         tpThoiGianBatDau.showPopup(this, (getWidth() - tpThoiGianBatDau.getPreferredSize().width) / 2, (getHeight() - tpThoiGianBatDau.getPreferredSize().height) / 2);
     }//GEN-LAST:event_txtThoiGianBDMouseClicked
-
-    private void txtTimKiemCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTimKiemCaretUpdate
-        // TODO add your handling code here:
-        try {
-            loadTableHoaDon(hoaDonService.findHoaDon(txtTimKiem.getText().trim()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_txtTimKiemCaretUpdate
 
     private void txtNgayBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNgayBDActionPerformed
         // TODO add your handling code here:
@@ -596,14 +608,44 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTien1ActionPerformed
 
+    private void btnXuatPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatPdfActionPerformed
+        // BTN xuất PDF
+        int row = tbHoaDon.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Mời chọn một hóa đơn để xuất PDF");
+            return;
+        }
+        JnaFileChooser jfc = new JnaFileChooser();
+        jfc.setMode(JnaFileChooser.Mode.Directories);
+        if (jfc.showOpenDialog((JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this))) {
+            String path = jfc.getSelectedFile().getAbsolutePath();
+            HoaDonDto hoaDon = lstHoaDon.get(row);
+            if (hoaDonService.exportPdf(path, hoaDon.getId())) {
+                Notification panel = new Notification((JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this), Notification.Type.SUCCESS, Notification.Location.TOP_CENTER, "Xuất thành công");
+                panel.showNotification();
+            } else {
+                Notification panel = new Notification((JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this), Notification.Type.WARNING, Notification.Location.TOP_CENTER, "Lỗi hệ thống. Xuất thất bại");
+                panel.showNotification();
+            }
+        }
+
+    }//GEN-LAST:event_btnXuatPdfActionPerformed
+
+    private void txtTimKiemPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtTimKiemPropertyChange
+        System.out.println("aaaaa");
+    }//GEN-LAST:event_txtTimKiemPropertyChange
+
+    private void txtTimKiemCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTimKiemCaretUpdate
+        JOptionPane.showMessageDialog(this, "xxxxxxxxxxxxxxx");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimKiemCaretUpdate
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private pro1041.team_3.swing.ButtonCustom btnLocNgay;
     private pro1041.team_3.swing.ButtonCustom btnLocTien;
     private pro1041.team_3.swing.ButtonCustom btnXemChiTiet;
-    private pro1041.team_3.swing.Combobox cbbLoaiKM;
-    private pro1041.team_3.swing.Combobox cbbLoaiKM1;
-    private pro1041.team_3.swing.Combobox cbbLoaiKM2;
+    private pro1041.team_3.swing.ButtonCustom btnXuatPdf;
     private pro1041.team_3.swing.Combobox cbbLocHttt;
     private pro1041.team_3.swing.DateChooser dlChonNgayBatDau;
     private pro1041.team_3.swing.DateChooser dlChonNgayKetThuc;
