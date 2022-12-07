@@ -1,10 +1,12 @@
 package pro1041.team_3.repository;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.Query;
+import org.hibernate.Session;
 import pro1041.team_3.domainModel.ChiTietDienThoai;
 import pro1041.team_3.domainModel.DienThoaiKhuyenMai;
 import pro1041.team_3.domainModel.KhuyenMai;
@@ -80,6 +82,20 @@ public class KhuyenMaiRepository extends Repository<KhuyenMai, UUID, KhuyenMaiDt
             return null;
         }
     }
-    
-  
+
+    public List<KhuyenMai> getAllForDailyCheck() {
+         List<KhuyenMai> list = new ArrayList<>();
+        try {
+            Session sessionForThread = HibernateUtil.getSessionForThread();
+            String hql = "SELECT a FROM " + className + " a";
+            Query query = sessionForThread.createQuery(hql);
+            list = query.getResultList();
+            sessionForThread.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return list;
+    }    
+      
 }

@@ -3,22 +3,28 @@ package pro1041.team_3.service.impl;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+import pro1041.team_3.dto.HoaDonChiTietDto;
 import pro1041.team_3.dto.HoaDonDto;
+import pro1041.team_3.repository.HoaDonChiTietRepository;
 import pro1041.team_3.repository.HoaDonRepository;
 import pro1041.team_3.service.HoaDonService;
+import pro1041.team_3.util.ExportBill;
 
 /**
  *
  * @author sonpt_ph19600
  */
-public class HoaDonServiceImpl implements HoaDonService{
-    
+public class HoaDonServiceImpl implements HoaDonService {
+
     private HoaDonRepository hoaDonRepository;
+    private HoaDonChiTietRepository hoaDonChiTietRepository;
 
     public HoaDonServiceImpl() {
         hoaDonRepository = new HoaDonRepository();
+        hoaDonChiTietRepository = new HoaDonChiTietRepository();
     }
-        
+
     @Override
     public List<HoaDonDto> getAllResponse() {
         return hoaDonRepository.getAllResponse();
@@ -48,5 +54,17 @@ public class HoaDonServiceImpl implements HoaDonService{
     public List<HoaDonDto> locHoaDonTheoTongTien(BigDecimal tien1, BigDecimal tien2) {
         return hoaDonRepository.locHoaDonTheoTongTien(tien1, tien2);
     }
-    
+
+    @Override
+    public Boolean exportPdf(String path, UUID idHoaDon) {
+        HoaDonDto hoaDonDone = hoaDonRepository.findResponseById(idHoaDon);
+        List<HoaDonChiTietDto> lst = hoaDonChiTietRepository.getAllByIdHoaDon(idHoaDon);
+        ExportBill exportBill = new ExportBill();
+        if (exportBill.docPDF(hoaDonDone, lst, path)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

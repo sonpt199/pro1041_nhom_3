@@ -56,7 +56,7 @@ import pro1041.team_3.dto.HoaDonRequest;
  */
 public class ExportBill {
 
-    public Document docPDF(HoaDonDto hoaDon, List<HoaDonChiTietDto> lstHdct, String path) {
+    public Boolean docPDF(HoaDonDto hoaDon, List<HoaDonChiTietDto> lstHdct, String path) {
         Document document;
         try {
             try {
@@ -292,9 +292,9 @@ public class ExportBill {
         } catch (Exception e) {
             e.printStackTrace();
             e.getMessage();
-            return null;
+            return false;
         }
-        return document;
+        return true;
     }
 
     private <BarcodeEAN extends Barcode1D> Image createBarCode(PdfDocument pdfDocument, String code, Class<BarcodeEAN> barcodeClass) throws InstantiationException, IllegalAccessException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException {

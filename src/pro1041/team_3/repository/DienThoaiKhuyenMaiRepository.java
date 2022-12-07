@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.Query;
+import org.hibernate.Session;
 import pro1041.team_3.domainModel.ChiTietDienThoai;
 import pro1041.team_3.domainModel.DienThoaiKhuyenMai;
 import pro1041.team_3.dto.DienThoaiKhuyenMaiDto;
@@ -99,5 +100,37 @@ public class DienThoaiKhuyenMaiRepository extends Repository<DienThoaiKhuyenMai,
         }
         return list;
     }
+    
+        public List<DienThoaiKhuyenMai> findByIdKhuyenMai(UUID idKhuyenMai) {
+        List<DienThoaiKhuyenMai> lstDtkm = new ArrayList<>();
+        try {
+            Session sessionForThread = HibernateUtil.getSessionForThread();
+            String hql = "SELECT a FROM DienThoaiKhuyenMai a WHERE a.khuyenMai.id = :idKhuyenMai";
+
+            Query query = sessionForThread.createQuery(hql);
+            query.setParameter("idKhuyenMai", idKhuyenMai);
+            lstDtkm = query.getResultList();
+            sessionForThread.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstDtkm;
+    }
+
+    public DienThoaiKhuyenMai UpdateForThread(DienThoaiKhuyenMai entity) {
+        try {
+            Session sessionForThread = HibernateUtil.getSessionForThread();
+            trans = sessionForThread.beginTransaction();
+            sessionForThread.saveOrUpdate(entity);
+            trans.commit();
+            sessionForThread.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return entity;
+    }
+        
+        
 
 }
