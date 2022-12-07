@@ -27,17 +27,20 @@ public class BanHangRepository {
 
     public BhChiTietDienThoaiDto bhFindByImei(String keyWord) {
         BhChiTietDienThoaiDto ctdt = null;
+        Session sessionForThread = null;
         try {
             String dto = "new pro1041.team_3.dto.BhChiTietDienThoaiDto"
                     + "(a.id, a.dienThoai.ma, a.mauSac.ten, a.dienThoai.ten, a.hang.ten, "
                     + "a.tinhTrang, a.donGia, a.trangThai, a.imei, "
                     + "a.ram, a.boNho, a.moTa)";
-            session = HibernateUtil.getSession();
+            sessionForThread = HibernateUtil.getSessionForThread();
             String hql = "SELECT " + dto + " FROM " + ChiTietDienThoai.class.getName() + " a WHERE a.imei = :keyWord";
-            Query query = session.createQuery(hql);
+            Query query = sessionForThread.createQuery(hql);
             query.setParameter("keyWord", keyWord);
             ctdt = (BhChiTietDienThoaiDto) query.getSingleResult();
+            sessionForThread.close();
         } catch (Exception e) {
+            sessionForThread.close();
             e.printStackTrace();
             return null;
         }
@@ -112,11 +115,6 @@ public class BanHangRepository {
             return null;
         }
         return hoaDon;
-    }
-
-    public static void main(String[] args) {
-        BanHangRepository x = new BanHangRepository();
-        System.out.println(x.getHoaDonByIdSp(UUID.fromString("c758277c-f33d-c54f-98a4-e29c4a094c7a")).toString());;
     }
 
 }
