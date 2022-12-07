@@ -284,7 +284,7 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
             Hashtable hints = new Hashtable();
             hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-            BitMatrix matrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, 200, 200, hints);
+            BitMatrix matrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, 400, 400, hints);
 
             // Write to file image
             Path path = FileSystems.getDefault().getPath(pathFolder + "\\" + ctdt.getMaDienThoai()+ "-" + ctdt.getDienThoai() + ".png");
