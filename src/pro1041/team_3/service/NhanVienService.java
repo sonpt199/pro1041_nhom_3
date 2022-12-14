@@ -1,5 +1,6 @@
 package pro1041.team_3.service;
 
+import java.io.File;
 import java.util.List;
 import java.util.UUID;
 import pro1041.team_3.domainModel.NhanVien;
@@ -32,6 +33,16 @@ public interface NhanVienService {
     List<NhanVienDto> getAllByTrangThai1();
 
     List<NhanVienDto> findNhanVien(String key);
-    
+
     List<NhanVienDto> findNhanVienNghiViec(String key);
+
+    boolean exportNhanVien(File file);
+
+    boolean exportNhanVienDangLam(File file);
+
+    boolean exportNhanVienNghiLam(File file);
+
+    NhanVien findNVByUserNameAndMatKhau(String userName, String matKhau);
+
+    boolean updateMatKhau(String tenDangNhap, String matKhau);
 }

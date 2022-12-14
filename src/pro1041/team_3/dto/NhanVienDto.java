@@ -15,17 +15,14 @@ import lombok.NoArgsConstructor;
 public class NhanVienDto {
     private UUID id;
     private String ma;
-    private String tendangnhap;
-    private String hoten;
-    private Integer gioitinh;
+    private String tenDangNhap;
+    private String hoTen;
+    private Integer gioiTinh;
     private String sdt;
-    private String diachi;
+    private String diaChi;
     private String email;
-    private String matkhau;
+    private String matKhau;
     private Integer trangThaiLamViec;
-    private Integer vaitro;
+    private Integer vaiTro;
     
-    public Object[] toDataRow() {
-        return new Object[]{ma, tendangnhap, hoten, gioitinh, sdt, diachi, email, matkhau,trangThaiLamViec, vaitro};
-    }
 }
