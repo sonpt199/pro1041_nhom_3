@@ -108,4 +108,8 @@ public class HangServiceImpl implements HangService {
         return _lstHang;
     }
 
+    @Override
+    public Hang findHangByName(String ten) {
+        return hangRepository.findHangByName(ten);
+    }
 }

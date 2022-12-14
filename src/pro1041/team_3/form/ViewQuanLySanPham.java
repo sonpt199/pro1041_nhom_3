@@ -69,17 +69,12 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         this.dienThoaiKhuyenMaiServiceImpl = new DienThoaiKhuyenMaiServiceImpl();
         this.khuyenMaiServiceImpl = new KhuyenMaiServiceImpl();
         this.list = this.chiTietDTImpl.getAllResponse();
-        this.listDT = this.dienThoaiImpl.getAllResponse();
-        this.listHang = this.hangImpl.getAllResponse();
-        this.listMS = this.mauSacImpl.getAllResponse();
         this.tinhTrangCuPanel.setVisible(false);
         this.loadCbbDienThoai();
         this.loadCbbHang();
         this.loadCbbMauSac();
         this.loadTable(list);
-        this.loadTableDT(listDT);
-        this.loadTableHang(listHang);
-        this.loadTableMS(listMS);
+
     }
 
     public void loadCbbDienThoai() {
@@ -1244,8 +1239,8 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-        ChiTietDienThoaiResponse chiTietDienThoaiResponse = chiTietDTImpl.checkImei(txtImei.getText().trim());
-        if (chiTietDienThoaiResponse != null) {
+        ChiTietDienThoai chiTietDienThoaicheck = chiTietDTImpl.checkImei(txtImei.getText().trim());
+        if (chiTietDienThoaicheck != null) {
             JOptionPane.showMessageDialog(this, "Trùng Imei");
             return;
         }
@@ -1373,7 +1368,21 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
         //BTN Import Excel
-        
+        JFileChooser avatarChooser = new JFileChooser("D:\\");
+        FileNameExtensionFilter avatarFilter = new FileNameExtensionFilter("Exel File", "xlsx");
+        avatarChooser.setFileFilter(avatarFilter);
+        avatarChooser.setAcceptAllFileFilterUsed(false);
+        int selectFileCheck = avatarChooser.showOpenDialog(this);
+        File selectedFile = avatarChooser.getSelectedFile();
+        if (!(selectFileCheck == JFileChooser.APPROVE_OPTION)) {
+            return;
+        }
+        String ketQua = chiTietDTImpl.importFile(selectedFile);
+        if (ketQua.equals("Import thành công")) {
+            this.list = this.chiTietDTImpl.getAllResponse();
+            loadTable(list);
+        }
+        JOptionPane.showMessageDialog(this, ketQua);
     }//GEN-LAST:event_btnImportActionPerformed
 
     private void btnTaoQrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoQrActionPerformed
@@ -1401,6 +1410,8 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
     private void btnEditDienThoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditDienThoaiActionPerformed
         // BTN hiển thị form edit điện thoại
+        this.listDT = this.dienThoaiImpl.getAllResponse();
+        this.loadTableDT(listDT);
         dlEditDienThoai.setVisible(true);
         dlEditDienThoai.setLocationRelativeTo(null);
 
@@ -1412,6 +1423,8 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
     private void btnEditHangDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditHangDTActionPerformed
         // BTN hiển thị form edit Hãng
+        this.listHang = this.hangImpl.getAllResponse();
+        this.loadTableHang(listHang);
         dlEditHangDT.setVisible(true);
         dlEditHangDT.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnEditHangDTActionPerformed
@@ -1710,6 +1723,9 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThemMSActionPerformed
 
     private void buttonCustom6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCustom6ActionPerformed
+        // Hiển thị form edit màu sắc
+        this.listMS = this.mauSacImpl.getAllResponse();
+        this.loadTableMS(listMS);
         dlEditMauSac.setVisible(true);
         dlEditMauSac.setLocationRelativeTo(null);
     }//GEN-LAST:event_buttonCustom6ActionPerformed

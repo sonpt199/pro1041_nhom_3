@@ -1,12 +1,22 @@
 package pro1041.team_3.service.impl;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import pro1041.team_3.domainModel.NhanVien;
 import pro1041.team_3.dto.NhanVienDto;
 import pro1041.team_3.repository.NhanVienRepository;
 import pro1041.team_3.service.NhanVienService;
+import pro1041.team_3.util.EmailUtil;
 
 /**
  *
@@ -35,6 +45,8 @@ public class NhanVienServiceImpl implements NhanVienService {
         String maNV = "NV" + time.getSecond() + time.getMinute() + time.getHour();
         user.setMa(maNV);
         user.setTrangThaiLamViec(0);
+//        user.setMatKhau(String.valueOf((int) (Math.random() * 10000000)));
+
         if (user.getTenDangNhap().trim().isEmpty()) {
             return "Tên đăng nhập không được trống";
         }
@@ -74,12 +86,12 @@ public class NhanVienServiceImpl implements NhanVienService {
         if (!user.getEmail().matches("^\\S+@\\S+$")) {
             return "Email không đúng định dạng";
         }
-        if (user.getMatKhau().trim().isEmpty()) {
-            return "Mật khẩu không được trống";
-        }
-        if (user.getMatKhau().length() > 50 || user.getMatKhau().length() < 6) {
-            return "Mật khẩu phải trên 6 ký tự và không quá 50 ký tự";
-        }
+//        if (user.getMatKhau().trim().isEmpty()) {
+//            return "Mật khẩu không được trống";
+//        }
+//        if (user.getMatKhau().length() > 50 || user.getMatKhau().length() < 6) {
+//            return "Mật khẩu phải trên 6 ký tự và không quá 50 ký tự";
+//        }
         user = repos.saveOrUpdate(user);
         if (user != null) {
             return "Thêm thành công";
@@ -167,15 +179,15 @@ public class NhanVienServiceImpl implements NhanVienService {
         if (!user.getEmail().matches("^\\S+@\\S+$")) {
             return "Email không đúng định dạng";
         }
-        if (user.getMatKhau().trim().isEmpty()) {
-            return "Mật khẩu không được trống";
-        }
-        if (user.getMatKhau().length() > 50 || user.getMatKhau().length() < 6) {
-            return "Mật khẩu phải trên 6 ký tự và không quá 50 ký tự";
-        }
+//        if (user.getMatKhau().trim().isEmpty()) {
+//            return "Mật khẩu không được trống";
+//        }
+//        if (user.getMatKhau().length() > 50 || user.getMatKhau().length() < 6) {
+//            return "Mật khẩu phải trên 6 ký tự và không quá 50 ký tự";
+//        }
 
         userFindById.setHoTen(user.getHoTen());
-        userFindById.setMatKhau(user.getMatKhau());
+//        userFindById.setEmail(user.getMatKhau());
         userFindById.setGioiTinh(user.getGioiTinh());
         userFindById.setVaiTro(user.getVaiTro());
         user = repos.saveOrUpdate(userFindById);
@@ -220,4 +232,274 @@ public class NhanVienServiceImpl implements NhanVienService {
     public List<NhanVienDto> findNhanVienNghiViec(String key) {
         return repos.findNhanVienNghiViec(key);
     }
+
+    @Override
+    public boolean exportNhanVien(File file) {
+        List<NhanVien> lst = repos.getAll();
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("Danh sách nhân viên");
+            int rowNum = 0;
+            int stt = 1;
+            Row firstRow = sheet.createRow(rowNum++);
+
+            Cell soTT = firstRow.createCell(0);
+            soTT.setCellValue("STT");
+
+            Cell maNhanVien = firstRow.createCell(1);
+            maNhanVien.setCellValue("Mã nhân viên");
+
+            Cell tenDangNhap = firstRow.createCell(2);
+            tenDangNhap.setCellValue("Tên đăng nhập");
+
+            Cell hoTen = firstRow.createCell(3);
+            hoTen.setCellValue("Họ tên");
+
+            Cell gioiTinh = firstRow.createCell(4);
+            gioiTinh.setCellValue("Giới tính");
+
+            Cell sdt = firstRow.createCell(5);
+            sdt.setCellValue("SĐT");
+
+            Cell diaChi = firstRow.createCell(6);
+            diaChi.setCellValue("Địa chỉ");
+
+            Cell email = firstRow.createCell(7);
+            email.setCellValue("Email");
+
+            Cell matKhau = firstRow.createCell(8);
+            matKhau.setCellValue("Mật khẩu");
+
+            Cell vaiTro = firstRow.createCell(9);
+            vaiTro.setCellValue("Vai trò");
+
+            for (NhanVien x : lst) {
+                Row row = sheet.createRow(rowNum++);
+
+                Cell cell0 = row.createCell(0);
+                cell0.setCellValue(stt++);
+
+                Cell cell1 = row.createCell(1);
+                cell1.setCellValue(x.getMa());
+
+                Cell cell2 = row.createCell(2);
+                cell2.setCellValue(x.getTenDangNhap());
+
+                Cell cell3 = row.createCell(3);
+                cell3.setCellValue(x.getHoTen());
+
+                Cell cell4 = row.createCell(4);
+                cell4.setCellValue(x.getGioiTinh() == 0 ? "Nam" : "Nữ");
+
+                Cell cell5 = row.createCell(5);
+                cell5.setCellValue(x.getSdt());
+
+                Cell cell6 = row.createCell(6);
+                cell6.setCellValue(x.getDiaChi());
+
+                Cell cell7 = row.createCell(7);
+                cell7.setCellValue(x.getEmail());
+
+                Cell cell8 = row.createCell(8);
+                cell8.setCellValue(x.getMatKhau());
+
+                Cell cell9 = row.createCell(9);
+                cell9.setCellValue(x.getVaiTro() == 2 ? "Quản lý" : "Nhân viên");
+            }
+            workbook.write(fos);
+            workbook.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+            return false;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean exportNhanVienDangLam(File file) {
+        List<NhanVienDto> lst = repos.getAllByTrangThai0();
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("Danh sách nhân viên đang làm việc");
+            int rowNum = 0;
+            int stt = 1;
+            Row firstRow = sheet.createRow(rowNum++);
+
+            Cell soTT = firstRow.createCell(0);
+            soTT.setCellValue("STT");
+
+            Cell maNhanVien = firstRow.createCell(1);
+            maNhanVien.setCellValue("Mã nhân viên");
+
+            Cell tenDangNhap = firstRow.createCell(2);
+            tenDangNhap.setCellValue("Tên đăng nhập");
+
+            Cell hoTen = firstRow.createCell(3);
+            hoTen.setCellValue("Họ tên");
+
+            Cell gioiTinh = firstRow.createCell(4);
+            gioiTinh.setCellValue("Giới tính");
+
+            Cell sdt = firstRow.createCell(5);
+            sdt.setCellValue("SĐT");
+
+            Cell diaChi = firstRow.createCell(6);
+            diaChi.setCellValue("Địa chỉ");
+
+            Cell email = firstRow.createCell(7);
+            email.setCellValue("Email");
+
+            Cell matKhau = firstRow.createCell(8);
+            matKhau.setCellValue("Mật khẩu");
+
+            Cell vaiTro = firstRow.createCell(9);
+            vaiTro.setCellValue("Vai trò");
+
+            for (NhanVienDto x : lst) {
+                Row row = sheet.createRow(rowNum++);
+
+                Cell cell0 = row.createCell(0);
+                cell0.setCellValue(stt++);
+
+                Cell cell1 = row.createCell(1);
+                cell1.setCellValue(x.getMa());
+
+                Cell cell2 = row.createCell(2);
+                cell2.setCellValue(x.getTenDangNhap());
+
+                Cell cell3 = row.createCell(3);
+                cell3.setCellValue(x.getHoTen());
+
+                Cell cell4 = row.createCell(4);
+                cell4.setCellValue(x.getGioiTinh() == 0 ? "Nam" : "Nữ");
+
+                Cell cell5 = row.createCell(5);
+                cell5.setCellValue(x.getSdt());
+
+                Cell cell6 = row.createCell(6);
+                cell6.setCellValue(x.getDiaChi());
+
+                Cell cell7 = row.createCell(7);
+                cell7.setCellValue(x.getEmail());
+
+                Cell cell8 = row.createCell(8);
+                cell8.setCellValue(x.getMatKhau());
+
+                Cell cell9 = row.createCell(9);
+                cell9.setCellValue(x.getVaiTro() == 2 ? "Quản lý" : "Nhân viên");
+            }
+            workbook.write(fos);
+            workbook.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+            return false;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean exportNhanVienNghiLam(File file) {
+        List<NhanVienDto> lst = repos.getAllByTrangThai1();
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("Danh sách nhân viên đã nghỉ việc");
+            int rowNum = 0;
+            int stt = 1;
+            Row firstRow = sheet.createRow(rowNum++);
+
+            Cell soTT = firstRow.createCell(0);
+            soTT.setCellValue("STT");
+
+            Cell maNhanVien = firstRow.createCell(1);
+            maNhanVien.setCellValue("Mã nhân viên");
+
+            Cell tenDangNhap = firstRow.createCell(2);
+            tenDangNhap.setCellValue("Tên đăng nhập");
+
+            Cell hoTen = firstRow.createCell(3);
+            hoTen.setCellValue("Họ tên");
+
+            Cell gioiTinh = firstRow.createCell(4);
+            gioiTinh.setCellValue("Giới tính");
+
+            Cell sdt = firstRow.createCell(5);
+            sdt.setCellValue("SĐT");
+
+            Cell diaChi = firstRow.createCell(6);
+            diaChi.setCellValue("Địa chỉ");
+
+            Cell email = firstRow.createCell(7);
+            email.setCellValue("Email");
+
+            Cell matKhau = firstRow.createCell(8);
+            matKhau.setCellValue("Mật khẩu");
+
+            Cell vaiTro = firstRow.createCell(9);
+            vaiTro.setCellValue("Vai trò");
+
+            for (NhanVienDto x : lst) {
+                Row row = sheet.createRow(rowNum++);
+
+                Cell cell0 = row.createCell(0);
+                cell0.setCellValue(stt++);
+
+                Cell cell1 = row.createCell(1);
+                cell1.setCellValue(x.getMa());
+
+                Cell cell2 = row.createCell(2);
+                cell2.setCellValue(x.getTenDangNhap());
+
+                Cell cell3 = row.createCell(3);
+                cell3.setCellValue(x.getHoTen());
+
+                Cell cell4 = row.createCell(4);
+                cell4.setCellValue(x.getGioiTinh() == 0 ? "Nam" : "Nữ");
+
+                Cell cell5 = row.createCell(5);
+                cell5.setCellValue(x.getSdt());
+
+                Cell cell6 = row.createCell(6);
+                cell6.setCellValue(x.getDiaChi());
+
+                Cell cell7 = row.createCell(7);
+                cell7.setCellValue(x.getEmail());
+
+                Cell cell8 = row.createCell(8);
+                cell8.setCellValue(x.getMatKhau());
+
+                Cell cell9 = row.createCell(9);
+                cell9.setCellValue(x.getVaiTro() == 2 ? "Quản lý" : "Nhân viên");
+            }
+            workbook.write(fos);
+            workbook.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+            return false;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean updateMatKhau(String tenDangNhap, String matKhau) {
+        return repos.updateMatKhau(tenDangNhap, matKhau);
+    }
+
+    @Override
+    public NhanVien findNVByUserNameAndMatKhau(String userName, String matKhau) {
+        return repos.findNVByUserNameAndMatKhau(userName, matKhau);
+
+    }
+
 }

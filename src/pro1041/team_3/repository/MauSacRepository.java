@@ -35,6 +35,25 @@ public class MauSacRepository extends Repository<MauSac, UUID, MauSacDto> {
         }
     }
     
+    public MauSac findMauSacByName(String ten) {
+        MauSac entity = null;
+        try {
+            
+            session = HibernateUtil.getSession();
+            String hql = "SELECT a FROM " + className + " a WHERE a.ten = :ten";
+            TypedQuery<MauSac> query = session.createQuery(hql, MauSac.class);
+            query.setParameter("ten", ten);
+            List<MauSac> lst = query.getResultList();
+            if (!lst.isEmpty()) {
+                entity = lst.get(0);
+            }
+            return entity;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     public ChiTietDienThoaiDto checkMSTrongCtdt(UUID id) {
         ChiTietDienThoaiDto chiTietDienThoaiDto = null;
         try {

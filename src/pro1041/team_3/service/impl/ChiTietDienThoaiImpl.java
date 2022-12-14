@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -25,6 +26,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import pro1041.team_3.domainModel.ChiTietDienThoai;
 import pro1041.team_3.dto.ChiTietDienThoaiResponse;
 import pro1041.team_3.dto.DienThoaiKhuyenMaiDto;
@@ -32,7 +34,9 @@ import pro1041.team_3.repository.ChiTietDienThoaiRepository;
 import pro1041.team_3.service.ChiTietDienThoaiService;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -49,6 +53,20 @@ import pro1041.team_3.repository.DienThoaiKhuyenMaiRepository;
  */
 public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
 
+    public static final int COLUMN_INDEX_MAUSAC = 0;
+    public static final int COLUMN_INDEX_DIEN_THOAI = 1;
+    public static final int COLUMN_INDEX_HANG = 2;
+    public static final int COLUMN_INDEX_TINH_TRANG = 3;
+    public static final int COLUMN_INDEX_DON_GIA = 4;
+    public static final int COLUMN_INDEX_TRANG_THAI = 5;
+    public static final int COLUMN_INDEX_IMEI = 6;
+    public static final int COLUMN_INDEX_RAM = 7;
+    public static final int COLUMN_INDEX_BO_NHO = 8;
+    public static final int COLUMN_INDEX_MO_TA = 9;
+    public static final int COLUMN_INDEX_TG_BAO_HANH = 10;
+    public static final MauSacServiceImpl mauSacServiceImpl = new MauSacServiceImpl();
+    public static final DienThoaiServiceImpl DIEN_THOAI_SERVICE_IMPL = new DienThoaiServiceImpl();
+    public static final HangServiceImpl HANG_SERVICE_IMPL = new HangServiceImpl();
     private ChiTietDienThoaiRepository chiTietDienThoaiRepository;
 
     public ChiTietDienThoaiImpl() {
@@ -214,12 +232,10 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
         return true;
     }
 
-
 //    @Override
 //    public List<ChiTietDienThoaiResponse> getAllDienThoaiNotInKM(UUID id) {
 //        return chiTietDienThoaiRepository.getAllDienThoaiNotInKM(id);
 //    }
-
     @Override
     public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByDienThoai(String tenDienThoai, Date batDau, Date ketThuc) {
         return chiTietDienThoaiRepository.getAllCTDienThoaiByDienThoai(tenDienThoai, batDau, ketThuc);
@@ -254,12 +270,10 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
 //    public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMByTinhTrang(UUID id, int tinhTrang) {
 //        return chiTietDienThoaiRepository.getAllCTDTNotInKMByTinhTrang(id, tinhTrang);
 //    }
-
     @Override
     public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByTinhTrang(int tinhTrang, Date batDau, Date ketThuc) {
         return chiTietDienThoaiRepository.getAllCTDienThoaiByTinhTrang(tinhTrang, batDau, ketThuc);
     }
-    
 
     @Override
     public String exportQr(String pathFolder, UUID idChiTietDienThoai) {
@@ -284,10 +298,10 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
             Hashtable hints = new Hashtable();
             hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-            BitMatrix matrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, 400, 400, hints);
+            BitMatrix matrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, 200, 200, hints);
 
             // Write to file image
-            Path path = FileSystems.getDefault().getPath(pathFolder + "\\" + ctdt.getMaDienThoai()+ "-" + ctdt.getDienThoai() + ".png");
+            Path path = FileSystems.getDefault().getPath(pathFolder + "\\" + ctdt.getMaDienThoai() + "-" + ctdt.getDienThoai() + ".png");
             BufferedImage qrImage = MatrixToImageWriter.toBufferedImage(matrix);
             MatrixToImageWriter.writeToPath(matrix, "PNG", path);
         } catch (Exception ex) {
@@ -299,46 +313,209 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
 
     @Override
     public String importFile(File file) {
-        List<ChiTietDienThoai> lstCTDT = new ArrayList<>();
+        List<ChiTietDienThoai> listCTDT = new ArrayList<>();
+        String ketQua;
         try {
-            FileInputStream fis = new FileInputStream(file);
-            Workbook workbook = new XSSFWorkbook(fis);
+            FileInputStream inputStream = new FileInputStream(file);
+            Workbook workbook = new XSSFWorkbook(inputStream);
+
             Sheet sheet = workbook.getSheetAt(0);
-            DataFormatter dft = new DataFormatter();
-            Iterator<Row> itegator = sheet.iterator();
-            while (itegator.hasNext()) {
-                Row row = itegator.next();
-                if (row.getRowNum() == 0 || row.getRowNum() == 1) {
+
+            Iterator<Row> iterator = sheet.iterator();
+            while (iterator.hasNext()) {
+                Row nextRow = iterator.next();
+                if (nextRow.getRowNum() == 0 || nextRow.getRowNum() == 1) {
                     continue;
                 }
-                String tenMauSac = row.getCell(0).getStringCellValue();
-                String tenDienThoai = row.getCell(1).getStringCellValue();
-                String tenHang = row.getCell(2).getStringCellValue();
-                String tinhTrang = row.getCell(3).getStringCellValue();
-                String donGia = row.getCell(4).getStringCellValue();
-                String trangThaiStr = row.getCell(5).getStringCellValue();
-                String imei = row.getCell(6).getStringCellValue();
-                String ram = row.getCell(7).getStringCellValue();
-                String boNho = row.getCell(8).getStringCellValue();
-                String moTa = row.getCell(9).getStringCellValue();
-                String thoiGianBaoHanh = row.getCell(10).getStringCellValue();
-                
-                
-                Integer trangThai = -1;
-                if (trangThaiStr.equals("Đang bán")) {
-                    trangThai = 0;
-                } else if (trangThaiStr.equals("Đã bán")) {
-                    trangThai = 1;
-                } else {
-                    trangThai = 2;
-                }
+
+                Iterator<Cell> cellIterator = nextRow.cellIterator();
 
                 ChiTietDienThoai ctdt = new ChiTietDienThoai();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    Object cellValue = getCellValue(cell);
+                    if (cellValue == null || cellValue.toString().isEmpty()) {
+                        continue;
+                    }
+
+                    int columnIndex = cell.getColumnIndex();
+                    switch (columnIndex) {
+                        case COLUMN_INDEX_MAUSAC:
+                            String mauSacStr = ((String) getCellValue(cell)).trim();
+                            System.out.println(mauSacStr);
+                            if (mauSacStr == null) {
+                                ketQua = "Màu sắc không được để trống";
+                                return ketQua;
+                            }
+                            MauSac ms = mauSacServiceImpl.findMauSacByName(mauSacStr);
+                            if (ms == null) {
+                                MauSac mauSac = new MauSac();
+                                mauSac.setTen(mauSacStr);
+                                String imsertMau = mauSacServiceImpl.insert(mauSac);
+                                ms = mauSacServiceImpl.findMauSacByName(mauSacStr);
+                            }
+                            ctdt.setMauSac(ms);
+                            break;
+                        case COLUMN_INDEX_DIEN_THOAI:
+                            String dienThoaiStr = ((String) getCellValue(cell)).trim();
+                            if (dienThoaiStr.length() == 0) {
+                                ketQua = "Tên điện thoại không được để trống";
+                                return ketQua;
+                            }
+                            DienThoai dt = DIEN_THOAI_SERVICE_IMPL.findDienThoaiByName(dienThoaiStr);
+                            if (dt == null) {
+                                DienThoai dienThoai = new DienThoai();
+                                dienThoai.setTen(dienThoaiStr);
+                                String imsertDienThoai = DIEN_THOAI_SERVICE_IMPL.insert(dienThoai);
+                                dt = DIEN_THOAI_SERVICE_IMPL.findDienThoaiByName(dienThoaiStr);
+                            }
+                            ctdt.setDienThoai(dt);
+                            break;
+                        case COLUMN_INDEX_IMEI:
+//                    ctdt.setImei(new BigDecimal((double) cellValue).intValue());
+                            String imei = ((String) getCellValue(cell)).trim();
+                            if (imei.length() == 0) {
+                                ketQua = "Imei không được để trống";
+                                return ketQua;
+                            }
+                            ChiTietDienThoai ctdtCheck = chiTietDienThoaiRepository.checkImei(imei);
+                            if (ctdtCheck != null) {
+                                ketQua = "Imei đã tồn tại";
+                                return ketQua;
+                            }
+                            ctdt.setImei((String) getCellValue(cell));
+                            break;
+                        case COLUMN_INDEX_HANG:
+                            String hangStr = (String) getCellValue(cell);
+                            if (hangStr.length() == 0) {
+                                ketQua = "Tên hãng không được để trống";
+                                return ketQua;
+                            }
+                            Hang hang = HANG_SERVICE_IMPL.findHangByName(hangStr);
+                            if (hang == null) {
+                                Hang h = new Hang();
+                                h.setTen(hangStr);
+                                String imsertHang = HANG_SERVICE_IMPL.insert(h);
+                                hang = HANG_SERVICE_IMPL.findHangByName(hangStr);
+                            }
+//                    ctdt.setPrice((Double) getCellValue(cell));
+                            ctdt.setHang(hang);
+                            break;
+                        case COLUMN_INDEX_RAM:
+                            Integer ram = null;
+                            try {
+                                ram = ((Double) getCellValue(cell)).intValue();
+                                if (ram <= 0) {
+                                    ketQua = "Ram điện thoại phải lớn hơn 0";
+                                    return ketQua;
+                                }
+                                
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                ketQua = "Ram điện thoại phải là số";
+                                    return ketQua;
+                            }
+                            ctdt.setRam(ram);
+                            break;
+                        case COLUMN_INDEX_BO_NHO:
+                            Integer boNho = null;
+                            try {
+                                boNho = ((Double) getCellValue(cell)).intValue();
+                                if (boNho <= 0) {
+                                    ketQua = "Bộ nhớ điện thoại phải lớn hơn 0";
+                                    return ketQua;
+                                }
+                                
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                ketQua = "Bộ nhớ điện thoại phải là số";
+                                    return ketQua;
+                            }
+                            ctdt.setBoNho(boNho);
+                            break;
+                        case COLUMN_INDEX_TINH_TRANG:
+                            Integer tinhTrang = null;
+                            try {
+                                tinhTrang = ((Double) getCellValue(cell)).intValue();
+                                if (tinhTrang <= 0) {
+                                    ketQua = "Tình trạng điện thoại phải lớn hơn 0";
+                                    return ketQua;
+                                }
+                                
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                ketQua = "Tình trạng điện thoại phải là số";
+                                    return ketQua;
+                            }
+                            ctdt.setTinhTrang(tinhTrang);
+                            break;
+                        case COLUMN_INDEX_TRANG_THAI:
+                            String trangThaiStr = ((String) getCellValue(cell)).trim();
+                            if (trangThaiStr.length() == 0) {
+                                ketQua = "Trạng thái không được để trống";
+                                return ketQua;
+                            }
+                            Integer trangThai = -1;
+                            if (trangThaiStr.equals("Đang bán")) {
+                                trangThai = 0;
+                            } else if (trangThaiStr.equals("Đã bán")) {
+                                trangThai = 1;
+                            } else {
+                                trangThai = 2;
+                            }
+                            ctdt.setTrangThai(trangThai);
+                            break;
+                        case COLUMN_INDEX_DON_GIA:
+                            BigDecimal giaBan = null;
+                            try {
+                                giaBan = new BigDecimal((double) cellValue);
+                                if (giaBan.compareTo(BigDecimal.ZERO) == -1) {
+                                    ketQua = "Giá bán không được nhỏ hơn 0";
+                                    return ketQua;
+                                }
+                            } catch (Exception e) {
+                                ketQua = "Giá bán phải là số";
+                                e.printStackTrace();
+                                return ketQua;
+                            }
+                            ctdt.setDonGia(giaBan);
+                            break;
+                        case COLUMN_INDEX_MO_TA:
+                            ctdt.setMoTa((String) getCellValue(cell));
+                            break;
+                        case COLUMN_INDEX_TG_BAO_HANH:
+                            Integer baoHanh = null;
+                            try {
+                                baoHanh = ((Double) getCellValue(cell)).intValue();
+                                if (baoHanh <= 0) {
+                                    ketQua = "Thời gian bảo hành điện thoại phải lớn hơn 0";
+                                    return ketQua;
+                                }
+                                
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                ketQua = "Thời gian bảo hành điện thoại phải là số";
+                                return ketQua;
+                            }
+                            ctdt.setThoiGianBaoHanh(((Double) getCellValue(cell)).intValue());
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
+                listCTDT.add(ctdt);
                 
-                
-                lstCTDT.add(ctdt);
+                boolean save = chiTietDienThoaiRepository.saveAll(listCTDT);
+                if (!save) {
+                    ketQua = "Import thất bại";
+                    return ketQua;
+                }
             }
+
             workbook.close();
+            inputStream.close();
+            return "Import thành công";
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
             return null;
@@ -346,22 +523,67 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
             ex.printStackTrace();
             return null;
         }
-        if (lstCTDT.isEmpty()) {
-            return "File excel trống";
-        }
-        chiTietDienThoaiRepository.saveAll(lstCTDT);
 
-        return "Import thành công";
     }
-    
+
     @Override
     public List<ChiTietDienThoaiResponse> getAllCTDTNotInKMTrung(Date batDau, Date ketThuc) {
         return chiTietDienThoaiRepository.getAllCTDTNotInKMTrung(batDau, ketThuc);
     }
-    
-        @Override
-    public ChiTietDienThoaiResponse checkImei(String imei) {
+
+    @Override
+    public ChiTietDienThoai checkImei(String imei) {
         return chiTietDienThoaiRepository.checkImei(imei);
+    }
+
+    // Get Workbook
+    private static Workbook getWorkbook(InputStream inputStream, String excelFilePath) throws IOException {
+        Workbook workbook = null;
+        if (excelFilePath.endsWith("xlsx")) {
+            workbook = new XSSFWorkbook(inputStream);
+        } else if (excelFilePath.endsWith("xls")) {
+            workbook = new HSSFWorkbook(inputStream);
+        } else {
+            throw new IllegalArgumentException("The specified file is not Excel file");
+        }
+
+        return workbook;
+    }
+
+    // Get cell value
+    private static Object getCellValue(Cell cell) {
+//        CellType cellType = cell.getCellTypeEnum();
+        CellType cellType = cell.getCellType();
+        Object cellValue = null;
+        switch (cellType) {
+            case BOOLEAN:
+                cellValue = cell.getBooleanCellValue();
+                break;
+            case FORMULA:
+                Workbook workbook = cell.getSheet().getWorkbook();
+                FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+                cellValue = evaluator.evaluate(cell).getNumberValue();
+                break;
+            case NUMERIC:
+                cellValue = cell.getNumericCellValue();
+                break;
+            case STRING:
+                cellValue = cell.getStringCellValue();
+                break;
+            case _NONE:
+            case BLANK:
+            case ERROR:
+                break;
+            default:
+                break;
+        }
+
+        return cellValue;
+    }
+
+    @Override
+    public boolean saveAll(List<ChiTietDienThoai> list) {
+        return chiTietDienThoaiRepository.saveAll(list);
     }
 
 }

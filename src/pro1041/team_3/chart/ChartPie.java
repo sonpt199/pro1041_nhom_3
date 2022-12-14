@@ -7,7 +7,7 @@ import java.awt.RenderingHints;
 import java.util.List;
 
 public class ChartPie extends javax.swing.JPanel {
-    
+
     private List<ModelChartPie> model;
 
     public List<ModelChartPie> getModel() {
@@ -33,6 +33,12 @@ public class ChartPie extends javax.swing.JPanel {
                 panelData.add(new ItemChartPie(data));
             }
         }
+    }
+
+    public void clearAll() {
+        panelChartPie1.removeAllData();
+        panelData.removeAll();
+        panelData.repaint();
     }
 
     @Override
@@ -73,8 +79,8 @@ public class ChartPie extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(panelChartPie1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(panelData, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

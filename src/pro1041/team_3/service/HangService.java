@@ -25,4 +25,5 @@ public interface HangService {
 
     List<HangDto> findHang(String ten);
 
+    Hang findHangByName(String ten);
 }

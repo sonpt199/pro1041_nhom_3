@@ -53,5 +53,23 @@ public class DienThoaiRepository extends Repository<DienThoai, UUID, DienThoaiDt
             return null;
         }
     }
+    
+    public DienThoai findDienThoaiByName(String ten) {
+        DienThoai entity = null;
+        try {
+            session = HibernateUtil.getSession();
+            String hql = "SELECT a FROM " + className + " a WHERE a.ten = :ten";
+            TypedQuery<DienThoai> query = session.createQuery(hql, DienThoai.class);
+            query.setParameter("ten", ten);
+            List<DienThoai> lst = query.getResultList();
+            if (!lst.isEmpty()) {
+                entity = lst.get(0);
+            }
+            return entity;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }

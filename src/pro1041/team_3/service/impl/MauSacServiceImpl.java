@@ -100,4 +100,8 @@ public class MauSacServiceImpl implements MauSacService {
         return repos.findByName(keyWord);
     }
 
+    @Override
+    public MauSac findMauSacByName(String ten) {
+        return repos.findMauSacByName(ten);
+    }
 }
