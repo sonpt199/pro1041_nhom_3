@@ -189,7 +189,6 @@ public class ViewQuanLyKhachHang extends javax.swing.JPanel {
         tblKhachHang = new pro1041.team_3.swing.config.Table();
 
         jdHoaDon.setMinimumSize(new java.awt.Dimension(1060, 500));
-        jdHoaDon.setPreferredSize(new java.awt.Dimension(1060, 500));
         jdHoaDon.setSize(new java.awt.Dimension(1095, 520));
         jdHoaDon.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -244,7 +243,6 @@ public class ViewQuanLyKhachHang extends javax.swing.JPanel {
         jdHoaDon.getContentPane().add(jpnHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1060, 460));
 
         jdHoaDonChiTiet.setMinimumSize(new java.awt.Dimension(1060, 500));
-        jdHoaDonChiTiet.setPreferredSize(new java.awt.Dimension(1060, 500));
         jdHoaDonChiTiet.setSize(new java.awt.Dimension(1095, 520));
         jdHoaDonChiTiet.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -430,7 +428,7 @@ public class ViewQuanLyKhachHang extends javax.swing.JPanel {
         btnXemLichSu.setBackground(new java.awt.Color(1, 181, 204));
         btnXemLichSu.setForeground(new java.awt.Color(255, 255, 255));
         btnXemLichSu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/eye.png"))); // NOI18N
-        btnXemLichSu.setText("Xem lịch sửa");
+        btnXemLichSu.setText("Xem lịch sử");
         btnXemLichSu.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
         btnXemLichSu.setMaximumSize(new java.awt.Dimension(113, 49));
         btnXemLichSu.setMinimumSize(new java.awt.Dimension(113, 49));
