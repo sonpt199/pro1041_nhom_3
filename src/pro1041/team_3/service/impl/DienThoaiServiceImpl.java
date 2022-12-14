@@ -94,4 +94,8 @@ public class DienThoaiServiceImpl implements DienThoaiService {
         return repos.findByName(keyWord);
     }
 
+    @Override
+    public DienThoai findDienThoaiByName(String ten) {
+        return repos.findDienThoaiByName(ten);
+    }
 }

@@ -71,4 +71,25 @@ public class HangRepository extends Repository<Hang, UUID, HangDto> {
         }
     }
 
+    public Hang findHangByName(String ten) {
+        Hang entity = null;
+        try {
+            session = HibernateUtil.getSession();
+            String hql = "SELECT a FROM " + className + " a WHERE a.ten = :ten";
+            TypedQuery<Hang> query = session.createQuery(hql, Hang.class);
+            query.setParameter("ten", ten);
+            List<Hang> lst = query.getResultList();
+            if (!lst.isEmpty()) {
+                entity = lst.get(0);
+            }
+//            query.setParameter("ten", ten);
+//            if (query.getSingleResult() != null) {
+//                entity = (Hang) query.getSingleResult();
+//            }
+            return entity;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

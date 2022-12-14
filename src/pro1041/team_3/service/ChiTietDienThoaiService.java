@@ -56,6 +56,8 @@ public interface ChiTietDienThoaiService {
     
     public String exportQr(String pathFolder, UUID idChiTietDienThoai);
     
-    ChiTietDienThoaiResponse checkImei(String imei);
+    ChiTietDienThoai checkImei(String imei);
+    
+    boolean saveAll(List<ChiTietDienThoai> list);
 
 }

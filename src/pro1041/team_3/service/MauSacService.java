@@ -22,4 +22,6 @@ public interface MauSacService {
     List<MauSac> getAll();
     
     List<MauSacDto> findByName(String keyWord);
+    
+    public MauSac findMauSacByName(String ten);
 }

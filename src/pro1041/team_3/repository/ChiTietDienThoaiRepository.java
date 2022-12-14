@@ -27,7 +27,8 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
         try {
             List<ChiTietDienThoaiResponse> lst;
             session = HibernateUtil.getSession();
-            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.ma LIKE CONCAT('%', :keyWord, '%') or a.dienThoai.ten LIKE CONCAT('%', :keyWord, '%')";
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.dienThoai.ma LIKE CONCAT('%', :keyWord, '%') or a.dienThoai.ten LIKE CONCAT('%', :keyWord, '%') "
+                    + "or a.imei LIKE CONCAT('%', :keyWord, '%')";
             Query query = session.createQuery(hql);
             query.setParameter("keyWord", keyWord);
             lst = query.getResultList();
@@ -292,22 +293,28 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
         return ctdt;
     }
 
-    public ChiTietDienThoaiResponse checkImei(String imei) {
-        ChiTietDienThoaiResponse chiTietDienThoaiDto = null;
+    public ChiTietDienThoai checkImei(String imei) {
+        ChiTietDienThoai chiTietDienThoai = null;
         try {
             session = HibernateUtil.getSession();
-            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.imei = :imei";
-            TypedQuery<ChiTietDienThoaiResponse> query = session.createQuery(hql, ChiTietDienThoaiResponse.class);
+            String hql = "SELECT a FROM " + className + " a WHERE a.imei = :imei";
+            TypedQuery<ChiTietDienThoai> query = session.createQuery(hql, ChiTietDienThoai.class);
             query.setParameter("imei", imei);
-            List<ChiTietDienThoaiResponse> lst = query.getResultList();
+            List<ChiTietDienThoai> lst = query.getResultList();
             if (!lst.isEmpty()) {
-                chiTietDienThoaiDto = lst.get(0);
+                chiTietDienThoai = lst.get(0);
             }
-            return chiTietDienThoaiDto;
+//            Query query = session.createQuery(hql);
+//            query.setParameter("imei", imei);
+//            if (query.getSingleResult() != null) {
+//                chiTietDienThoai = (ChiTietDienThoai) query.getSingleResult();
+//            }
+            return chiTietDienThoai;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+        
     }
 
 }

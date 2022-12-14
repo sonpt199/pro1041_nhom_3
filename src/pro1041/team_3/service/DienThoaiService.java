@@ -23,4 +23,5 @@ public interface DienThoaiService {
     
     List<DienThoaiDto> findByName(String keyWord);
     
+    DienThoai findDienThoaiByName(String ten);
 }
