@@ -170,6 +170,7 @@ public class NhanVienRepository extends Repository<NhanVien, UUID, NhanVienDto> 
             return null;
         }
     }
+
     public List<NhanVienDto> findNhanVienNghiViec(String key) {
         try {
             List<NhanVienDto> lst;
@@ -184,6 +185,44 @@ public class NhanVienRepository extends Repository<NhanVien, UUID, NhanVienDto> 
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public NhanVien findNVByUserNameAndMatKhau(String userName, String matKhau) {
+        try {
+            NhanVien nhanVien = null;
+            session = HibernateUtil.getSession();
+            String hql = "SELECT a FROM " + className + " a WHERE a.tenDangNhap = :userName and a.matKhau = :matKhau";
+            TypedQuery<NhanVien> query = session.createQuery(hql, NhanVien.class);
+            query.setParameter("userName", userName);
+            query.setParameter("matKhau", matKhau);
+            List<NhanVien> lst = query.getResultList();
+            if (!lst.isEmpty()) {
+                nhanVien = lst.get(0);
+            }
+            return nhanVien;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    
+     public boolean updateMatKhau(String tenDangNhap,String matKhau) {
+        try {
+            session = HibernateUtil.getSession();
+            trans = session.beginTransaction();
+            String hql = "update NhanVien a set a.matKhau = :matKhau where a.tenDangNhap = :tenDangNhap";
+            javax.persistence.Query query = session.createQuery(hql);
+            query.setParameter("matKhau", matKhau);
+            query.setParameter("tenDangNhap", tenDangNhap);
+            query.executeUpdate();
+            trans.commit();
+            return true;
+        } catch (Exception e) {
+            trans.rollback();
+            e.printStackTrace();
+            return false;
         }
     }
 

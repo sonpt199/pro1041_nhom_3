@@ -811,6 +811,11 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 txtTimCaretUpdate(evt);
             }
         });
+        txtTim.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtTimMouseClicked(evt);
+            }
+        });
         jPanel1.add(txtTim, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 300, 30));
 
         jLabel21.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
@@ -1713,6 +1718,10 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         dlEditMauSac.setVisible(true);
         dlEditMauSac.setLocationRelativeTo(null);
     }//GEN-LAST:event_buttonCustom6ActionPerformed
+
+    private void txtTimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTimMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

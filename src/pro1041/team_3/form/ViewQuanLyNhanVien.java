@@ -4,13 +4,18 @@
  */
 package pro1041.team_3.form;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import pro1041.team_3.domainModel.NhanVien;
 import pro1041.team_3.dto.NhanVienDto;
 import pro1041.team_3.service.NhanVienService;
 import pro1041.team_3.service.impl.NhanVienServiceImpl;
+import pro1041.team_3.util.EmailUtil;
 
 /**
  *
@@ -21,6 +26,8 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
     private NhanVienService service;
 
     private List<NhanVienDto> lstNV;
+
+    private String maXT;
 
     public ViewQuanLyNhanVien() {
         initComponents();
@@ -38,7 +45,6 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
         txtSDT.setText("");
         txtDiaChi.setText("");
         txtEmail.setText("");
-        txtMatKhau.setText("");
         txtTim.setText("");
         rdNam.setSelected(false);
         rdNu.setSelected(false);
@@ -69,14 +75,14 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
             Object[] rowData = {
                 index++,
                 x.getMa(),
-                x.getTendangnhap(),
-                x.getHoten(),
-                x.getGioitinh() == 0 ? "Nam" : "Nữ",
+                x.getTenDangNhap(),
+                x.getHoTen(),
+                x.getGioiTinh() == 0 ? "Nam" : "Nữ",
                 x.getSdt(),
-                x.getDiachi(),
+                x.getDiaChi(),
                 x.getEmail(),
-                x.getMatkhau(),
-                x.getVaitro() == 2 ? "Quản lý" : "Nhân viên",};
+                x.getMatKhau(),
+                x.getVaiTro() == 2 ? "Quản lý" : "Nhân viên",};
             dtm.addRow(rowData);
         }
     }
@@ -89,14 +95,13 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
             Object[] rowData = {
                 index++,
                 x.getMa(),
-                x.getTendangnhap(),
-                x.getHoten(),
-                x.getGioitinh() == 0 ? "Nam" : "Nữ",
+                x.getTenDangNhap(),
+                x.getHoTen(),
+                x.getGioiTinh() == 0 ? "Nam" : "Nữ",
                 x.getSdt(),
-                x.getDiachi(),
+                x.getDiaChi(),
                 x.getEmail(),
-                x.getMatkhau(),
-                x.getVaitro() == 2 ? "Quản lý" : "Nhân viên",};
+                x.getVaiTro() == 2 ? "Quản lý" : "Nhân viên",};
             dtm.addRow(rowData);
         }
     }
@@ -108,7 +113,6 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
         String sdt = txtSDT.getText().trim();
         String diachi = txtDiaChi.getText().trim();
         String email = txtEmail.getText().trim();
-        String matkhau = txtMatKhau.getText().trim();
         int gioiTinh = this.rdNam.isSelected() ? 0 : 1;
         int vaitro = this.rdQuanLy.isSelected() ? 2 : 1;
 
@@ -119,7 +123,6 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
         nv.setSdt(sdt);
         nv.setDiaChi(diachi);
         nv.setEmail(email);
-        nv.setMatKhau(matkhau);
         nv.setGioiTinh(gioiTinh);
         nv.setVaiTro(vaitro);
         return nv;
@@ -138,54 +141,216 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
         buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
         buttonGroup4 = new javax.swing.ButtonGroup();
+        dlDoiMatKhau = new javax.swing.JDialog();
+        jPanel9 = new javax.swing.JPanel();
+        btnThoat = new pro1041.team_3.swing.ButtonCustom();
+        btnDoiMatKhau = new pro1041.team_3.swing.ButtonCustom();
+        txtTDN = new pro1041.team_3.swing.TextField();
+        txtMK = new pro1041.team_3.swing.TextField();
+        dlMatKhauMoi = new javax.swing.JDialog();
+        jPanel10 = new javax.swing.JPanel();
+        btnThoat1 = new pro1041.team_3.swing.ButtonCustom();
+        btnLuuThayDoi = new pro1041.team_3.swing.ButtonCustom();
+        txtMatKhauMoi = new pro1041.team_3.swing.TextField();
+        txtGoLaiMK = new pro1041.team_3.swing.TextField();
+        dlMaXacThuc = new javax.swing.JDialog();
+        jPanel11 = new javax.swing.JPanel();
+        btnThoat2 = new pro1041.team_3.swing.ButtonCustom();
+        btnNext = new pro1041.team_3.swing.ButtonCustom();
+        txtMaXacThuc = new pro1041.team_3.swing.TextField();
         jPanel1 = new javax.swing.JPanel();
         materialTabbed1 = new pro1041.team_3.swing.MaterialTabbed();
         jpnDangHoatDong = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblNhanVien = new pro1041.team_3.swing.config.Table();
         jLabel1 = new javax.swing.JLabel();
-        btnThem = new pro1041.team_3.swing.ButtonCustom();
-        txtMatKhau = new pro1041.team_3.swing.TextField();
-        txtMaNhanVien = new pro1041.team_3.swing.TextField();
-        txtTenDangNhap = new pro1041.team_3.swing.TextField();
-        txtHoTen = new pro1041.team_3.swing.TextField();
-        txtSDT = new pro1041.team_3.swing.TextField();
-        txtDiaChi = new pro1041.team_3.swing.TextField();
-        txtEmail = new pro1041.team_3.swing.TextField();
-        jpnNamNu = new javax.swing.JPanel();
-        rdNam = new pro1041.team_3.swing.RadioButtonCustom();
-        rdNu = new pro1041.team_3.swing.RadioButtonCustom();
-        btnSua = new pro1041.team_3.swing.ButtonCustom();
-        btnVoHieuHoa = new pro1041.team_3.swing.ButtonCustom();
-        btnClear = new pro1041.team_3.swing.ButtonCustom();
+        jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         btnTimKiem = new javax.swing.JLabel();
         txtTim = new pro1041.team_3.swing.TextField();
+        txtSDT = new pro1041.team_3.swing.TextField();
+        txtMaNhanVien = new pro1041.team_3.swing.TextField();
+        txtTenDangNhap = new pro1041.team_3.swing.TextField();
+        txtDiaChi = new pro1041.team_3.swing.TextField();
+        txtHoTen = new pro1041.team_3.swing.TextField();
+        jpnNamNu = new javax.swing.JPanel();
+        rdNam = new pro1041.team_3.swing.RadioButtonCustom();
+        rdNu = new pro1041.team_3.swing.RadioButtonCustom();
         jpnVaiTro = new javax.swing.JPanel();
         rdQuanLy = new pro1041.team_3.swing.RadioButtonCustom();
         rdNhanVien = new pro1041.team_3.swing.RadioButtonCustom();
+        txtEmail = new pro1041.team_3.swing.TextField();
+        jPanel2 = new javax.swing.JPanel();
+        btnClear = new pro1041.team_3.swing.ButtonCustom();
+        btnThem = new pro1041.team_3.swing.ButtonCustom();
+        btnSua = new pro1041.team_3.swing.ButtonCustom();
+        btnVoHieuHoa = new pro1041.team_3.swing.ButtonCustom();
+        btnExport = new pro1041.team_3.swing.ButtonCustom();
+        cbbLoai = new pro1041.team_3.swing.Combobox();
+        btnThayDoiMK = new pro1041.team_3.swing.ButtonCustom();
         jpnNghiViec = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblNhanVienNghiViec = new pro1041.team_3.swing.config.Table();
         jLabel2 = new javax.swing.JLabel();
-        txtMatKhauNV = new pro1041.team_3.swing.TextField();
-        txtMaNVNghiViec = new pro1041.team_3.swing.TextField();
-        txtTenDangNhapNV = new pro1041.team_3.swing.TextField();
-        txtHoTenNV = new pro1041.team_3.swing.TextField();
-        txtSDTNV = new pro1041.team_3.swing.TextField();
-        txtDiaChiNV = new pro1041.team_3.swing.TextField();
-        txtEmailNV = new pro1041.team_3.swing.TextField();
-        jpnNamNu1 = new javax.swing.JPanel();
-        rdNamNV = new pro1041.team_3.swing.RadioButtonCustom();
-        rdNuNV = new pro1041.team_3.swing.RadioButtonCustom();
-        btnKhoiPhuc = new pro1041.team_3.swing.ButtonCustom();
+        jPanel6 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btnTimKiem1 = new javax.swing.JLabel();
         txtTimKiemNV = new pro1041.team_3.swing.TextField();
+        txtMaNVNghiViec = new pro1041.team_3.swing.TextField();
+        txtTenDangNhapNV = new pro1041.team_3.swing.TextField();
+        txtHoTenNV = new pro1041.team_3.swing.TextField();
+        jpnNamNu1 = new javax.swing.JPanel();
+        rdNamNV = new pro1041.team_3.swing.RadioButtonCustom();
+        rdNuNV = new pro1041.team_3.swing.RadioButtonCustom();
+        txtSDTNV = new pro1041.team_3.swing.TextField();
+        txtDiaChiNV = new pro1041.team_3.swing.TextField();
+        txtEmailNV = new pro1041.team_3.swing.TextField();
+        txtMatKhauNV = new pro1041.team_3.swing.TextField();
         jpnVaiTro1 = new javax.swing.JPanel();
         rdQuanLyNV = new pro1041.team_3.swing.RadioButtonCustom();
         rdNhanVienNV = new pro1041.team_3.swing.RadioButtonCustom();
+        jPanel7 = new javax.swing.JPanel();
         btnClearNV = new pro1041.team_3.swing.ButtonCustom();
+        btnKhoiPhuc = new pro1041.team_3.swing.ButtonCustom();
+
+        dlDoiMatKhau.setMinimumSize(new java.awt.Dimension(400, 330));
+        dlDoiMatKhau.setSize(new java.awt.Dimension(400, 330));
+        dlDoiMatKhau.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel9.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Đổi mật khẩu", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnThoat.setBackground(new java.awt.Color(153, 153, 153));
+        btnThoat.setForeground(new java.awt.Color(255, 255, 255));
+        btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/back.png"))); // NOI18N
+        btnThoat.setText("Quay lại");
+        btnThoat.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
+        jPanel9.add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 120, -1));
+
+        btnDoiMatKhau.setBackground(new java.awt.Color(1, 181, 204));
+        btnDoiMatKhau.setForeground(new java.awt.Color(255, 255, 255));
+        btnDoiMatKhau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/add.png"))); // NOI18N
+        btnDoiMatKhau.setText("Đổi mật khẩu");
+        btnDoiMatKhau.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        btnDoiMatKhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoiMatKhauActionPerformed(evt);
+            }
+        });
+        jPanel9.add(btnDoiMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 150, -1));
+
+        txtTDN.setFont(new java.awt.Font("Nunito Light", 1, 13)); // NOI18N
+        txtTDN.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtTDN.setLabelText("Tên đăng nhập");
+        jPanel9.add(txtTDN, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 210, -1));
+
+        txtMK.setFont(new java.awt.Font("Nunito Light", 1, 13)); // NOI18N
+        txtMK.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtMK.setLabelText("Mật khẩu");
+        jPanel9.add(txtMK, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, 210, -1));
+
+        dlDoiMatKhau.getContentPane().add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
+
+        dlMatKhauMoi.setMinimumSize(new java.awt.Dimension(400, 330));
+        dlMatKhauMoi.setSize(new java.awt.Dimension(400, 330));
+        dlMatKhauMoi.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel10.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Đổi mật khẩu", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnThoat1.setBackground(new java.awt.Color(153, 153, 153));
+        btnThoat1.setForeground(new java.awt.Color(255, 255, 255));
+        btnThoat1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/back.png"))); // NOI18N
+        btnThoat1.setText("Quay lại");
+        btnThoat1.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        btnThoat1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoat1ActionPerformed(evt);
+            }
+        });
+        jPanel10.add(btnThoat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 120, -1));
+
+        btnLuuThayDoi.setBackground(new java.awt.Color(1, 181, 204));
+        btnLuuThayDoi.setForeground(new java.awt.Color(255, 255, 255));
+        btnLuuThayDoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/add.png"))); // NOI18N
+        btnLuuThayDoi.setText("Lưu thay đổi");
+        btnLuuThayDoi.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        btnLuuThayDoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLuuThayDoiActionPerformed(evt);
+            }
+        });
+        jPanel10.add(btnLuuThayDoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 150, -1));
+
+        txtMatKhauMoi.setFont(new java.awt.Font("Nunito Light", 1, 13)); // NOI18N
+        txtMatKhauMoi.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtMatKhauMoi.setLabelText("Mật khẩu mới");
+        txtMatKhauMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMatKhauMoiActionPerformed(evt);
+            }
+        });
+        jPanel10.add(txtMatKhauMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 210, -1));
+
+        txtGoLaiMK.setFont(new java.awt.Font("Nunito Light", 1, 13)); // NOI18N
+        txtGoLaiMK.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtGoLaiMK.setLabelText("Gõ lại mật khẩu mới");
+        txtGoLaiMK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtGoLaiMKActionPerformed(evt);
+            }
+        });
+        jPanel10.add(txtGoLaiMK, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 210, -1));
+
+        dlMatKhauMoi.getContentPane().add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
+
+        dlMaXacThuc.setMinimumSize(new java.awt.Dimension(400, 330));
+        dlMaXacThuc.setSize(new java.awt.Dimension(400, 330));
+        dlMaXacThuc.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel11.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Đổi mật khẩu", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnThoat2.setBackground(new java.awt.Color(153, 153, 153));
+        btnThoat2.setForeground(new java.awt.Color(255, 255, 255));
+        btnThoat2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/back.png"))); // NOI18N
+        btnThoat2.setText("Quay lại");
+        btnThoat2.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        btnThoat2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoat2ActionPerformed(evt);
+            }
+        });
+        jPanel11.add(btnThoat2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 120, -1));
+
+        btnNext.setBackground(new java.awt.Color(1, 181, 204));
+        btnNext.setForeground(new java.awt.Color(255, 255, 255));
+        btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/add.png"))); // NOI18N
+        btnNext.setText("Tiếp tục");
+        btnNext.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
+        jPanel11.add(btnNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 150, -1));
+
+        txtMaXacThuc.setFont(new java.awt.Font("Nunito Light", 1, 13)); // NOI18N
+        txtMaXacThuc.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtMaXacThuc.setLabelText("Mã xác thực");
+        jPanel11.add(txtMaXacThuc, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 210, -1));
+
+        dlMaXacThuc.getContentPane().add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
+
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -202,11 +367,11 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
 
             },
             new String [] {
-                "STT", "Mã nhân viên", "Tên đăng nhập", "Họ tên", "Giới tính", "Sđt", "Địa chỉ", "Email", "Mật khẩu", "Vai trò"
+                "STT", "Mã nhân viên", "Tên đăng nhập", "Họ tên", "Giới tính", "Sđt", "Địa chỉ", "Email", "Vai trò"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -221,122 +386,16 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblNhanVien);
 
-        jpnDangHoatDong.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 322, 1120, 240));
+        jpnDangHoatDong.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 1120, 350));
 
         jLabel1.setFont(new java.awt.Font("Nunito", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(66, 66, 66));
         jLabel1.setText("DANH SÁCH NHÂN VIÊN");
-        jpnDangHoatDong.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 292, -1, -1));
+        jpnDangHoatDong.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, -1, -1));
 
-        btnThem.setBackground(new java.awt.Color(1, 181, 204));
-        btnThem.setForeground(new java.awt.Color(255, 255, 255));
-        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/add.png"))); // NOI18N
-        btnThem.setText("Thêm");
-        btnThem.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
-        btnThem.setMaximumSize(new java.awt.Dimension(113, 49));
-        btnThem.setMinimumSize(new java.awt.Dimension(113, 49));
-        btnThem.setPreferredSize(new java.awt.Dimension(112, 49));
-        btnThem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThemActionPerformed(evt);
-            }
-        });
-        jpnDangHoatDong.add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 220, 150, -1));
-
-        txtMatKhau.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtMatKhau.setLabelText("Mật khẩu");
-        txtMatKhau.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMatKhauActionPerformed(evt);
-            }
-        });
-        jpnDangHoatDong.add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, 260, -1));
-
-        txtMaNhanVien.setEditable(false);
-        txtMaNhanVien.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtMaNhanVien.setLabelText("Mã nhân viên");
-        jpnDangHoatDong.add(txtMaNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 260, -1));
-
-        txtTenDangNhap.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtTenDangNhap.setLabelText("Tên đăng nhập");
-        jpnDangHoatDong.add(txtTenDangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 260, -1));
-
-        txtHoTen.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtHoTen.setLabelText("Họ tên");
-        jpnDangHoatDong.add(txtHoTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 260, -1));
-
-        txtSDT.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtSDT.setLabelText("Số điện thoại");
-        txtSDT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSDTActionPerformed(evt);
-            }
-        });
-        jpnDangHoatDong.add(txtSDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 70, 260, -1));
-
-        txtDiaChi.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtDiaChi.setLabelText("Địa chỉ");
-        jpnDangHoatDong.add(txtDiaChi, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 130, 260, -1));
-
-        txtEmail.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtEmail.setLabelText("Email");
-        jpnDangHoatDong.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 130, 260, -1));
-
-        jpnNamNu.setBackground(new java.awt.Color(255, 255, 255));
-        jpnNamNu.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray), "Giới tính", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito", 0, 12), new java.awt.Color(3, 155, 216))); // NOI18N
-        jpnNamNu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        buttonGroup1.add(rdNam);
-        rdNam.setText("Nam");
-        jpnNamNu.add(rdNam, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
-
-        buttonGroup1.add(rdNu);
-        rdNu.setText("Nữ");
-        jpnNamNu.add(rdNu, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, -1, -1));
-
-        jpnDangHoatDong.add(jpnNamNu, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, 260, 60));
-
-        btnSua.setBackground(new java.awt.Color(1, 181, 204));
-        btnSua.setForeground(new java.awt.Color(255, 255, 255));
-        btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/edit.png"))); // NOI18N
-        btnSua.setText("Sửa");
-        btnSua.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
-        btnSua.setMaximumSize(new java.awt.Dimension(113, 49));
-        btnSua.setMinimumSize(new java.awt.Dimension(113, 49));
-        btnSua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSuaActionPerformed(evt);
-            }
-        });
-        jpnDangHoatDong.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 220, 150, -1));
-
-        btnVoHieuHoa.setBackground(new java.awt.Color(1, 181, 204));
-        btnVoHieuHoa.setForeground(new java.awt.Color(255, 255, 255));
-        btnVoHieuHoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/add.png"))); // NOI18N
-        btnVoHieuHoa.setText("Nghỉ việc");
-        btnVoHieuHoa.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
-        btnVoHieuHoa.setMaximumSize(new java.awt.Dimension(113, 49));
-        btnVoHieuHoa.setMinimumSize(new java.awt.Dimension(113, 49));
-        btnVoHieuHoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVoHieuHoaActionPerformed(evt);
-            }
-        });
-        jpnDangHoatDong.add(btnVoHieuHoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 220, 150, -1));
-
-        btnClear.setBackground(new java.awt.Color(1, 181, 204));
-        btnClear.setForeground(new java.awt.Color(255, 255, 255));
-        btnClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/add.png"))); // NOI18N
-        btnClear.setText("Clear");
-        btnClear.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
-        btnClear.setMaximumSize(new java.awt.Dimension(113, 49));
-        btnClear.setMinimumSize(new java.awt.Dimension(113, 49));
-        btnClear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClearActionPerformed(evt);
-            }
-        });
-        jpnDangHoatDong.add(btnClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 220, 150, -1));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray), "Tìm kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(3, 155, 216))); // NOI18N
@@ -350,7 +409,7 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
                 btnTimKiemMouseClicked(evt);
             }
         });
-        jPanel4.add(btnTimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 30, 30));
+        jPanel4.add(btnTimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 30, 30));
 
         txtTim.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
         txtTim.setLabelText("");
@@ -364,9 +423,49 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
                 txtTimActionPerformed(evt);
             }
         });
-        jPanel4.add(txtTim, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 270, 50));
+        jPanel4.add(txtTim, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 240, 50));
 
-        jpnDangHoatDong.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 330, 80));
+        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 310, 80));
+
+        txtSDT.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtSDT.setLabelText("Số điện thoại");
+        txtSDT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSDTActionPerformed(evt);
+            }
+        });
+        jPanel3.add(txtSDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 100, 260, -1));
+
+        txtMaNhanVien.setEditable(false);
+        txtMaNhanVien.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtMaNhanVien.setLabelText("Mã nhân viên");
+        jPanel3.add(txtMaNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 260, -1));
+
+        txtTenDangNhap.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtTenDangNhap.setLabelText("Tên đăng nhập");
+        jPanel3.add(txtTenDangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 260, -1));
+
+        txtDiaChi.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtDiaChi.setLabelText("Địa chỉ");
+        jPanel3.add(txtDiaChi, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, 260, -1));
+
+        txtHoTen.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtHoTen.setLabelText("Họ tên");
+        jPanel3.add(txtHoTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 260, -1));
+
+        jpnNamNu.setBackground(new java.awt.Color(255, 255, 255));
+        jpnNamNu.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray), "Giới tính", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito", 0, 12), new java.awt.Color(3, 155, 216))); // NOI18N
+        jpnNamNu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        buttonGroup1.add(rdNam);
+        rdNam.setText("Nam");
+        jpnNamNu.add(rdNam, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
+
+        buttonGroup1.add(rdNu);
+        rdNu.setText("Nữ");
+        jpnNamNu.add(rdNu, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, -1, -1));
+
+        jPanel3.add(jpnNamNu, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 260, 60));
 
         jpnVaiTro.setBackground(new java.awt.Color(255, 255, 255));
         jpnVaiTro.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray), "Vai trò", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito", 0, 12))); // NOI18N
@@ -385,7 +484,116 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
         });
         jpnVaiTro.add(rdNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, -1, -1));
 
-        jpnDangHoatDong.add(jpnVaiTro, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 70, 260, 60));
+        jPanel3.add(jpnVaiTro, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 250, 260, 60));
+
+        txtEmail.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtEmail.setLabelText("Email");
+        jPanel3.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, 260, -1));
+
+        jpnDangHoatDong.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 700, 350));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnClear.setBackground(new java.awt.Color(1, 181, 204));
+        btnClear.setForeground(new java.awt.Color(255, 255, 255));
+        btnClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/add.png"))); // NOI18N
+        btnClear.setText("Clear");
+        btnClear.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnClear.setMaximumSize(new java.awt.Dimension(113, 49));
+        btnClear.setMinimumSize(new java.awt.Dimension(113, 49));
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 150, -1));
+
+        btnThem.setBackground(new java.awt.Color(1, 181, 204));
+        btnThem.setForeground(new java.awt.Color(255, 255, 255));
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/add.png"))); // NOI18N
+        btnThem.setText("Thêm");
+        btnThem.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnThem.setMaximumSize(new java.awt.Dimension(113, 49));
+        btnThem.setMinimumSize(new java.awt.Dimension(113, 49));
+        btnThem.setPreferredSize(new java.awt.Dimension(112, 49));
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, 150, -1));
+
+        btnSua.setBackground(new java.awt.Color(1, 181, 204));
+        btnSua.setForeground(new java.awt.Color(255, 255, 255));
+        btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/edit.png"))); // NOI18N
+        btnSua.setText("Sửa");
+        btnSua.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnSua.setMaximumSize(new java.awt.Dimension(113, 49));
+        btnSua.setMinimumSize(new java.awt.Dimension(113, 49));
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 150, -1));
+
+        btnVoHieuHoa.setBackground(new java.awt.Color(1, 181, 204));
+        btnVoHieuHoa.setForeground(new java.awt.Color(255, 255, 255));
+        btnVoHieuHoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/add.png"))); // NOI18N
+        btnVoHieuHoa.setText("Nghỉ việc");
+        btnVoHieuHoa.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnVoHieuHoa.setMaximumSize(new java.awt.Dimension(113, 49));
+        btnVoHieuHoa.setMinimumSize(new java.awt.Dimension(113, 49));
+        btnVoHieuHoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoHieuHoaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnVoHieuHoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 150, -1));
+
+        btnExport.setBackground(new java.awt.Color(1, 181, 204));
+        btnExport.setForeground(new java.awt.Color(255, 255, 255));
+        btnExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/export.png"))); // NOI18N
+        btnExport.setText("Export");
+        btnExport.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnExport.setMaximumSize(new java.awt.Dimension(113, 49));
+        btnExport.setMinimumSize(new java.awt.Dimension(113, 49));
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnExport, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 150, -1));
+
+        cbbLoai.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tất cả nhân viên", "Nhân viên đang làm", "Nhân viên nghỉ làm" }));
+        cbbLoai.setFocusLostColor(new java.awt.Color(3, 155, 216));
+        cbbLoai.setFont(new java.awt.Font("Nunito Light", 1, 12)); // NOI18N
+        cbbLoai.setLabeText("");
+        cbbLoai.setLabelColor(new java.awt.Color(1, 132, 203));
+        cbbLoai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbLoaiActionPerformed(evt);
+            }
+        });
+        jPanel2.add(cbbLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 160, 50));
+
+        btnThayDoiMK.setBackground(new java.awt.Color(1, 181, 204));
+        btnThayDoiMK.setForeground(new java.awt.Color(255, 255, 255));
+        btnThayDoiMK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/add.png"))); // NOI18N
+        btnThayDoiMK.setText("Đổi mật khẩu");
+        btnThayDoiMK.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnThayDoiMK.setMaximumSize(new java.awt.Dimension(113, 49));
+        btnThayDoiMK.setMinimumSize(new java.awt.Dimension(113, 49));
+        btnThayDoiMK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThayDoiMKActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnThayDoiMK, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 150, -1));
+
+        jpnDangHoatDong.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 10, 390, 350));
 
         materialTabbed1.addTab("Đang làm việc", jpnDangHoatDong);
 
@@ -419,90 +627,16 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
             tblNhanVienNghiViec.getColumnModel().getColumn(0).setResizable(false);
         }
 
-        jpnNghiViec.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 322, 1120, 240));
+        jpnNghiViec.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 1100, 340));
 
         jLabel2.setFont(new java.awt.Font("Nunito", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(66, 66, 66));
         jLabel2.setText("DANH SÁCH NHÂN VIÊN");
-        jpnNghiViec.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 292, -1, -1));
+        jpnNghiViec.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, -1, -1));
 
-        txtMatKhauNV.setEditable(false);
-        txtMatKhauNV.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtMatKhauNV.setLabelText("Mật khẩu");
-        txtMatKhauNV.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMatKhauNVActionPerformed(evt);
-            }
-        });
-        jpnNghiViec.add(txtMatKhauNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, 260, -1));
-
-        txtMaNVNghiViec.setEditable(false);
-        txtMaNVNghiViec.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtMaNVNghiViec.setLabelText("Mã nhân viên");
-        txtMaNVNghiViec.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMaNVNghiViecActionPerformed(evt);
-            }
-        });
-        jpnNghiViec.add(txtMaNVNghiViec, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 260, -1));
-
-        txtTenDangNhapNV.setEditable(false);
-        txtTenDangNhapNV.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtTenDangNhapNV.setLabelText("Tên đăng nhập");
-        jpnNghiViec.add(txtTenDangNhapNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 260, -1));
-
-        txtHoTenNV.setEditable(false);
-        txtHoTenNV.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtHoTenNV.setLabelText("Họ tên");
-        jpnNghiViec.add(txtHoTenNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 260, -1));
-
-        txtSDTNV.setEditable(false);
-        txtSDTNV.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtSDTNV.setLabelText("Số điện thoại");
-        txtSDTNV.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSDTNVActionPerformed(evt);
-            }
-        });
-        jpnNghiViec.add(txtSDTNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 70, 260, -1));
-
-        txtDiaChiNV.setEditable(false);
-        txtDiaChiNV.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtDiaChiNV.setLabelText("Địa chỉ");
-        jpnNghiViec.add(txtDiaChiNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 130, 260, -1));
-
-        txtEmailNV.setEditable(false);
-        txtEmailNV.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
-        txtEmailNV.setLabelText("Email");
-        jpnNghiViec.add(txtEmailNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 130, 260, -1));
-
-        jpnNamNu1.setBackground(new java.awt.Color(255, 255, 255));
-        jpnNamNu1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray), "Giới tính", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito", 0, 12))); // NOI18N
-        jpnNamNu1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        buttonGroup3.add(rdNamNV);
-        rdNamNV.setText("Nam");
-        jpnNamNu1.add(rdNamNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
-
-        buttonGroup3.add(rdNuNV);
-        rdNuNV.setText("Nữ");
-        jpnNamNu1.add(rdNuNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, -1, -1));
-
-        jpnNghiViec.add(jpnNamNu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, 260, 60));
-
-        btnKhoiPhuc.setBackground(new java.awt.Color(1, 181, 204));
-        btnKhoiPhuc.setForeground(new java.awt.Color(255, 255, 255));
-        btnKhoiPhuc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/add.png"))); // NOI18N
-        btnKhoiPhuc.setText("Khôi phục");
-        btnKhoiPhuc.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
-        btnKhoiPhuc.setMaximumSize(new java.awt.Dimension(113, 49));
-        btnKhoiPhuc.setMinimumSize(new java.awt.Dimension(113, 49));
-        btnKhoiPhuc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKhoiPhucActionPerformed(evt);
-            }
-        });
-        jpnNghiViec.add(btnKhoiPhuc, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 210, 150, -1));
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray), "Tìm kiếm"));
@@ -516,7 +650,7 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
                 btnTimKiem1MouseClicked(evt);
             }
         });
-        jPanel5.add(btnTimKiem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 30, 30));
+        jPanel5.add(btnTimKiem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 30, 30));
 
         txtTimKiemNV.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
         txtTimKiemNV.setLabelText("");
@@ -530,9 +664,73 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
                 txtTimKiemNVActionPerformed(evt);
             }
         });
-        jPanel5.add(txtTimKiemNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 270, 50));
+        jPanel5.add(txtTimKiemNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 240, 50));
 
-        jpnNghiViec.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 340, 80));
+        jPanel6.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 310, 80));
+
+        txtMaNVNghiViec.setEditable(false);
+        txtMaNVNghiViec.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtMaNVNghiViec.setLabelText("Mã nhân viên");
+        txtMaNVNghiViec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMaNVNghiViecActionPerformed(evt);
+            }
+        });
+        jPanel6.add(txtMaNVNghiViec, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 260, -1));
+
+        txtTenDangNhapNV.setEditable(false);
+        txtTenDangNhapNV.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtTenDangNhapNV.setLabelText("Tên đăng nhập");
+        jPanel6.add(txtTenDangNhapNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 260, -1));
+
+        txtHoTenNV.setEditable(false);
+        txtHoTenNV.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtHoTenNV.setLabelText("Họ tên");
+        jPanel6.add(txtHoTenNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 260, -1));
+
+        jpnNamNu1.setBackground(new java.awt.Color(255, 255, 255));
+        jpnNamNu1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray), "Giới tính", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito", 0, 12))); // NOI18N
+        jpnNamNu1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        buttonGroup3.add(rdNamNV);
+        rdNamNV.setText("Nam");
+        jpnNamNu1.add(rdNamNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+
+        buttonGroup3.add(rdNuNV);
+        rdNuNV.setText("Nữ");
+        jpnNamNu1.add(rdNuNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, -1, -1));
+
+        jPanel6.add(jpnNamNu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 260, 60));
+
+        txtSDTNV.setEditable(false);
+        txtSDTNV.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtSDTNV.setLabelText("Số điện thoại");
+        txtSDTNV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSDTNVActionPerformed(evt);
+            }
+        });
+        jPanel6.add(txtSDTNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 60, 260, -1));
+
+        txtDiaChiNV.setEditable(false);
+        txtDiaChiNV.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtDiaChiNV.setLabelText("Địa chỉ");
+        jPanel6.add(txtDiaChiNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 110, 260, -1));
+
+        txtEmailNV.setEditable(false);
+        txtEmailNV.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtEmailNV.setLabelText("Email");
+        jPanel6.add(txtEmailNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 260, -1));
+
+        txtMatKhauNV.setEditable(false);
+        txtMatKhauNV.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        txtMatKhauNV.setLabelText("Mật khẩu");
+        txtMatKhauNV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMatKhauNVActionPerformed(evt);
+            }
+        });
+        jPanel6.add(txtMatKhauNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 210, 260, -1));
 
         jpnVaiTro1.setBackground(new java.awt.Color(255, 255, 255));
         jpnVaiTro1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray), "Vai trò", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito", 0, 12))); // NOI18N
@@ -551,7 +749,13 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
         });
         jpnVaiTro1.add(rdNhanVienNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, -1, -1));
 
-        jpnNghiViec.add(jpnVaiTro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 60, 260, 60));
+        jPanel6.add(jpnVaiTro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 260, 260, 60));
+
+        jpnNghiViec.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 810, 360));
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnClearNV.setBackground(new java.awt.Color(1, 181, 204));
         btnClearNV.setForeground(new java.awt.Color(255, 255, 255));
@@ -565,22 +769,29 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
                 btnClearNVActionPerformed(evt);
             }
         });
-        jpnNghiViec.add(btnClearNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 210, 150, -1));
+        jPanel7.add(btnClearNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 150, -1));
+
+        btnKhoiPhuc.setBackground(new java.awt.Color(1, 181, 204));
+        btnKhoiPhuc.setForeground(new java.awt.Color(255, 255, 255));
+        btnKhoiPhuc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/add.png"))); // NOI18N
+        btnKhoiPhuc.setText("Khôi phục");
+        btnKhoiPhuc.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnKhoiPhuc.setMaximumSize(new java.awt.Dimension(113, 49));
+        btnKhoiPhuc.setMinimumSize(new java.awt.Dimension(113, 49));
+        btnKhoiPhuc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKhoiPhucActionPerformed(evt);
+            }
+        });
+        jPanel7.add(btnKhoiPhuc, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 150, -1));
+
+        jpnNghiViec.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 10, 260, 360));
 
         materialTabbed1.addTab("Nghỉ việc", jpnNghiViec);
 
-        jPanel1.add(materialTabbed1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 1140, 630));
+        jPanel1.add(materialTabbed1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 1140, 820));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
@@ -595,8 +806,7 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
         String sdt = this.tblNhanVien.getValueAt(row, 5).toString();
         String diachi = this.tblNhanVien.getValueAt(row, 6).toString();
         String email = this.tblNhanVien.getValueAt(row, 7).toString();
-        String matkhau = this.tblNhanVien.getValueAt(row, 8).toString();
-        String vaitro = this.tblNhanVien.getValueAt(row, 9).toString();
+        String vaitro = this.tblNhanVien.getValueAt(row, 8).toString();
 
         txtMaNhanVien.setText(ma);
         txtTenDangNhap.setText(tendangnhap);
@@ -604,7 +814,6 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
         txtDiaChi.setText(diachi);
         txtSDT.setText(sdt);
         txtEmail.setText(email);
-        txtMatKhau.setText(matkhau);
         if (vaitro.equals("Quản lý")) {
             this.rdQuanLy.setSelected(true);
         } else {
@@ -624,11 +833,13 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
         if (nhanVien == null) {
             return;
         }
+        nhanVien.setMatKhau(String.valueOf((int) (Math.random() * 10000000)));
         String mess = service.insert(nhanVien);
         if (mess.equals("Thêm thành công")) {
             lstNV = service.getAllByTrangThai0();
             loadTable(lstNV);
             clear();
+            EmailUtil.send(nhanVien.getEmail(), "Mật khẩu đăng nhập", "Mật khẩu của bạn: " + nhanVien.getMatKhau());
         }
         JOptionPane.showMessageDialog(this, mess);
 
@@ -663,10 +874,6 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnSuaActionPerformed
-
-    private void txtMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatKhauActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMatKhauActionPerformed
 
     private void btnVoHieuHoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoHieuHoaActionPerformed
         // TODO add your handling code here:
@@ -829,13 +1036,185 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMaNVNghiViecActionPerformed
 
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        // TODO add your handling code here:
+        int choose = cbbLoai.getSelectedIndex();
+        if (choose == 0) {
+            JFileChooser fileChooser = new JFileChooser("D:\\");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("File Exel (.xlsx)", "xlsx");
+            fileChooser.setFileFilter(filter);
+            int x = fileChooser.showSaveDialog(this);
+            FileOutputStream fos = null;
+            File file = fileChooser.getSelectedFile();
+            if (!(x == JFileChooser.APPROVE_OPTION)) {
+                return;
+            }
+            boolean ketQua = service.exportNhanVien(file);
+            if (ketQua) {
+                JOptionPane.showMessageDialog(this, "Xuất danh sách thành công", "Export", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Thất bại", "Export", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else if (choose == 1) {
+            JFileChooser fileChooser = new JFileChooser("D:\\");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("File Exel (.xlsx)", "xlsx");
+            fileChooser.setFileFilter(filter);
+            int x = fileChooser.showSaveDialog(this);
+            FileOutputStream fos = null;
+            File file = fileChooser.getSelectedFile();
+            if (!(x == JFileChooser.APPROVE_OPTION)) {
+                return;
+            }
+            boolean ketQua = service.exportNhanVienDangLam(file);
+            if (ketQua) {
+                JOptionPane.showMessageDialog(this, "Xuất danh sách thành công", "Export", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Thất bại", "Export", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else if (choose == 2) {
+            JFileChooser fileChooser = new JFileChooser("D:\\");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("File Exel (.xlsx)", "xlsx");
+            fileChooser.setFileFilter(filter);
+            int x = fileChooser.showSaveDialog(this);
+            FileOutputStream fos = null;
+            File file = fileChooser.getSelectedFile();
+            if (!(x == JFileChooser.APPROVE_OPTION)) {
+                return;
+            }
+            boolean ketQua = service.exportNhanVienNghiLam(file);
+            if (ketQua) {
+                JOptionPane.showMessageDialog(this, "Xuất danh sách thành công", "Export", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Thất bại", "Export", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+
+    }//GEN-LAST:event_btnExportActionPerformed
+
+    private void cbbLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLoaiActionPerformed
+        // CBB lọc hãng khi chọn Điện thoại vào KM
+
+    }//GEN-LAST:event_cbbLoaiActionPerformed
+
+    private void btnThayDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThayDoiMKActionPerformed
+        // TODO add your handling code here:
+        dlDoiMatKhau.setLocationRelativeTo(null);
+        dlDoiMatKhau.setVisible(true);
+    }//GEN-LAST:event_btnThayDoiMKActionPerformed
+
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+        // TODO add your handling code here:
+        dlDoiMatKhau.setVisible(false);
+    }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void btnDoiMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMatKhauActionPerformed
+        // Bước 1
+        String tenDangNhap = txtTDN.getText().trim();
+        String matKhau = txtMK.getText().trim();
+
+        if (tenDangNhap.length() == 0 || matKhau.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Mời bạn nhập đầy đủ thông tin");
+            return;
+        }
+
+        NhanVien nhanVien = service.findNVByUserNameAndMatKhau(tenDangNhap, matKhau);
+        if (nhanVien == null) {
+            JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không đúng");
+            return;
+        }
+        if (nhanVien.getTrangThaiLamViec() == 1) {
+            JOptionPane.showMessageDialog(this, "Tài khoản đã bị vô hiệu hóa");
+            return;
+        }
+        maXT = String.valueOf((int) (Math.random() * 10000000));
+        EmailUtil.send(nhanVien.getEmail(), "Mã xác thực", "Mã xác thực của bạn: " + maXT);
+        dlMaXacThuc.setLocationRelativeTo(null);
+        dlMaXacThuc.setVisible(true);
+    }//GEN-LAST:event_btnDoiMatKhauActionPerformed
+
+    private void btnThoat1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoat1ActionPerformed
+        // TODO add your handling code here:
+        dlMatKhauMoi.setVisible(false);
+    }//GEN-LAST:event_btnThoat1ActionPerformed
+
+    private void btnLuuThayDoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuThayDoiActionPerformed
+        // Bước 3
+        String tenDangNhap = txtTDN.getText().trim();
+        String matKhauMoi = txtMatKhauMoi.getText().trim();
+        String nhapLai = txtGoLaiMK.getText().trim();
+        if (matKhauMoi.length() == 0 || nhapLai.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Mời bạn nhập đầy đủ thông tin");
+            return;
+        }
+        if (matKhauMoi.length() < 6 || matKhauMoi.length() > 50) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu phải trên 6 ký tự và không quá 50 ký tự");
+            return;
+        }
+        if (matKhauMoi.contains(" ")) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu không được chứa khoảng trắng");
+            return;
+        }
+        if (!matKhauMoi.equals(nhapLai)) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu gõ lại không trùng khớp với mật khẩu mới");
+            return;
+        }
+        int c = JOptionPane.showConfirmDialog(this, "Bạn có muốn đổi mật khẩu không?");
+        if (c != JOptionPane.YES_OPTION) {
+            return;
+        }
+        boolean ketQua = service.updateMatKhau(tenDangNhap, matKhauMoi);
+        if (ketQua) {
+            JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công");
+            return;
+        } else {
+            JOptionPane.showMessageDialog(this, "Đổi mật khẩu thất bại");
+        }
+    }//GEN-LAST:event_btnLuuThayDoiActionPerformed
+
+    private void txtMatKhauMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatKhauMoiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMatKhauMoiActionPerformed
+
+    private void txtGoLaiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGoLaiMKActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtGoLaiMKActionPerformed
+
+    private void btnThoat2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoat2ActionPerformed
+        // TODO add your handling code here:
+        dlMaXacThuc.setVisible(false);
+    }//GEN-LAST:event_btnThoat2ActionPerformed
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // Bước 2
+        String maXacThuc = txtMaXacThuc.getText().trim();
+        if (maXacThuc.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Mời bạn nhập đầy đủ thông tin");
+            return;
+        }
+        if (!maXacThuc.equals(maXT)) {
+            JOptionPane.showMessageDialog(this, "Mã xác thực không đúng");
+            return;
+        }
+        dlMatKhauMoi.setLocationRelativeTo(null);
+        dlMatKhauMoi.setVisible(true);
+
+    }//GEN-LAST:event_btnNextActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private pro1041.team_3.swing.ButtonCustom btnClear;
     private pro1041.team_3.swing.ButtonCustom btnClearNV;
+    private pro1041.team_3.swing.ButtonCustom btnDoiMatKhau;
+    private pro1041.team_3.swing.ButtonCustom btnExport;
     private pro1041.team_3.swing.ButtonCustom btnKhoiPhuc;
+    private pro1041.team_3.swing.ButtonCustom btnLuuThayDoi;
+    private pro1041.team_3.swing.ButtonCustom btnNext;
     private pro1041.team_3.swing.ButtonCustom btnSua;
+    private pro1041.team_3.swing.ButtonCustom btnThayDoiMK;
     private pro1041.team_3.swing.ButtonCustom btnThem;
+    private pro1041.team_3.swing.ButtonCustom btnThoat;
+    private pro1041.team_3.swing.ButtonCustom btnThoat1;
+    private pro1041.team_3.swing.ButtonCustom btnThoat2;
     private javax.swing.JLabel btnTimKiem;
     private javax.swing.JLabel btnTimKiem1;
     private pro1041.team_3.swing.ButtonCustom btnVoHieuHoa;
@@ -843,11 +1222,22 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
+    private pro1041.team_3.swing.Combobox cbbLoai;
+    private javax.swing.JDialog dlDoiMatKhau;
+    private javax.swing.JDialog dlMaXacThuc;
+    private javax.swing.JDialog dlMatKhauMoi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel jpnDangHoatDong;
@@ -871,14 +1261,18 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
     private pro1041.team_3.swing.TextField txtDiaChiNV;
     private pro1041.team_3.swing.TextField txtEmail;
     private pro1041.team_3.swing.TextField txtEmailNV;
+    private pro1041.team_3.swing.TextField txtGoLaiMK;
     private pro1041.team_3.swing.TextField txtHoTen;
     private pro1041.team_3.swing.TextField txtHoTenNV;
+    private pro1041.team_3.swing.TextField txtMK;
     private pro1041.team_3.swing.TextField txtMaNVNghiViec;
     private pro1041.team_3.swing.TextField txtMaNhanVien;
-    private pro1041.team_3.swing.TextField txtMatKhau;
+    private pro1041.team_3.swing.TextField txtMaXacThuc;
+    private pro1041.team_3.swing.TextField txtMatKhauMoi;
     private pro1041.team_3.swing.TextField txtMatKhauNV;
     private pro1041.team_3.swing.TextField txtSDT;
     private pro1041.team_3.swing.TextField txtSDTNV;
+    private pro1041.team_3.swing.TextField txtTDN;
     private pro1041.team_3.swing.TextField txtTenDangNhap;
     private pro1041.team_3.swing.TextField txtTenDangNhapNV;
     private pro1041.team_3.swing.TextField txtTim;
