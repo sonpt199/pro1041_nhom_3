@@ -12,8 +12,9 @@ public class ItemChartPie extends javax.swing.JPanel {
         this.data = data;
         initComponents();
         setOpaque(false);
-        DecimalFormat df = new DecimalFormat("$ #,##0.##");
+        DecimalFormat df = new DecimalFormat("VNĐ #,##0.##");
         lbName.setText(data.getName());
+        lbName.setBackground(data.getColor());
         lbValues.setText(df.format(data.getValue()));
     }
 
@@ -21,30 +22,33 @@ public class ItemChartPie extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lbName = new javax.swing.JLabel();
         lbValues = new javax.swing.JLabel();
-
-        lbName.setForeground(new java.awt.Color(69, 69, 69));
-        lbName.setText("Name");
+        lbName = new javax.swing.JTextField();
 
         lbValues.setForeground(new java.awt.Color(69, 69, 69));
         lbValues.setText("Values");
+
+        lbName.setEditable(false);
+        lbName.setForeground(new java.awt.Color(255, 255, 255));
+        lbName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lbName.setBorder(null);
+        lbName.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(lbName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(lbValues)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbValues, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lbName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(lbValues, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -56,12 +60,12 @@ public class ItemChartPie extends javax.swing.JPanel {
         int margin = 8;
         int size = getHeight() - margin * 2;
         g.setColor(data.getColor());
-        g.fillRect(margin, margin, size, size);
+//        g.fillRect(margin, margin, size, size);
         super.paintComponent(g);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel lbName;
+    private javax.swing.JTextField lbName;
     private javax.swing.JLabel lbValues;
     // End of variables declaration//GEN-END:variables
 }
