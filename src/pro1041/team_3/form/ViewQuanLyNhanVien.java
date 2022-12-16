@@ -81,7 +81,6 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
                 x.getSdt(),
                 x.getDiaChi(),
                 x.getEmail(),
-                x.getMatKhau(),
                 x.getVaiTro() == 2 ? "Quản lý" : "Nhân viên",};
             dtm.addRow(rowData);
         }
@@ -350,12 +349,14 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
 
         dlMaXacThuc.getContentPane().add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        materialTabbed1.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        materialTabbed1.setForeground(new java.awt.Color(3, 155, 216));
+        materialTabbed1.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
         materialTabbed1.setMinimumSize(new java.awt.Dimension(1120, 720));
         materialTabbed1.setPreferredSize(new java.awt.Dimension(1120, 720));
 
@@ -386,12 +387,12 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblNhanVien);
 
-        jpnDangHoatDong.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 1120, 350));
+        jpnDangHoatDong.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 1120, 300));
 
         jLabel1.setFont(new java.awt.Font("Nunito", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(66, 66, 66));
         jLabel1.setText("DANH SÁCH NHÂN VIÊN");
-        jpnDangHoatDong.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, -1, -1));
+        jpnDangHoatDong.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -423,9 +424,9 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
                 txtTimActionPerformed(evt);
             }
         });
-        jPanel4.add(txtTim, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 240, 50));
+        jPanel4.add(txtTim, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 240, 40));
 
-        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 310, 80));
+        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 310, 70));
 
         txtSDT.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
         txtSDT.setLabelText("Số điện thoại");
@@ -468,7 +469,7 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
         jPanel3.add(jpnNamNu, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 260, 60));
 
         jpnVaiTro.setBackground(new java.awt.Color(255, 255, 255));
-        jpnVaiTro.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray), "Vai trò", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito", 0, 12))); // NOI18N
+        jpnVaiTro.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray), "Vai trò", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito", 0, 12), new java.awt.Color(3, 155, 216))); // NOI18N
         jpnVaiTro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         buttonGroup2.add(rdQuanLy);
@@ -490,7 +491,7 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
         txtEmail.setLabelText("Email");
         jPanel3.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, 260, -1));
 
-        jpnDangHoatDong.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 700, 350));
+        jpnDangHoatDong.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 700, 330));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -508,7 +509,7 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
                 btnClearActionPerformed(evt);
             }
         });
-        jPanel2.add(btnClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 150, -1));
+        jPanel2.add(btnClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, -1));
 
         btnThem.setBackground(new java.awt.Color(1, 181, 204));
         btnThem.setForeground(new java.awt.Color(255, 255, 255));
@@ -523,7 +524,7 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
                 btnThemActionPerformed(evt);
             }
         });
-        jPanel2.add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, 150, -1));
+        jPanel2.add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, 150, -1));
 
         btnSua.setBackground(new java.awt.Color(1, 181, 204));
         btnSua.setForeground(new java.awt.Color(255, 255, 255));
@@ -537,21 +538,19 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
                 btnSuaActionPerformed(evt);
             }
         });
-        jPanel2.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 150, -1));
+        jPanel2.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 150, -1));
 
         btnVoHieuHoa.setBackground(new java.awt.Color(1, 181, 204));
         btnVoHieuHoa.setForeground(new java.awt.Color(255, 255, 255));
         btnVoHieuHoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/add.png"))); // NOI18N
         btnVoHieuHoa.setText("Nghỉ việc");
         btnVoHieuHoa.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
-        btnVoHieuHoa.setMaximumSize(new java.awt.Dimension(113, 49));
-        btnVoHieuHoa.setMinimumSize(new java.awt.Dimension(113, 49));
         btnVoHieuHoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVoHieuHoaActionPerformed(evt);
             }
         });
-        jPanel2.add(btnVoHieuHoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 150, -1));
+        jPanel2.add(btnVoHieuHoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 150, -1));
 
         btnExport.setBackground(new java.awt.Color(1, 181, 204));
         btnExport.setForeground(new java.awt.Color(255, 255, 255));
@@ -565,7 +564,7 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
                 btnExportActionPerformed(evt);
             }
         });
-        jPanel2.add(btnExport, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 150, -1));
+        jPanel2.add(btnExport, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 150, -1));
 
         cbbLoai.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tất cả nhân viên", "Nhân viên đang làm", "Nhân viên nghỉ làm" }));
         cbbLoai.setFocusLostColor(new java.awt.Color(3, 155, 216));
@@ -577,7 +576,7 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
                 cbbLoaiActionPerformed(evt);
             }
         });
-        jPanel2.add(cbbLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 160, 50));
+        jPanel2.add(cbbLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 160, 50));
 
         btnThayDoiMK.setBackground(new java.awt.Color(1, 181, 204));
         btnThayDoiMK.setForeground(new java.awt.Color(255, 255, 255));
@@ -591,9 +590,9 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
                 btnThayDoiMKActionPerformed(evt);
             }
         });
-        jPanel2.add(btnThayDoiMK, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 150, -1));
+        jPanel2.add(btnThayDoiMK, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 150, -1));
 
-        jpnDangHoatDong.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 10, 390, 350));
+        jpnDangHoatDong.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 10, 390, 330));
 
         materialTabbed1.addTab("Đang làm việc", jpnDangHoatDong);
 
@@ -605,11 +604,11 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
 
             },
             new String [] {
-                "STT", "Mã nhân viên", "Tên đăng nhập", "Họ tên", "Giới tính", "Sđt", "Địa chỉ", "Email", "Mật khẩu", "Vai trò"
+                "STT", "Mã nhân viên", "Tên đăng nhập", "Họ tên", "Giới tính", "Sđt", "Địa chỉ", "Email", "Vai trò"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -795,6 +794,7 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
+        //TBL Nhân viên click
         int row = this.tblNhanVien.getSelectedRow();
         if (row == -1) {
             return;
@@ -919,7 +919,7 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
     }//GEN-LAST:event_rdNhanVienActionPerformed
 
     private void tblNhanVienNghiViecMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienNghiViecMouseClicked
-        // TODO add your handling code here:
+        // TBL Nhân viên nghỉ việc click
         int row = this.tblNhanVienNghiViec.getSelectedRow();
         if (row == -1) {
             return;
@@ -931,8 +931,7 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
         String sdt = this.tblNhanVienNghiViec.getValueAt(row, 5).toString();
         String diachi = this.tblNhanVienNghiViec.getValueAt(row, 6).toString();
         String email = this.tblNhanVienNghiViec.getValueAt(row, 7).toString();
-        String matkhau = this.tblNhanVienNghiViec.getValueAt(row, 8).toString();
-        String vaitro = this.tblNhanVienNghiViec.getValueAt(row, 9).toString();
+        String vaitro = this.tblNhanVienNghiViec.getValueAt(row, 8).toString();
 
         txtMaNVNghiViec.setText(ma);
         txtTenDangNhapNV.setText(tendangnhap);
@@ -940,7 +939,6 @@ public class ViewQuanLyNhanVien extends javax.swing.JPanel {
         txtDiaChiNV.setText(diachi);
         txtSDTNV.setText(sdt);
         txtEmailNV.setText(email);
-        txtMatKhauNV.setText(matkhau);
         if (vaitro.equals("Quản lý")) {
             this.rdQuanLyNV.setSelected(true);
         } else {

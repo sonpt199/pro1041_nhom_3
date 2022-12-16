@@ -5,6 +5,7 @@ import pro1041.team_3.chart.ModelChartPie;
 import pro1041.team_3.model.ModelStaff;
 import java.awt.Color;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -60,7 +62,7 @@ public class ViewThongKe extends javax.swing.JPanel {
         now.add(Calendar.DATE, 1);
         chooserTheoHangTu.setSelectedDate(start);
         thongKeTheoHang(cbbThongKeTheoHang.getItemAt(0), start, end);
-
+        cbbLoaiTongDoanhThu.setSelectedIndex(0);
     }
 
     private void loadCbbTheoDienThoai() {
@@ -74,7 +76,9 @@ public class ViewThongKe extends javax.swing.JPanel {
     private void thongKeTheoNgay(int day, int month, int year) {
         DoanhThuTheoNgayDto doanhThu = thongKeService.theoNgay(day, month, year);
         if (doanhThu != null) {
-            DecimalFormat moneyFormat = new DecimalFormat("#,###");
+            Locale locale = new Locale("en", "UK");
+            DecimalFormat moneyFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
+            moneyFormat.applyPattern("#,###");
             txtDoanhThuTheoNgay.setText(moneyFormat.format(doanhThu.getDoanhThu()) + "VNĐ");
             txtSoHoaDonTheoNgay.setText(doanhThu.getSoHoaDon().toString() + " hóa đơn");
             txtTienMatTheoNgay.setText(doanhThu.getTienMat() == null ? "-" : moneyFormat.format(doanhThu.getTienMat()) + "VNĐ");
@@ -573,7 +577,9 @@ public class ViewThongKe extends javax.swing.JPanel {
             int year = (int) cbbNamTongDoanhThu.getSelectedItem();
             DoanhThuTheoNgayDto doanhThu = thongKeService.theoThang(month, year);
             if (doanhThu != null) {
-                DecimalFormat moneyFormat = new DecimalFormat("#,###");
+                Locale locale = new Locale("en", "UK");
+                DecimalFormat moneyFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
+                moneyFormat.applyPattern("#,###");
                 txtDoanhThuTheoNgay.setText(moneyFormat.format(doanhThu.getDoanhThu()) + "VNĐ");
                 txtSoHoaDonTheoNgay.setText(doanhThu.getSoHoaDon().toString() + " hóa đơn");
                 txtTienMatTheoNgay.setText(doanhThu.getTienMat() == null ? "-" : moneyFormat.format(doanhThu.getTienMat()) + "VNĐ");

@@ -311,11 +311,6 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
                 txtTimKiemCaretUpdate(evt);
             }
         });
-        txtTimKiem.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                txtTimKiemPropertyChange(evt);
-            }
-        });
         jPanel2.add(txtTimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 130, -1));
 
         txtNgayBD.setFont(new java.awt.Font("Nunito Light", 1, 13)); // NOI18N
@@ -631,13 +626,17 @@ public class ViewQuanLyHoaDon extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnXuatPdfActionPerformed
 
-    private void txtTimKiemPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtTimKiemPropertyChange
-        System.out.println("aaaaa");
-    }//GEN-LAST:event_txtTimKiemPropertyChange
-
     private void txtTimKiemCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTimKiemCaretUpdate
-        JOptionPane.showMessageDialog(this, "xxxxxxxxxxxxxxx");
-        // TODO add your handling code here:
+        //TXT Tìm kiếm type
+        String keyword = txtTimKiem.getText().trim();
+        if (keyword.isEmpty()) {
+            return;
+        }
+        List<HoaDonDto> lstHoaDon = hoaDonService.findHoaDon(keyword);
+        if (lstHoaDon.isEmpty() || lstHoaDon == null) {
+            return;
+        }
+        loadTableHoaDon(lstHoaDon);
     }//GEN-LAST:event_txtTimKiemCaretUpdate
 
 

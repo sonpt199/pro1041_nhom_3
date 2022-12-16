@@ -26,4 +26,6 @@ public interface HoaDonService {
     
     Boolean exportPdf(String path, UUID idHoaDon);
     
+    HoaDonDto findHoaDonForNhanVien(String key);
+    
 }

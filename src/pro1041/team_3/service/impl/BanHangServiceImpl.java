@@ -1,5 +1,6 @@
 package pro1041.team_3.service.impl;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,7 +27,9 @@ import pro1041.team_3.repository.GioHangChiTietRepository;
 import pro1041.team_3.repository.GioHangRepository;
 import pro1041.team_3.repository.HoaDonChiTietRepository;
 import pro1041.team_3.repository.HoaDonRepository;
+import pro1041.team_3.repository.KhachHangRepository;
 import pro1041.team_3.service.BanHangService;
+import pro1041.team_3.util.EmailUtil;
 import pro1041.team_3.util.ExportBill;
 
 /**
@@ -41,6 +44,7 @@ public class BanHangServiceImpl implements BanHangService {
     private BanHangRepository banHangRepository;
     private GioHangRepository gioHangRepository;
     private GioHangChiTietRepository gioHangChiTietRepository;
+    private KhachHangRepository khachHangRepository;
 
     public BanHangServiceImpl() {
         hoaDonRepository = new HoaDonRepository();
@@ -48,6 +52,7 @@ public class BanHangServiceImpl implements BanHangService {
         banHangRepository = new BanHangRepository();
         gioHangRepository = new GioHangRepository();
         gioHangChiTietRepository = new GioHangChiTietRepository();
+        khachHangRepository = new KhachHangRepository();
     }
 
     @Override
@@ -86,12 +91,33 @@ public class BanHangServiceImpl implements BanHangService {
         if (!hoaDonChiTietRepository.saveAll(lstHoaDonChiTiet)) {
             return "Lỗi hệ thống. Không thể thêm sản phẩm vào hóa đơn";
         }
-        if (path != null) {
-            HoaDonDto hoaDonDone = hoaDonRepository.findResponseById(hoaDon.getId());
-            List<HoaDonChiTietDto> lst = hoaDonChiTietRepository.getAllByIdHoaDon(hoaDon.getId());
-            ExportBill pdf = new ExportBill();
-            if (!pdf.docPDF(hoaDonDone, lst, path)) {
-                return "Không thể xuất PDF hóa đơn";
+        String output = null;
+        Boolean open = true;
+        String emailKh = null;
+        if (lstSp.get(0).getKhachHang() != null) {
+            KhachHang kh = khachHangRepository.findById(lstSp.get(0).getKhachHang().getId());
+            emailKh = kh.getEmail();
+        }
+        HoaDonDto hoaDonDone = hoaDonRepository.findResponseById(hoaDon.getId());
+        List<HoaDonChiTietDto> lst = hoaDonChiTietRepository.getAllByIdHoaDon(hoaDon.getId());
+        if (path == null) {
+            File billFolder = new File("Bills");
+            if (!billFolder.exists()) {
+                billFolder.mkdirs();
+            }
+            path = billFolder.getAbsolutePath();
+            open = false;
+        }
+        ExportBill pdf = new ExportBill();
+        output = pdf.docPDF(hoaDonDone, lst, path, open);
+        if (output == null) {
+            return "Lỗi hệ thống. Không thể xuất PDF hóa đơn";
+        }
+        if (emailKh != null) {
+            File billFile = new File(output);
+            boolean checkSendEmail = EmailUtil.sendFile(emailKh, "Waikiki - Hóa đơn bán hàng", "Cảm ơn quý khách đã mua hàng", billFile, maHd);
+            if (!checkSendEmail) {
+                return "Lỗi gửi email hóa đơn";
             }
         }
         return "Thanh toán thành công";
@@ -134,13 +160,6 @@ public class BanHangServiceImpl implements BanHangService {
             return "Lỗi hệ thống. Không thể thêm sản phẩm vào giỏ hàng treo";
         }
         return "Treo giỏ hàng thành công";
-    }
-
-    public void test() {
-//        HoaDonDto hoaDon = hoaDonRepository.findResponseById(UUID.fromString("8c64f3cc-7c8e-4027-a8ec-f8221e415903"));
-//        List<HoaDonChiTietDto> lst = hoaDonChiTietRepository.getAllByIdHoaDon(UUID.fromString("8c64f3cc-7c8e-4027-a8ec-f8221e415903"));
-//        ExportBill pdf = new ExportBill();
-//        pdf.docPDF(hoaDon, lst);
     }
 
     @Override

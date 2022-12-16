@@ -16,12 +16,14 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -97,7 +99,9 @@ public class ViewBanHang extends javax.swing.JPanel {
         gioHangService = new GioHangServiceImpl();
         mapGioHang = new HashMap<>();
         //Biến toàn cục
-        moneyFormat = new DecimalFormat("#,###");
+        Locale locale  = new Locale("en", "UK");
+        moneyFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
+        moneyFormat.applyPattern("#,###");
         gioHangHienTai = null;
         khachHang = null;
         //Setting Jpanel, dialog
@@ -243,7 +247,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         int size = tbGioHang.getRowCount();
         BigDecimal tongTien = new BigDecimal(0);
         for (int i = 0; i < size; i++) {
-            BigDecimal thanhTien = new BigDecimal((tbGioHang.getValueAt(i, 9) + "").replace(".", "").replace("VNĐ", ""));
+            BigDecimal thanhTien = new BigDecimal((tbGioHang.getValueAt(i, 9) + "").replace(",", "").replace("VNĐ", ""));
             tongTien = tongTien.add(thanhTien);
         }
         if (tongTien.compareTo(BigDecimal.ZERO) == 0) {
@@ -274,6 +278,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         Date ngaySinh = khachHangFind.getNgaySinh();
         txtDetailNgaySinh.setText(sdf.format(ngaySinh));
         txtDetailDiaChi.setText(khachHangFind.getDiaChi());
+        txtDetailEmail.setText(khachHangFind.getEmail() == null ? "" : khachHangFind.getEmail());
         if (khachHangFind.getGioiTinh() == 0) {
             rdDetailNam.setSelected(true);
         } else {
@@ -352,7 +357,7 @@ public class ViewBanHang extends javax.swing.JPanel {
             e.printStackTrace();
             return;
         }
-        String tongTienStr = txtTongTien.getText().replace(".", "").replace("VNĐ", "");
+        String tongTienStr = txtTongTien.getText().replace(",", "").replace("VNĐ", "");
         if (tongTienStr.equals("") || tongTienStr.equals("0")) {
             return;
         }
@@ -526,6 +531,11 @@ public class ViewBanHang extends javax.swing.JPanel {
 
         dlDetailKhachHang.setSize(new java.awt.Dimension(375, 430));
         dlDetailKhachHang.setType(java.awt.Window.Type.POPUP);
+        dlDetailKhachHang.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                dlDetailKhachHangWindowClosing(evt);
+            }
+        });
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray), "Thông tin khách hàng"));
@@ -1419,7 +1429,7 @@ public class ViewBanHang extends javax.swing.JPanel {
                 return;
             }
         }
-        String tongTienStr = txtTongTien.getText().replace(".", "").replace("VNĐ", "");
+        String tongTienStr = txtTongTien.getText().replace(",", "").replace("VNĐ", "");
         BigDecimal tongTien = new BigDecimal(tongTienStr);
         int hinhThucThanhToan = cbbHtThanhToan.getSelectedIndex();
         BigDecimal tienMat = null;
@@ -1867,7 +1877,7 @@ public class ViewBanHang extends javax.swing.JPanel {
             e.printStackTrace();
             return;
         }
-        String tongTienStr = txtTongTien.getText().replace(".", "").replace("VNĐ", "");
+        String tongTienStr = txtTongTien.getText().replace(",", "").replace("VNĐ", "");
         if (tongTienStr.equals("") || tongTienStr.equals("0")) {
             return;
         }
@@ -1912,7 +1922,7 @@ public class ViewBanHang extends javax.swing.JPanel {
             e.printStackTrace();
             return;
         }
-        String tongTienStr = txtTongTien.getText().replace(".", "").replace("VNĐ", "");
+        String tongTienStr = txtTongTien.getText().replace(",", "").replace("VNĐ", "");
         if (tongTienStr.equals("") || tongTienStr.equals("0")) {
             return;
         }
@@ -1951,10 +1961,15 @@ public class ViewBanHang extends javax.swing.JPanel {
     }//GEN-LAST:event_btnScanQrActionPerformed
 
     private void dlScanQrWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_dlScanQrWindowClosing
-        // TODO add your handling code here:
+        // Dialog Scan QR Close
         webcam.close();
         capture.stop();
     }//GEN-LAST:event_dlScanQrWindowClosing
+
+    private void dlDetailKhachHangWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_dlDetailKhachHangWindowClosing
+        // Dialog Detail Khách hàng close
+        khachHang = null;
+    }//GEN-LAST:event_dlDetailKhachHangWindowClosing
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -28,8 +28,8 @@ public class MenuLayout extends javax.swing.JPanel {
     private boolean show;
     private float alpha;
 
-    public MenuLayout() {
-        initComponents();
+    public MenuLayout(NhanVien user) {
+        initComponents(user);
         setOpaque(false);
         setVisible(false);
         menu1.addMouseListener(new MouseAdapter() {
@@ -38,9 +38,9 @@ public class MenuLayout extends javax.swing.JPanel {
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents(NhanVien user) {
 
-        menu1 = new pro1041.team_3.component.Menu();
+        menu1 = new pro1041.team_3.component.Menu(user);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

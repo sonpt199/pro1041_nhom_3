@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pro1041.team_3.util;
 
 import jakarta.activation.DataHandler;
@@ -23,7 +19,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author hanhltph27725
+ * @author sonhn
  */
 public class EmailUtil {
 
@@ -64,7 +60,7 @@ public class EmailUtil {
         }
     }
 
-    public static void sendFile(String to, String subject, File file, String fileName) {
+    public static boolean sendFile(String to, String subject, String body, File file, String fileName) {
         final String from = "waikikiphonesystem@gmail.com";
         final String pass = "loswmmaumazyjkyd";
         Properties prop = new Properties();
@@ -92,13 +88,17 @@ public class EmailUtil {
             DataSource source = new FileDataSource(file);
             message.setDataHandler(new DataHandler(source));
             message.setFileName(fileName + ".pdf");
+//            String content = "<h1>" + body + "</h1>";
+//            message.setContent(content, "text/html; charset=UTF-8");
             Transport.send(message);
 
             System.out.println("Done");
 
         } catch (MessagingException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
 }

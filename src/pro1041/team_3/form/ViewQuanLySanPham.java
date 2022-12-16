@@ -74,7 +74,13 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         this.loadCbbHang();
         this.loadCbbMauSac();
         this.loadTable(list);
-
+        ImageIcon iconDialog = new ImageIcon(getClass().getResource("/pro1041/team_3/icon/logoCircle.png"));
+        dlEditDienThoai.setTitle("Quản lý điện thoại");
+        dlEditDienThoai.setIconImage(iconDialog.getImage());
+        dlEditHangDT.setTitle("Quản lý hãng");
+        dlEditHangDT.setIconImage(iconDialog.getImage());
+        dlEditMauSac.setTitle("Quản lý màu sắc");
+        dlEditMauSac.setIconImage(iconDialog.getImage());
     }
 
     public void loadCbbDienThoai() {
@@ -1004,7 +1010,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
             },
             new String [] {
-                "STT ", "Mã", "Điện thoại", "Hãng", "Giá bán", "Màu sắc", "Imei", "Ram", "Rom", "Tình trạng", "Trạng thái", "Mô tả", "Bảo hành"
+                "STT ", "Mã", "Điện thoại", "Hãng", "Giá bán(VNĐ)", "Màu sắc", "Imei", "Ram", "Rom", "Tình trạng", "Trạng thái", "Mô tả", "Bảo hành"
             }
         ) {
             boolean[] canEdit = new boolean [] {

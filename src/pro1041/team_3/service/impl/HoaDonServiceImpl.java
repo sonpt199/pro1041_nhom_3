@@ -60,11 +60,16 @@ public class HoaDonServiceImpl implements HoaDonService {
         HoaDonDto hoaDonDone = hoaDonRepository.findResponseById(idHoaDon);
         List<HoaDonChiTietDto> lst = hoaDonChiTietRepository.getAllByIdHoaDon(idHoaDon);
         ExportBill exportBill = new ExportBill();
-        if (exportBill.docPDF(hoaDonDone, lst, path)) {
+        if (exportBill.docPDF(hoaDonDone, lst, path, true) != null) {
             return true;
         } else {
             return false;
         }
+    }
+
+    @Override
+    public HoaDonDto findHoaDonForNhanVien(String key) {
+        return hoaDonRepository.findHoaDonForNhanVien(key);
     }
 
 }

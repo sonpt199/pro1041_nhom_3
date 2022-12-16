@@ -38,6 +38,8 @@ import com.itextpdf.barcodes.qrcode.EncodeHintType;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import java.awt.Desktop;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
@@ -56,8 +58,9 @@ import pro1041.team_3.dto.HoaDonRequest;
  */
 public class ExportBill {
 
-    public Boolean docPDF(HoaDonDto hoaDon, List<HoaDonChiTietDto> lstHdct, String path) {
+    public String docPDF(HoaDonDto hoaDon, List<HoaDonChiTietDto> lstHdct, String path, boolean open) {
         Document document;
+        String output = path + "\\" + hoaDon.getMaHoaDon() + ".pdf";
         try {
             try {
                 PdfFont fontTitle = PdfFontFactory.createFont("unicode.ttf", com.itextpdf.text.pdf.BaseFont.IDENTITY_H);
@@ -72,8 +75,7 @@ public class ExportBill {
                 int min = calendar.get(Calendar.MINUTE);
                 int second = calendar.get(Calendar.SECOND);
                 String timeNow = hour + ":" + min + ":" + second + "\t" + day + "/" + month + "/" + year;
-
-                PdfWriter pdfWriter = new PdfWriter(path + "\\" + hoaDon.getMaHoaDon() + ".pdf");
+                PdfWriter pdfWriter = new PdfWriter(output);
                 PdfDocument pdfDocument = new PdfDocument(pdfWriter);
                 pdfDocument.addNewPage();
 
@@ -284,6 +286,13 @@ public class ExportBill {
 
                 document.close();
                 System.out.println("Create a PDF file sussecess");
+                if (Desktop.isDesktopSupported() && open) {
+                    Desktop desktop = Desktop.getDesktop();
+                    File file = new File(output);
+                    if (file.exists()) {
+                        desktop.open(file);
+                    }
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 e.getMessage();
@@ -292,9 +301,9 @@ public class ExportBill {
         } catch (Exception e) {
             e.printStackTrace();
             e.getMessage();
-            return false;
+            return null;
         }
-        return true;
+        return output;
     }
 
     private <BarcodeEAN extends Barcode1D> Image createBarCode(PdfDocument pdfDocument, String code, Class<BarcodeEAN> barcodeClass) throws InstantiationException, IllegalAccessException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException {

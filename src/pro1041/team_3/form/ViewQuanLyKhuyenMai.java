@@ -31,7 +31,7 @@ import pro1041.team_3.service.impl.MauSacServiceImpl;
 
 /**
  *
- * @author trangdttph27721
+ * @author hanhlt
  */
 public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
 
@@ -216,7 +216,7 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
             }
         } catch (NumberFormatException numberFormatException) {
             numberFormatException.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Mức giá phai la so nguyen duong");
+            JOptionPane.showMessageDialog(this, "Mức giá phải lớn hơn hoặc bằng 0");
             return null;
         }
 
@@ -709,7 +709,7 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
             tblAllSpChiTiet.getColumnModel().getColumn(7).setPreferredWidth(50);
         }
 
-        add(jspTblAllSpChiTiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 1130, 340));
+        add(jspTblAllSpChiTiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 1130, 300));
 
         tblKhuyenMai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -892,12 +892,14 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
             return;
         }
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdfThoiGian = new SimpleDateFormat("hh:mm aa", Locale.US);
         KhuyenMaiDto x = list1.get(row);
         this.txtMa.setText(x.getMaKhuyenMai());
         this.txtTen.setText(x.getTenKhuyenMai());
         this.txtNgayBD.setText(sdf.format(x.getNgayBatDau()));
         this.txtNgayKT.setText(sdf.format(x.getNgayKetThuc()));
-
+        this.txtThoiGianBD.setText(sdfThoiGian.format(x.getNgayBatDau()));
+        this.txtThoiGianKT.setText(sdfThoiGian.format(x.getNgayKetThuc()));
         if (x.getGiaTriPhanTram() == null) {
             txtMucKM.setText(x.getGiaTriTienMat().toString());
             cbbLoaiKM.setSelectedIndex(1);
