@@ -173,7 +173,7 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
     }
 
     private KhuyenMai getFormData() {
-        UUID id = UUID.randomUUID();
+
         String ma = txtMa.getText().trim();
         String ten = txtTen.getText().trim();
         String ngayBDStr = txtNgayBD.getText().trim();
@@ -186,9 +186,25 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         Float tienMat = null;
         Date ngayBatDau = null;
         Date ngayKetThuc = null;
+        Date dateNow = new Date();
         SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm aa", Locale.US);
         SimpleDateFormat sdfCongChuoi = new SimpleDateFormat("kk:mm");
-        SimpleDateFormat sdfInput = new SimpleDateFormat("dd-MM-yyyy kk:mm");       
+        SimpleDateFormat sdfInput = new SimpleDateFormat("dd-MM-yyyy kk:mm");  
+        
+        if (ten.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Tên khuyến mại không được để trống");
+            return null;
+        } else if (ngayBDStr.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Ngày bắt đầu không được để trống");
+            return null;
+        } else if (ngayKTStr.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Ngày kết thúc không được để trống");
+            return null;
+        } else if (mucKM.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Mức khuyến mại không được để trống");
+            return null;
+        }
+        
         try {
             Date thoiGianBatDau = sdfTime.parse(thoiGianBatDauStr);
             Date thoiGianKetThuc = sdfTime.parse(thoiGianKetThucStr);
@@ -217,6 +233,14 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
         } catch (NumberFormatException numberFormatException) {
             numberFormatException.printStackTrace();
             JOptionPane.showMessageDialog(this, "Mức giá phải lớn hơn hoặc bằng 0");
+            return null;
+        }
+        
+        if (ngayBatDau.getTime() > ngayKetThuc.getTime()) {
+            JOptionPane.showMessageDialog(this, "Ngày kết thúc không thể sau ngày bắt đầu");
+            return null;
+        } else if (ngayKetThuc.getTime() < dateNow.getTime()) {
+            JOptionPane.showMessageDialog(this, "Ngày kết thúc không thể sau ngày hiện tại");
             return null;
         }
 
@@ -771,6 +795,10 @@ public class ViewQuanLyKhuyenMai extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
+        KhuyenMai khuyenMai = getFormData();
+        if (khuyenMai == null) {
+            return;
+        }
         this.loadCbbDienThoai1();
         this.loadCbbHang1();
         this.loadCbbMauSac1();

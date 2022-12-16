@@ -21,11 +21,9 @@ public class LoginServiceImpl implements LoginService{
     public NhanVien login(String username, String password) {
         List<NhanVien> lstAccoutn = userRepository.getAll();
         for (NhanVien x : lstAccoutn) {
+            System.out.println(x.toString());
             if (username.equals(x.getTenDangNhap()) && 
-                    password.equals(x.getMatKhau())) {
-//                if (x.getTrangThaiLamViec() == 1) {
-//                    return x;
-//                }
+                    password.equals(x.getMatKhau())) {                
                 return x;
             }
         }

@@ -39,17 +39,19 @@ public class Menu extends javax.swing.JPanel {
             listMenu1.addItem(new Model_Menu("5", "Quản lý khách hàng", Model_Menu.MenuType.MENU));
             listMenu1.addItem(new Model_Menu("6", "Quản lý nhân viên", Model_Menu.MenuType.MENU));
             listMenu1.addItem(new Model_Menu("7", "Quản lý hóa đơn", Model_Menu.MenuType.MENU));
-            listMenu1.addItem(new Model_Menu("8", "Đăng xuất", Model_Menu.MenuType.MENU));
-            listMenu1.addItem(new Model_Menu("9", "Thoát", Model_Menu.MenuType.MENU));
+            listMenu1.addItem(new Model_Menu("8", "Đổi mật khẩu", Model_Menu.MenuType.MENU));
+            listMenu1.addItem(new Model_Menu("9", "Đăng xuất", Model_Menu.MenuType.MENU));
+            listMenu1.addItem(new Model_Menu("10", "Thoát", Model_Menu.MenuType.MENU));
             listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));            
         } else {
             listMenu1.addItem(new Model_Menu("1", "Bán hàng", Model_Menu.MenuType.MENU));
             listMenu1.addItem(new Model_Menu("2", "Sản phẩm", Model_Menu.MenuType.MENU));
-            listMenu1.addItem(new Model_Menu("3", "Xem khuyến mại", Model_Menu.MenuType.MENU));
+            listMenu1.addItem(new Model_Menu("3", "Khuyến mại", Model_Menu.MenuType.MENU));
             listMenu1.addItem(new Model_Menu("4", "Quản lý khách hàng", Model_Menu.MenuType.MENU));
             listMenu1.addItem(new Model_Menu("5", "Tìm kiếm hóa đơn", Model_Menu.MenuType.MENU));
-            listMenu1.addItem(new Model_Menu("6", "Đăng xuất", Model_Menu.MenuType.MENU));
-            listMenu1.addItem(new Model_Menu("7", "Thoát", Model_Menu.MenuType.MENU));
+            listMenu1.addItem(new Model_Menu("6", "Đổi mật khẩu", Model_Menu.MenuType.MENU));
+            listMenu1.addItem(new Model_Menu("7", "Đăng xuất", Model_Menu.MenuType.MENU));
+            listMenu1.addItem(new Model_Menu("8", "Thoát", Model_Menu.MenuType.MENU));
             listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));     
         }
     }

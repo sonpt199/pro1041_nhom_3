@@ -208,16 +208,17 @@ public class NhanVienRepository extends Repository<NhanVien, UUID, NhanVienDto> 
     }
     
     
-     public boolean updateMatKhau(String tenDangNhap,String matKhau) {
+     public boolean updateMatKhau(UUID id,String matKhau) {
         try {
             session = HibernateUtil.getSession();
             trans = session.beginTransaction();
-            String hql = "update NhanVien a set a.matKhau = :matKhau where a.tenDangNhap = :tenDangNhap";
+            String hql = "update NhanVien a set a.matKhau = :matKhau WHERE a.id = :id";
             javax.persistence.Query query = session.createQuery(hql);
             query.setParameter("matKhau", matKhau);
-            query.setParameter("tenDangNhap", tenDangNhap);
+            query.setParameter("id", id);
             query.executeUpdate();
             trans.commit();
+            session.close();
             return true;
         } catch (Exception e) {
             trans.rollback();

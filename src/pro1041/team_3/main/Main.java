@@ -37,9 +37,12 @@ import pro1041.team_3.form.ViewQuanLyNhanVien;
 import pro1041.team_3.form.ViewQuanLySanPham;
 import pro1041.team_3.service.HoaDonChiTietService;
 import pro1041.team_3.service.HoaDonService;
+import pro1041.team_3.service.NhanVienService;
 import pro1041.team_3.service.impl.HoaDonChiTietServiceImpl;
 import pro1041.team_3.service.impl.HoaDonServiceImpl;
+import pro1041.team_3.service.impl.NhanVienServiceImpl;
 import pro1041.team_3.swing.Notification;
+import pro1041.team_3.util.EmailUtil;
 //import pro1041.team_3.util.DailyCheckKhuyenMai;
 
 public class Main extends javax.swing.JFrame {
@@ -52,18 +55,25 @@ public class Main extends javax.swing.JFrame {
     private HoaDonService hoaDonService;
     private HoaDonChiTietService hoaDonChiTietService;
     private NhanVien userHienTai;
+    private static int maXacNhan = 0;
+    private NhanVienService nhanVienService;
 
     public Main(NhanVien user) {
         initComponents();
 //        daily = new DailyCheckKhuyenMai();
 //        daily.start();
+        userHienTai = user;
         hoaDonService = new HoaDonServiceImpl();
         hoaDonChiTietService = new HoaDonChiTietServiceImpl();
+        nhanVienService = new NhanVienServiceImpl();
         userHienTai = user;
         Notification panel = new Notification(this, Notification.Type.SUCCESS, Notification.Location.TOP_CENTER, "Đăng nhập thành công");
         panel.showNotification();
         this.setTitle("Waikiki");
         ImageIcon icon = new ImageIcon(getClass().getResource("/pro1041/team_3/icon/logoCircle.png"));
+        dlDoiMatKhau.setIconImage(icon.getImage());
+        dlDoiMatKhau.setTitle("Đổi mật khẩu");
+        dlDoiMatKhau.setLocationRelativeTo(null);
         this.setIconImage(icon.getImage());
         dlTimHoaDon.setIconImage(icon.getImage());
         dlTimHoaDon.setLocationRelativeTo(null);
@@ -134,44 +144,52 @@ public class Main extends javax.swing.JFrame {
         menu.getMenu().addEventMenuSelected(new EventMenuSelected() {
             @Override
             public void selected(int index) {
-                if (user.getVaiTro() == 2) {                    
+                if (user.getVaiTro() == 2) {
                     if (index == 0) {
-                        main.show(new ViewThongKe());                        
+                        main.show(new ViewThongKe());
                     } else if (index == 1) {
-                        main.show(new ViewBanHang(user));                        
+                        main.show(new ViewBanHang(user));
                     } else if (index == 2) {
-                        main.show(new ViewQuanLySanPham());                        
+                        main.show(new ViewQuanLySanPham());
                     } else if (index == 3) {
-                        main.show(new ViewQuanLyKhuyenMai());                        
+                        main.show(new ViewQuanLyKhuyenMai());
                     } else if (index == 4) {
-                        main.show(new ViewQuanLyKhachHang());                        
+                        main.show(new ViewQuanLyKhachHang());
                     } else if (index == 5) {
-                        main.show(new ViewQuanLyNhanVien());                        
+                        main.show(new ViewQuanLyNhanVien());
                     } else if (index == 6) {
                         main.show(new ViewQuanLyHoaDon());
                     } else if (index == 7) {
+                        dlDoiMatKhau.setVisible(true);
+                    } else if (index == 8) {
                         ViewDangNhap dangNhap = new ViewDangNhap();
                         dangNhap.setVisible(true);
                         close();
-                    } else if (index == 8) {
+                    } else if (index == 9) {
                         System.exit(0);
                     }
-                } else {                                    
+                } else {
                     if (index == 0) {
-                        main.show(new ViewBanHang(user));                       
+                        main.show(new ViewBanHang(user));
                     } else if (index == 1) {
                         main.show(new ViewNhanVienXemSanPham());
                     } else if (index == 2) {
-                        main.show(new ViewNhanVienXemKhuyenMai());                        
+                        main.show(new ViewNhanVienXemKhuyenMai());
                     } else if (index == 3) {
-                        main.show(new ViewQuanLyKhachHang());                        
+                        main.show(new ViewQuanLyKhachHang());
                     } else if (index == 4) {
                         dlTimHoaDon.setVisible(true);
                     } else if (index == 5) {
+                        dlDoiMatKhau.setVisible(true);
+                        jpnConfirm.setVisible(true);
+                        jpnChange.setVisible(false);
+                        txtEmailError.setVisible(false);
+                        txtMaXacNhanError.setVisible(false);
+                    } else if (index == 6) {
                         ViewDangNhap dangNhap = new ViewDangNhap();
                         dangNhap.setVisible(true);
                         close();
-                    } else if (index == 6) {
+                    } else if (index == 7) {
                         System.exit(0);
                     }
                 }
@@ -205,6 +223,20 @@ public class Main extends javax.swing.JFrame {
         txtTimKiemHoaDon = new pro1041.team_3.swing.TextField();
         jspTbHoaDonChiTiet = new javax.swing.JScrollPane();
         tbHoaDonChiTiet = new pro1041.team_3.swing.config.Table();
+        dlDoiMatKhau = new javax.swing.JDialog();
+        jpnConfirm = new javax.swing.JPanel();
+        txtMaXacNhan = new pro1041.team_3.swing.TextField();
+        txtEmail = new pro1041.team_3.swing.TextField();
+        btnGuiMa = new pro1041.team_3.swing.ButtonCustom();
+        btnConfirm = new pro1041.team_3.swing.ButtonCustom();
+        txtMaXacNhanError = new javax.swing.JLabel();
+        txtEmailError = new javax.swing.JLabel();
+        jpnChange = new javax.swing.JPanel();
+        btnChange = new pro1041.team_3.swing.ButtonCustom();
+        txtConfirmPassError = new javax.swing.JLabel();
+        txtNewPassError = new javax.swing.JLabel();
+        txtConfirmPass = new pro1041.team_3.swing.TextField();
+        txtNewPass = new pro1041.team_3.swing.TextField();
         mainPanel = new javax.swing.JLayeredPane();
 
         dlTimHoaDon.setPreferredSize(new java.awt.Dimension(1095, 590));
@@ -331,6 +363,96 @@ public class Main extends javax.swing.JFrame {
 
         dlTimHoaDon.getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 550));
 
+        dlDoiMatKhau.setPreferredSize(new java.awt.Dimension(270, 285));
+        dlDoiMatKhau.setSize(new java.awt.Dimension(270, 285));
+        dlDoiMatKhau.getContentPane().setLayout(new java.awt.CardLayout());
+
+        jpnConfirm.setBackground(new java.awt.Color(255, 255, 255));
+        jpnConfirm.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtMaXacNhan.setFont(new java.awt.Font("Nunito", 0, 14)); // NOI18N
+        txtMaXacNhan.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtMaXacNhan.setLabelText("Mã xác nhận");
+        jpnConfirm.add(txtMaXacNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 220, -1));
+
+        txtEmail.setFont(new java.awt.Font("Nunito", 0, 14)); // NOI18N
+        txtEmail.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtEmail.setLabelText("Email");
+        jpnConfirm.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 220, -1));
+
+        btnGuiMa.setBackground(new java.awt.Color(1, 181, 204));
+        btnGuiMa.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuiMa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/reload.png"))); // NOI18N
+        btnGuiMa.setText("Gửi mã");
+        btnGuiMa.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnGuiMa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuiMaActionPerformed(evt);
+            }
+        });
+        jpnConfirm.add(btnGuiMa, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
+
+        btnConfirm.setBackground(new java.awt.Color(1, 181, 204));
+        btnConfirm.setForeground(new java.awt.Color(255, 255, 255));
+        btnConfirm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/check.png"))); // NOI18N
+        btnConfirm.setText("Xác nhận");
+        btnConfirm.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmActionPerformed(evt);
+            }
+        });
+        jpnConfirm.add(btnConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, -1, -1));
+
+        txtMaXacNhanError.setFont(new java.awt.Font("Nunito", 2, 12)); // NOI18N
+        txtMaXacNhanError.setForeground(new java.awt.Color(255, 51, 51));
+        txtMaXacNhanError.setText("Warning");
+        jpnConfirm.add(txtMaXacNhanError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 220, -1));
+
+        txtEmailError.setFont(new java.awt.Font("Nunito", 2, 12)); // NOI18N
+        txtEmailError.setForeground(new java.awt.Color(255, 51, 51));
+        txtEmailError.setText("Warning");
+        jpnConfirm.add(txtEmailError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 220, -1));
+
+        dlDoiMatKhau.getContentPane().add(jpnConfirm, "card2");
+
+        jpnChange.setBackground(new java.awt.Color(255, 255, 255));
+        jpnChange.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnChange.setBackground(new java.awt.Color(1, 181, 204));
+        btnChange.setForeground(new java.awt.Color(255, 255, 255));
+        btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/changePass.png"))); // NOI18N
+        btnChange.setText("Đổi mật khẩu");
+        btnChange.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnChange.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangeActionPerformed(evt);
+            }
+        });
+        jpnChange.add(btnChange, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, -1, -1));
+
+        txtConfirmPassError.setFont(new java.awt.Font("Nunito", 2, 12)); // NOI18N
+        txtConfirmPassError.setForeground(new java.awt.Color(255, 51, 0));
+        txtConfirmPassError.setText("Warning");
+        jpnChange.add(txtConfirmPassError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 220, -1));
+
+        txtNewPassError.setFont(new java.awt.Font("Nunito", 2, 12)); // NOI18N
+        txtNewPassError.setForeground(new java.awt.Color(255, 51, 0));
+        txtNewPassError.setText("Warning");
+        jpnChange.add(txtNewPassError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 220, -1));
+
+        txtConfirmPass.setFont(new java.awt.Font("Nunito", 0, 14)); // NOI18N
+        txtConfirmPass.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtConfirmPass.setLabelText("Nhập lại mật khẩu mới");
+        jpnChange.add(txtConfirmPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 220, -1));
+
+        txtNewPass.setFont(new java.awt.Font("Nunito", 0, 14)); // NOI18N
+        txtNewPass.setLabelColor(new java.awt.Color(1, 132, 203));
+        txtNewPass.setLabelText("Mật khẩu mới");
+        jpnChange.add(txtNewPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 220, -1));
+
+        dlDoiMatKhau.getContentPane().add(jpnChange, "card3");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         mainPanel.setBackground(new java.awt.Color(250, 250, 250));
@@ -416,6 +538,97 @@ public class Main extends javax.swing.JFrame {
         txtTongTien.setText(money.format(hoaDon.getTongTien()) + "VNĐ");
     }//GEN-LAST:event_txtTimKiemHoaDonActionPerformed
 
+    private void btnGuiMaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuiMaActionPerformed
+        // BTN Gửi mã
+        String inputEmail = txtEmail.getText().trim();
+        if (inputEmail.isEmpty()) {
+            txtEmailError.setText("Vui lòng nhập email");
+            txtEmailError.setVisible(true);
+            return;
+        } else if (!inputEmail.matches("^\\S+@\\S+$")) {
+            txtEmailError.setText("Email không đúng định dạng");
+            txtEmailError.setVisible(true);
+            return;
+        } else if (!inputEmail.equals(userHienTai.getEmail())) {
+            txtEmailError.setText("Email không đúng");
+            txtEmailError.setVisible(true);
+            return;
+        } else {
+            txtEmailError.setVisible(false);
+        }
+        maXacNhan = (int) (Math.random() * 100000000 + 1);
+        EmailUtil.send(userHienTai.getEmail(), "[WAIKIKI] Mã xác nhận đổi mật khẩu",
+                "Mã xác nhận đổi mật khẩu của bạn là: " + maXacNhan);
+    }//GEN-LAST:event_btnGuiMaActionPerformed
+
+    private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
+        // BTN Confirm
+        String inputEmail = txtEmail.getText().trim();
+        if (inputEmail.isEmpty()) {
+            txtEmailError.setText("Vui lòng nhập email");
+            txtEmailError.setVisible(true);
+            return;
+        } else if (!inputEmail.matches("^\\S+@\\S+$")) {
+            txtEmailError.setText("Email không đúng định dạng");
+            txtEmailError.setVisible(true);
+            return;
+        } else {
+            txtEmailError.setVisible(false);
+        }
+        String inputMa = txtMaXacNhan.getText().trim();
+        if (inputMa.isEmpty()) {
+            txtMaXacNhanError.setText("Vui lòng nhập mã xác nhận gồm 8 số");
+            txtMaXacNhanError.setVisible(true);
+            return;
+        }
+        if (!inputMa.matches("\\d+")) {
+            txtMaXacNhanError.setText("Mã xác nhận là số gồm 8 chữ số");
+            txtMaXacNhanError.setVisible(true);
+            return;
+        } else {
+            txtMaXacNhanError.setVisible(false);
+        }
+        if (Integer.parseInt(inputMa) != maXacNhan) {
+            txtMaXacNhanError.setText("Mã xác nhận không đúng");
+            txtMaXacNhanError.setVisible(true);
+            return;
+        }
+        jpnChange.setVisible(true);
+        jpnConfirm.setVisible(false);
+        txtConfirmPassError.setVisible(false);
+        txtNewPassError.setVisible(false);
+    }//GEN-LAST:event_btnConfirmActionPerformed
+
+    private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
+        // BTN Change
+        String newPass = txtNewPass.getText().trim();
+        String confirm = txtConfirmPass.getText().trim();
+        if (newPass.isEmpty()) {
+            txtNewPassError.setText("Vui lòng nhập mật khẩu mới");
+            txtNewPassError.setVisible(true);
+            return;
+        } else {
+            txtNewPassError.setVisible(false);
+        }
+        if (confirm.isEmpty()) {
+            txtConfirmPassError.setVisible(true);
+            txtConfirmPassError.setText("Vui lòng nhập lại mật khẩu mới");
+            return;
+        } else if (!confirm.equals(newPass)) {
+            txtConfirmPassError.setVisible(true);
+            txtConfirmPassError.setText("Mật khẩu không khớp");
+            return;
+        } else {
+            txtConfirmPassError.setVisible(false);
+        }
+        if (nhanVienService.updateMatKhau(userHienTai.getId(), newPass)) {
+            JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công. \nVui lòng đăng nhập lại!");
+            ViewDangNhap dangNhap = new ViewDangNhap();
+            dangNhap.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnChangeActionPerformed
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -445,17 +658,31 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private pro1041.team_3.swing.ButtonCustom btnChange;
+    private pro1041.team_3.swing.ButtonCustom btnConfirm;
+    private pro1041.team_3.swing.ButtonCustom btnGuiMa;
+    private javax.swing.JDialog dlDoiMatKhau;
     private javax.swing.JDialog dlTimHoaDon;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jpnChange;
+    private javax.swing.JPanel jpnConfirm;
     private javax.swing.JScrollPane jspTbHoaDonChiTiet;
     private javax.swing.JLayeredPane mainPanel;
     private pro1041.team_3.swing.config.Table tbHoaDonChiTiet;
+    private pro1041.team_3.swing.TextField txtConfirmPass;
+    private javax.swing.JLabel txtConfirmPassError;
+    private pro1041.team_3.swing.TextField txtEmail;
+    private javax.swing.JLabel txtEmailError;
     private pro1041.team_3.swing.TextField txtHinhThucThanhToan;
     private pro1041.team_3.swing.TextField txtMaGiaoDich;
     private pro1041.team_3.swing.TextField txtMaHoaDon;
     private pro1041.team_3.swing.TextField txtMaKhachHang;
     private pro1041.team_3.swing.TextField txtMaNhanVien;
+    private pro1041.team_3.swing.TextField txtMaXacNhan;
+    private javax.swing.JLabel txtMaXacNhanError;
+    private pro1041.team_3.swing.TextField txtNewPass;
+    private javax.swing.JLabel txtNewPassError;
     private pro1041.team_3.swing.TextField txtNganHang;
     private pro1041.team_3.swing.TextField txtNgayThanhToan;
     private pro1041.team_3.swing.TextField txtSdtKhachHang;

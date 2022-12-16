@@ -1,5 +1,6 @@
 package pro1041.team_3.form;
 
+import java.awt.Desktop;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,6 +9,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -388,9 +391,9 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         btnThem1 = new pro1041.team_3.swing.ButtonCustom();
         btnThem = new pro1041.team_3.swing.ButtonCustom();
         btnSua = new pro1041.team_3.swing.ButtonCustom();
-        btnExport = new pro1041.team_3.swing.ButtonCustom();
         btnImport = new pro1041.team_3.swing.ButtonCustom();
         btnTaoQr = new pro1041.team_3.swing.ButtonCustom();
+        btnExport = new pro1041.team_3.swing.ButtonCustom();
 
         dlEditDienThoai.setSize(new java.awt.Dimension(700, 630));
 
@@ -1075,7 +1078,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 btnThemActionPerformed(evt);
             }
         });
-        jPanel3.add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 120, -1));
+        jPanel3.add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 130, -1));
 
         btnSua.setBackground(new java.awt.Color(1, 181, 204));
         btnSua.setForeground(new java.awt.Color(255, 255, 255));
@@ -1087,19 +1090,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 btnSuaActionPerformed(evt);
             }
         });
-        jPanel3.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 120, -1));
-
-        btnExport.setBackground(new java.awt.Color(1, 181, 204));
-        btnExport.setForeground(new java.awt.Color(255, 255, 255));
-        btnExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/export.png"))); // NOI18N
-        btnExport.setText("Export");
-        btnExport.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
-        btnExport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExportActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnExport, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 120, -1));
+        jPanel3.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 130, -1));
 
         btnImport.setBackground(new java.awt.Color(1, 181, 204));
         btnImport.setForeground(new java.awt.Color(255, 255, 255));
@@ -1111,7 +1102,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 btnImportActionPerformed(evt);
             }
         });
-        jPanel3.add(btnImport, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 120, -1));
+        jPanel3.add(btnImport, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 130, -1));
 
         btnTaoQr.setBackground(new java.awt.Color(1, 181, 204));
         btnTaoQr.setForeground(new java.awt.Color(255, 255, 255));
@@ -1123,9 +1114,21 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 btnTaoQrActionPerformed(evt);
             }
         });
-        jPanel3.add(btnTaoQr, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 120, -1));
+        jPanel3.add(btnTaoQr, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 130, -1));
 
-        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 20, 160, 350));
+        btnExport.setBackground(new java.awt.Color(1, 181, 204));
+        btnExport.setForeground(new java.awt.Color(255, 255, 255));
+        btnExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/export.png"))); // NOI18N
+        btnExport.setText("Export");
+        btnExport.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnExport, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 130, -1));
+
+        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 20, 160, 360));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtTimCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTimCaretUpdate
@@ -1339,6 +1342,9 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
         // TODO add your handling code here:
+//        LocalDateTime time = LocalDateTime.now();
+//        String fileName = "Chi_tiet_san_pham_" + time.getSecond() + time.getMinute() + time.getHour();
+
         JFileChooser fileChooser = new JFileChooser("D:\\");
         FileNameExtensionFilter filter = new FileNameExtensionFilter("File Exel (.xlsx)", "xlsx");
         fileChooser.setFileFilter(filter);
@@ -1350,6 +1356,17 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         }
         if (chiTietDTImpl.export(file)) {
             JOptionPane.showMessageDialog(this, "Xuất danh sách thành công", "Export", JOptionPane.INFORMATION_MESSAGE);
+            if (Desktop.isDesktopSupported()) {
+                Desktop desktop = Desktop.getDesktop();
+                if (file.exists()) {
+                    try {
+                        desktop.open(file);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(this, "Mở thất bại", "Export", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Thất bại", "Export", JOptionPane.INFORMATION_MESSAGE);
         }
