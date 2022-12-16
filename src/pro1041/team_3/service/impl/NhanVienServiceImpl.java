@@ -492,8 +492,8 @@ public class NhanVienServiceImpl implements NhanVienService {
     }
 
     @Override
-    public boolean updateMatKhau(String tenDangNhap, String matKhau) {
-        return repos.updateMatKhau(tenDangNhap, matKhau);
+    public boolean updateMatKhau(UUID id, String matKhau) {
+        return repos.updateMatKhau(id, matKhau);
     }
 
     @Override

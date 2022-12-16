@@ -44,5 +44,5 @@ public interface NhanVienService {
 
     NhanVien findNVByUserNameAndMatKhau(String userName, String matKhau);
 
-    boolean updateMatKhau(String tenDangNhap, String matKhau);
+    boolean updateMatKhau(UUID id, String matKhau);
 }
