@@ -5,6 +5,7 @@
 package pro1041.team_3.dto;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -49,7 +50,7 @@ public class KhuyenMaiDto {
             mucKhuyenMai = new BigDecimal(giaTriPhanTram);
             mucKhuyenMaiStr = mucKhuyenMai + " %";
         }
-
-        return new Object[]{index, maKhuyenMai, tenKhuyenMai, ngayBatDau, ngayKetThuc, mucKhuyenMaiStr, trangThai};
+        SimpleDateFormat sdf = new SimpleDateFormat("kk:mm dd/MM/yyyy");
+        return new Object[]{index, maKhuyenMai, tenKhuyenMai, sdf.format(ngayBatDau), sdf.format(ngayKetThuc), mucKhuyenMaiStr, trangThai};
     }
 }

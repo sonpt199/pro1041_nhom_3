@@ -433,7 +433,6 @@
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new Integer[] { 2021, 2022 })" type="code"/>
                     </Property>
-                    <Property name="selectedIndex" type="int" value="-1"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Nunito Light" size="14" style="1"/>
                     </Property>
@@ -456,7 +455,6 @@
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="new javax.swing.DefaultComboBoxModel(new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})" type="code"/>
                     </Property>
-                    <Property name="selectedIndex" type="int" value="-1"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Nunito Light" size="14" style="1"/>
                     </Property>

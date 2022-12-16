@@ -88,8 +88,9 @@ public class HoaDonRepository extends Repository<HoaDon, UUID, HoaDonDto> {
             session = HibernateUtil.getSession();
             String hql = "SELECT " + resCon + " FROM " + className + " a "
                     + "LEFT JOIN a.khachHang b LEFT JOIN a.nhanVien c "
-                    + "WHERE a.ma LIKE CONCAT('%', :key, '%')"
-                    + " or b.sdt LIKE CONCAT('%', :key, '%')";
+                    + "WHERE a.ma LIKE CONCAT('%', :key, '%') "
+                    + "OR b.sdt LIKE CONCAT('%', :key, '%') "
+                    + "OR b.ma LIKE CONCAT('%', :key, '%')";
 
             Query query = session.createQuery(hql);
             query.setParameter("key", key);
@@ -106,7 +107,7 @@ public class HoaDonRepository extends Repository<HoaDon, UUID, HoaDonDto> {
             session = HibernateUtil.getSession();
             String hql = "SELECT " + resCon + " FROM " + className + " a "
                     + "LEFT JOIN a.khachHang b LEFT JOIN a.nhanVien c "
-                    + "WHERE a.hinhThucThanhToan = : httt";
+                    + "WHERE a.hinhThucThanhToan = :httt";
 
             Query query = session.createQuery(hql);
             query.setParameter("httt", httt);
@@ -154,4 +155,24 @@ public class HoaDonRepository extends Repository<HoaDon, UUID, HoaDonDto> {
         }
         return list;
     }
+
+    public HoaDonDto findHoaDonForNhanVien(String key) {
+        HoaDonDto hoaDon = null;
+        try {
+            session = HibernateUtil.getSession();
+            String hql = "SELECT " + resCon + " FROM " + className + " a "
+                    + "LEFT JOIN a.khachHang b LEFT JOIN a.nhanVien c "
+                    + "WHERE a.ma = :key "
+                    + "OR b.sdt = :key "
+                    + "OR b.ma = :key";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("key", key);
+            hoaDon = (HoaDonDto) query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hoaDon;
+    }
+
 }

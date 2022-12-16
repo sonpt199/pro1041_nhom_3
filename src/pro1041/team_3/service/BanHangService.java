@@ -26,6 +26,5 @@ public interface BanHangService {
     List<GioHangDto> getGioHangByIdSp(UUID idChiTietDienThoai);
     
     HoaDonDto getHoaDonByIdSp(UUID idChiTietDienThoai);
-    void test();
     
 }

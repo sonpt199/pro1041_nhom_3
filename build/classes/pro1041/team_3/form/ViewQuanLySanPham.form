@@ -1638,7 +1638,7 @@
                 <Column editable="false" title="M&#xe3;" type="java.lang.Object"/>
                 <Column editable="false" title="&#x110;i&#x1ec7;n tho&#x1ea1;i" type="java.lang.Object"/>
                 <Column editable="false" title="H&#xe3;ng" type="java.lang.Object"/>
-                <Column editable="false" title="Gi&#xe1; b&#xe1;n" type="java.lang.Object"/>
+                <Column editable="false" title="Gi&#xe1; b&#xe1;n(VN&#x110;)" type="java.lang.Object"/>
                 <Column editable="false" title="M&#xe0;u s&#x1eaf;c" type="java.lang.Object"/>
                 <Column editable="false" title="Imei" type="java.lang.Object"/>
                 <Column editable="false" title="Ram" type="java.lang.Object"/>
