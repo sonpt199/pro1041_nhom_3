@@ -42,10 +42,19 @@ public class HangServiceImpl implements HangService {
 
     @Override
     public String insert(Hang hangResponse) {
+        List<Hang> list = hangRepository.getAll();
+        Integer ma = 0;
+        for (Hang x : list) {
+            String maSoStr = x.getMa().substring(2);
+            Integer maSo = Integer.parseInt(maSoStr);
+            if (ma < maSo) {
+                ma = maSo;
+            }
+        }
+
         hangResponse.setId(null);
-        LocalDateTime time = LocalDateTime.now();
-        String maHang = "H" + time.getSecond() + time.getMinute() + time.getHour();
-        hangResponse.setMa(maHang);
+        Integer maMau = ma + 1;
+        hangResponse.setMa("H0" + maMau);
         if (hangResponse.getTen().trim().isEmpty()) {
             return "Tên không được trống";
         }

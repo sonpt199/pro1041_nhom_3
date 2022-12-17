@@ -19,14 +19,14 @@ public class HangRepository extends Repository<Hang, UUID, HangDto> {
     public HangRepository() {
         className = Hang.class.getName();
         resCon = "new pro1041.team_3.dto.HangDto(a.id, a.ma, a.ten)";
-        
+        join = " order by CONVERT(INT, SUBSTRING(a.ma, 2, 10)) desc";
     }
 
     public List<Hang> findHang(String ten) {
         try {
             List<Hang> lst;
             session = HibernateUtil.getSession();
-            String hql = "SELECT a FROM " + className + " a WHERE a.ten LIKE CONCAT('%', :ten, '%') or a.ma LIKE CONCAT('%', :ten, '%') ";
+            String hql = "SELECT a FROM " + className + " a WHERE a.ten LIKE CONCAT('%', :ten, '%') or a.ma LIKE CONCAT('%', :ten, '%') " + join;
             Query query = session.createQuery(hql);
             query.setParameter("ten", ten);
             lst = query.getResultList();
@@ -41,7 +41,7 @@ public class HangRepository extends Repository<Hang, UUID, HangDto> {
         try {
             List<Hang> lst;
             session = HibernateUtil.getSession();
-            String hql = "SELECT a FROM " + className + " a WHERE a.ten LIKE CONCAT('%', :ten, '%')";
+            String hql = "SELECT a FROM " + className + " a WHERE a.ten LIKE CONCAT('%', :ten, '%')" + join;
             Query query = session.createQuery(hql);
             query.setParameter("ten", ten);
             lst = query.getResultList();

@@ -28,10 +28,19 @@ public class DienThoaiServiceImpl implements DienThoaiService {
 
     @Override
     public String insert(DienThoai dienthoai) {
+        List<DienThoai> list = repos.getAll();
+        Integer ma = 0;
+        for (DienThoai x : list) {
+            String maSoStr = x.getMa().substring(3);
+            Integer maSo = Integer.parseInt(maSoStr);
+            if (ma < maSo) {
+                ma = maSo;
+            }
+        }
+
         dienthoai.setId(null);
-        LocalDateTime time = LocalDateTime.now();
-        String maDT = "DT" + time.getSecond() + time.getMinute() + time.getHour();
-        dienthoai.setMa(maDT);
+        Integer maMau = ma + 1;
+        dienthoai.setMa("DT0" + maMau);
         if (dienthoai.getTen().trim().isEmpty()) {
             return "Tên không được trống";
         }

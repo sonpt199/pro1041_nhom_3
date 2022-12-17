@@ -18,13 +18,14 @@ public class MauSacRepository extends Repository<MauSac, UUID, MauSacDto> {
     public MauSacRepository() {
         className = MauSac.class.getName();
         resCon = "new pro1041.team_3.dto.MauSacDto(a.id, a.ma, a.ten)";
+        join = " order by CONVERT(INT, SUBSTRING(a.ma, 2, 10)) desc";
     }
     
     public List<MauSacDto> findByName(String keyWord){
         try {
             List<MauSacDto> lst;
             session = HibernateUtil.getSession();
-            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.ten LIKE CONCAT('%', :keyWord, '%')";
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.ten LIKE CONCAT('%', :keyWord, '%') " + join;
             Query query = session.createQuery(hql);
             query.setParameter("keyWord", keyWord);
             lst = query.getResultList();
@@ -71,5 +72,5 @@ public class MauSacRepository extends Repository<MauSac, UUID, MauSacDto> {
             e.printStackTrace();
             return null;
         }
-    }
+    } 
 }

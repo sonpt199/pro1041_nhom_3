@@ -28,10 +28,19 @@ public class MauSacServiceImpl implements MauSacService {
 
     @Override
     public String insert(MauSac mausac) {
+        List<MauSac> list = repos.getAll();
+        Integer ma = 0;
+        for (MauSac x : list) {
+            String maSoStr = x.getMa().substring(2);
+            Integer maSo = Integer.parseInt(maSoStr);
+            if (ma < maSo) {
+                ma = maSo;
+            }
+        }
+
         mausac.setId(null);
-        LocalDateTime time = LocalDateTime.now();
-        String maMau = "M" + time.getSecond() + time.getMinute() + time.getHour();
-        mausac.setMa(maMau);
+        Integer maMau = ma + 1;
+        mausac.setMa("M0" + maMau);
         MauSac mauSacFindByMa = repos.findByMa(mausac.getMa());
         if (mausac.getTen().trim().isEmpty()) {
             return "Tên không được trống";

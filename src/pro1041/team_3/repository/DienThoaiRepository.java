@@ -18,13 +18,14 @@ public class DienThoaiRepository extends Repository<DienThoai, UUID, DienThoaiDt
     public DienThoaiRepository() {
         className = DienThoai.class.getName();
         resCon = "new pro1041.team_3.dto.DienThoaiDto(a.id, a.ma, a.ten)";
+        join = " order by CONVERT(INT, SUBSTRING(a.ma, 3, 10)) desc";
     }
     
     public List<DienThoaiDto> findByName(String keyWord){
         try {
             List<DienThoaiDto> lst;
             session = HibernateUtil.getSession();
-            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.ten LIKE CONCAT('%', :keyWord, '%')";
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.ten LIKE CONCAT('%', :keyWord, '%') " + join;
             Query query = session.createQuery(hql);
             query.setParameter("keyWord", keyWord);
             lst = query.getResultList();
