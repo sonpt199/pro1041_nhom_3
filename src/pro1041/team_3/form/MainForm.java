@@ -9,7 +9,11 @@ public class MainForm extends javax.swing.JPanel {
 
     public MainForm(NhanVien user) {
         initComponents();
-        show(new ViewBanHang(user));
+        if (user.getVaiTro() == 1) {
+            show(new ViewBanHang(user));
+        } else {
+            show(new ViewThongKe());
+        }
     }
 
     @SuppressWarnings("unchecked")

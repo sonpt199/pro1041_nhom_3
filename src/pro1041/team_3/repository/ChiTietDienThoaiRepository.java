@@ -20,7 +20,8 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
     public ChiTietDienThoaiRepository() {
         this.className = ChiTietDienThoai.class.getName();
         this.resCon = "new " + ChiTietDienThoaiResponse.class.getName() +"(a.id, a.dienThoai.ma, a.mauSac.ten, a.dienThoai.ten, a.hang.ten, a.tinhTrang, "
-                + "a.donGia, a.trangThai, a.hinhAnh, a.imei, a.ram, a.boNho, a.moTa, a.thoiGianBaoHanh)";
+                + "a.donGia, a.trangThai, a.imei, a.ram, a.boNho, a.moTa, a.thoiGianBaoHanh)";
+        join = " ORDER BY a.createdDate DESC";
     }
 
     public List<ChiTietDienThoaiResponse> findBy(String keyWord) {
@@ -28,7 +29,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             List<ChiTietDienThoaiResponse> lst;
             session = HibernateUtil.getSession();
             String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.dienThoai.ma LIKE CONCAT('%', :keyWord, '%') or a.dienThoai.ten LIKE CONCAT('%', :keyWord, '%') "
-                    + "or a.imei LIKE CONCAT('%', :keyWord, '%')";
+                    + "or a.imei LIKE CONCAT('%', :keyWord, '%') ORDER BY a.createdDate DESC";
             Query query = session.createQuery(hql);
             query.setParameter("keyWord", keyWord);
             lst = query.getResultList();
@@ -43,7 +44,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
         try {
             List<ChiTietDienThoaiResponse> lst;
             session = HibernateUtil.getSession();
-            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.tinhTrang = 1 ORDER BY a.giaBan " + chieu;
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.tinhTrang = 1 ORDER BY a.giaBan ORDER BY a.createdDate DESC" + chieu;
             Query query = session.createQuery(hql);
             lst = query.getResultList();
             return lst;
@@ -57,7 +58,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
         try {
             List<ChiTietDienThoaiResponse> lst;
             session = HibernateUtil.getSession();
-            String hql = "SELECT " + resCon + " FROM " + className + " a ORDER BY a." + loai + " " + chieu;
+            String hql = "SELECT " + resCon + " FROM " + className + " a ORDER BY a." + loai + " " + chieu + " ORDER BY a.createdDate DESC";
             Query query = session.createQuery(hql);
             lst = query.getResultList();
             return lst;
@@ -71,7 +72,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
         try {
             List<ChiTietDienThoaiResponse> lst;
             session = HibernateUtil.getSession();
-            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = " + trangThai;
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = " + trangThai + " ORDER BY a.createdDate DESC";
             Query query = session.createQuery(hql);
             lst = query.getResultList();
             return lst;
@@ -88,7 +89,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
                     + "and (a.id not in (select b.chiTietDienThoai.id from DienThoaiKhuyenMai b where "
                     + "b.khuyenMai.ngayBatDau < :ngay_ket_thuc and b.khuyenMai.ngayKetThuc > :ngay_bat_dau))"
-                    + "and a.dienThoai.ten=:ten ";
+                    + "and a.dienThoai.ten=:ten ORDER BY a.createdDate DESC";
             
 //            String hql1 = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
 //                    + "and a.dienThoai.ten =: ten";
@@ -104,18 +105,25 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
         }
     }
     
-    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByHang(String tenHang, Date batDau, Date ketThuc){
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoai(UUID idDienThoai, UUID idHang, UUID idMauSac, Integer tinhTrang, Date batDau, Date ketThuc){
         try {
             List<ChiTietDienThoaiResponse> lst;
             session = HibernateUtil.getSession();
             String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
                     + "and (a.id not in (select b.chiTietDienThoai.id from DienThoaiKhuyenMai b where "
-                    + "b.khuyenMai.ngayBatDau < :ngay_ket_thuc and b.khuyenMai.ngayKetThuc > :ngay_bat_dau))"
-                    + "and a.hang.ten=:ten ";
+                    + "b.khuyenMai.ngayBatDau < :ngay_ket_thuc and b.khuyenMai.ngayKetThuc > :ngay_bat_dau)) "
+                    + "AND (:idDienThoai IS NULL OR a.dienThoai.id = :idDienThoai) "
+                    + "AND (:idHang IS NULL OR a.hang.id = :idHang) "
+                    + "AND (:idMauSac IS NULL OR a.mauSac.id = :idMauSac) "
+                    + "AND (:tinhTrang IS NULL OR a.tinhTrang = :tinhTrang) "
+                    + "ORDER BY a.createdDate DESC";
 //            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
 //                    + "and a.hang.ten =: ten";
             Query query = session.createQuery(hql);
-            query.setParameter("ten", tenHang);
+            query.setParameter("idDienThoai", idDienThoai);
+            query.setParameter("idHang", idHang);
+            query.setParameter("idMauSac", idMauSac);
+            query.setParameter("tinhTrang", tinhTrang);
             query.setParameter("ngay_bat_dau", batDau);
             query.setParameter("ngay_ket_thuc", ketThuc);
             lst = query.getResultList();
@@ -133,7 +141,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
                     + "and (a.id not in (select b.chiTietDienThoai.id from DienThoaiKhuyenMai b where "
                     + "b.khuyenMai.ngayBatDau < :ngay_ket_thuc and b.khuyenMai.ngayKetThuc > :ngay_bat_dau))"
-                    + "and a.mauSac.ten =: ten";
+                    + "and a.mauSac.ten =: ten ORDER BY a.createdDate DESC";
 //            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
 //                    + "and a.mauSac.ten =: ten";
             Query query = session.createQuery(hql);
@@ -156,7 +164,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
                     + "and (a.id not in (select b.chiTietDienThoai.id from DienThoaiKhuyenMai b where "
                     + "b.khuyenMai.ngayBatDau < :ngay_ket_thuc and b.khuyenMai.ngayKetThuc > :ngay_bat_dau))"
-                    + "and a.tinhTrang=:tinhTrang";
+                    + "and a.tinhTrang=:tinhTrang ORDER BY a.createdDate DESC";
 //            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
 //                    + "and a.tinhTrang =: tinhTrang";
             Query query = session.createQuery(hql);
@@ -177,7 +185,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
             session = HibernateUtil.getSession();
             String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThai = 0 "
                     + "and (a.id not in (select b.chiTietDienThoai.id from DienThoaiKhuyenMai b where "
-                    + "b.khuyenMai.ngayBatDau < :ngay_ket_thuc and b.khuyenMai.ngayKetThuc > :ngay_bat_dau)) ";
+                    + "b.khuyenMai.ngayBatDau < :ngay_ket_thuc and b.khuyenMai.ngayKetThuc > :ngay_bat_dau)) ORDER BY a.createdDate DESC";
             Query query = session.createQuery(hql);
             query.setParameter("ngay_bat_dau", batDau);
             query.setParameter("ngay_ket_thuc", ketThuc);
@@ -282,7 +290,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
         ChiTietDienThoaiResponse ctdt = null;
         try {
             session = HibernateUtil.getSession();
-            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.id = :id";
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.id = :id ORDER BY a.createdDate DESC";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             ctdt = (ChiTietDienThoaiResponse) query.getSingleResult();
@@ -297,7 +305,7 @@ public class ChiTietDienThoaiRepository extends Repository<ChiTietDienThoai, UUI
         ChiTietDienThoai chiTietDienThoai = null;
         try {
             session = HibernateUtil.getSession();
-            String hql = "SELECT a FROM " + className + " a WHERE a.imei = :imei";
+            String hql = "SELECT a FROM " + className + " a WHERE a.imei = :imei ORDER BY a.createdDate DESC";
             TypedQuery<ChiTietDienThoai> query = session.createQuery(hql, ChiTietDienThoai.class);
             query.setParameter("imei", imei);
             List<ChiTietDienThoai> lst = query.getResultList();

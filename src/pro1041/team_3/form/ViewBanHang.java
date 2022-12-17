@@ -99,7 +99,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         gioHangService = new GioHangServiceImpl();
         mapGioHang = new HashMap<>();
         //Biến toàn cục
-        Locale locale  = new Locale("en", "UK");
+        Locale locale = new Locale("en", "UK");
         moneyFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
         moneyFormat.applyPattern("#,###");
         gioHangHienTai = null;
@@ -262,6 +262,10 @@ public class ViewBanHang extends javax.swing.JPanel {
         if (keyWord.isEmpty()) {
             return;
         }
+        if (keyWord.length() > 11) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại tối đa 11 số");
+            return;
+        }
         if (!keyWord.matches("\\d+")) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập số điện thoại khách hàng");
             return;
@@ -366,7 +370,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         if (tienThua.compareTo(BigDecimal.ZERO) == 1) {
             txtTienThuaKetHop.setText(moneyFormat.format(tienThua) + "VNĐ");
         } else {
-            txtTienThuaKetHop.setText("");
+            txtTienThuaKetHop.setText("0VNĐ");
         }
     }
 
@@ -880,7 +884,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         textAreaScroll2.setBackground(new java.awt.Color(255, 255, 255));
         textAreaScroll2.setFont(new java.awt.Font("Nunito", 0, 14)); // NOI18N
         textAreaScroll2.setLabelColor(new java.awt.Color(1, 132, 203));
-        textAreaScroll2.setLabelText("Mô tả");
+        textAreaScroll2.setLabelText("Địa chỉ");
         textAreaScroll2.setLostFocusColor(new java.awt.Color(3, 155, 216));
 
         txtThemDiaChiKh.setColumns(20);
@@ -1440,8 +1444,12 @@ public class ViewBanHang extends javax.swing.JPanel {
             if (tienMatStr.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Mời nhập tiền khách thanh toán");
                 return;
-            }
+            }            
             tienMat = new BigDecimal(tienMatStr);
+            if (tienMat.compareTo(tongTien) == -1) {
+                JOptionPane.showMessageDialog(this, "Số tiền thanh toán chưa đủ");
+                return;
+            }
         } else if (hinhThucThanhToan == 1) {
             maGiaoDich = txtMaGiaoDich.getText().trim();
             String nganHangStr = txtNganHang.getText().trim();
@@ -1449,11 +1457,23 @@ public class ViewBanHang extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Mã giao dịch không được để trống");
                 return;
             }
+            if (maGiaoDich.length() > 30) {
+                JOptionPane.showMessageDialog(this, "Mã giao dịch tối đa 30 ký tự");
+                return;
+            }
+            if (!maGiaoDich.matches("\\w+")) {
+                JOptionPane.showMessageDialog(this, "Mã giao dịch chỉ gồm ký tự chữ và số");
+                return;
+            }
             if (nganHangStr.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Mời nhập số tiền khách thanh toán bằng ngân hàng");
                 return;
             }
             nganHang = new BigDecimal(nganHangStr);
+            if (nganHang.compareTo(tongTien) == -1) {
+                JOptionPane.showMessageDialog(this, "Số tiền thanh toán chưa đủ");
+                return;
+            }
         } else {
             String tienMatKetHopStr = txtTienKhachDuaKetHop.getText().trim();
             String nganHangStr = txtNganHangKetHop.getText().trim();
@@ -1474,6 +1494,18 @@ public class ViewBanHang extends javax.swing.JPanel {
             nganHang = new BigDecimal(nganHangStr);
             if (maGiaoDich.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Mã giao dịch không được để trống");
+                return;
+            }
+            if (maGiaoDich.length() > 30) {
+                JOptionPane.showMessageDialog(this, "Mã giao dịch tối đa 30 ký tự");
+                return;
+            }
+            if (!maGiaoDich.matches("\\w+")) {
+                JOptionPane.showMessageDialog(this, "Mã giao dịch chỉ gồm ký tự chữ và số");
+                return;
+            }
+            if ((tienMat.add(nganHang)).compareTo(tongTien) == -1) {
+                JOptionPane.showMessageDialog(this, "Số tiền thanh toán chưa đủ");
                 return;
             }
         }
@@ -1720,7 +1752,8 @@ public class ViewBanHang extends javax.swing.JPanel {
             ghct.setIdChiTietDienThoai(x.getId());
             ghct.setKhachHang(khachHang);
             ghct.setNhanVien(nhanVienHienTai);
-            ghct.setLyDo(txtLyDo.getText().trim());
+            String lyDo = txtLyDo.getText().trim();
+            ghct.setLyDo(lyDo);
             lstSp.add(ghct);
         }
         String mess = banHangService.treoHoaDon(lstSp);
@@ -1754,8 +1787,21 @@ public class ViewBanHang extends javax.swing.JPanel {
             // BTN Thêm khách hàng
             SimpleDateFormat sdfNgaySinh = new SimpleDateFormat("dd-MM-yyyy");
             String ngaySinhStr = txtThemNgaySinhKh.getText();
-            khachHangMoi.setHoTen(txtThemTenKh.getText().trim());
+            String hoTen = txtThemTenKh.getText().trim();
+            khachHangMoi.setHoTen(hoTen);
+            if (hoTen.length() > 100) {
+                JOptionPane.showMessageDialog(this, "Họ và tên tối đa 100 ký tự");
+                return;
+            }
+            if (!hoTen.matches("[a-zA-Z]+")) {
+                JOptionPane.showMessageDialog(this, "Họ và tên chỉ gồm ký tự chữ");
+                return;
+            }
             Date ngaySinh = sdfNgaySinh.parse(ngaySinhStr);
+            if (ngaySinh.after(new Date())) {
+                JOptionPane.showMessageDialog(this, "Ngày sinh không thể là tương lai");
+                return;
+            }
             khachHangMoi.setNgaySinh(ngaySinh);
             if (rdNamThemKh.isSelected()) {
                 khachHangMoi.setGioiTinh(0);
@@ -1765,9 +1811,21 @@ public class ViewBanHang extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Mời chọn giới tính");
                 return;
             }
-            khachHangMoi.setSdt(txtThemSdtKh.getText().trim());
-            khachHangMoi.setDiaChi(txtThemDiaChiKh.getText().trim());
-            khachHangMoi.setEmail(txtThemEmailKh.getText().trim());
+            String sdt = txtThemSdtKh.getText().trim();
+            if (sdt.length() > 11) {
+                JOptionPane.showMessageDialog(this, "Số điện thoại tối đa 11 ký tự số");
+                return;
+            }
+            if (!sdt.matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "Số điện thoại chỉ gồm ký tự số");
+                return;
+            }
+            khachHangMoi.setSdt(sdt);
+            String diaChi = txtThemDiaChiKh.getText().trim();
+            khachHangMoi.setDiaChi(diaChi);
+            String email = txtThemEmailKh.getText().trim();
+            khachHangMoi.setEmail(email);
+            
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(this, "Lỗi ngày sinh");
             return;
@@ -1861,6 +1919,10 @@ public class ViewBanHang extends javax.swing.JPanel {
             return;
         }
         String tienKhachDuaStr = txtTienKhachDua.getText().trim();
+        if (tienKhachDuaStr.length() > 18) {
+            JOptionPane.showMessageDialog(this, "Vượt quá giới hạn tiền tệ");
+            return;
+        }
         if (tienKhachDuaStr.equals("")) {
             txtTienThua.setText("");
             return;
@@ -1886,7 +1948,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         if (tienThua.compareTo(BigDecimal.ZERO) == 1) {
             txtTienThua.setText(moneyFormat.format(tienThua) + "VNĐ");
         } else {
-            txtTienThua.setText("");
+            txtTienThua.setText("0VNĐ");
         }
     }//GEN-LAST:event_txtTienKhachDuaCaretUpdate
 
@@ -1905,7 +1967,12 @@ public class ViewBanHang extends javax.swing.JPanel {
         if (txtTongTien.getText().length() == 0) {
             return;
         }
+
         String tienNganHangStr = txtNganHang.getText().trim();
+        if (tienNganHangStr.length() > 18) {
+            JOptionPane.showMessageDialog(this, "Vượt quá giới hạn tiền tệ");
+            return;
+        }
         if (tienNganHangStr.equals("")) {
             txtTienThua.setText("");
             return;
@@ -1931,7 +1998,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         if (tienThua.compareTo(BigDecimal.ZERO) == 1) {
             txtTienThuaNganHang.setText(moneyFormat.format(tienThua) + "VNĐ");
         } else {
-            txtTienThuaNganHang.setText("");
+            txtTienThuaNganHang.setText("0VNĐ");
         }
     }//GEN-LAST:event_txtNganHangCaretUpdate
 

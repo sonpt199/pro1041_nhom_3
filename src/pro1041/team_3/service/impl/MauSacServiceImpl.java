@@ -41,12 +41,13 @@ public class MauSacServiceImpl implements MauSacService {
         mausac.setId(null);
         Integer maMau = ma + 1;
         mausac.setMa("M0" + maMau);
-        MauSac mauSacFindByMa = repos.findByMa(mausac.getMa());
         if (mausac.getTen().trim().isEmpty()) {
             return "Tên không được trống";
         }
-        if (mauSacFindByMa != null) {
-            return "Mã không được trùng";
+        for (MauSac x : list) {
+            if (mausac.getTen().equalsIgnoreCase(x.getTen())) {
+                return "Trùng tên màu sắc";
+            }
         }
         mausac = repos.saveOrUpdate(mausac);
         if (mausac != null) {
@@ -64,6 +65,12 @@ public class MauSacServiceImpl implements MauSacService {
         }
         if (mausac.getTen().trim().isEmpty()) {
             return "Tên không được trống";
+        }
+        List<MauSac> list = repos.getAll();
+        for (MauSac x : list) {
+            if (mausac.getTen().equalsIgnoreCase(x.getTen())) {
+                return "Trùng tên màu sắc";
+            }
         }
         mauSacFindById.setMa(mausac.getMa());
         mauSacFindById.setTen(mausac.getTen());

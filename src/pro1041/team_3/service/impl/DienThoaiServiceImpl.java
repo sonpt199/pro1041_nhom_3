@@ -44,9 +44,10 @@ public class DienThoaiServiceImpl implements DienThoaiService {
         if (dienthoai.getTen().trim().isEmpty()) {
             return "Tên không được trống";
         }
-        DienThoai dienThoaiFindByMa = repos.findByMa(dienthoai.getMa());
-        if (dienThoaiFindByMa != null) {
-            return "Mã không được trùng";
+        for (DienThoai x : list) {
+            if (dienthoai.getTen().equalsIgnoreCase(x.getTen())) {
+                return "Trùng tên điện thoại";
+            }
         }
         dienthoai = repos.saveOrUpdate(dienthoai);
         if (dienthoai != null) {
@@ -64,6 +65,12 @@ public class DienThoaiServiceImpl implements DienThoaiService {
         }
         if (dienthoai.getTen().trim().isEmpty()) {
             return "Tên không được trống";
+        }
+        List<DienThoai> list = repos.getAll();
+        for (DienThoai x : list) {
+            if (dienthoai.getTen().equalsIgnoreCase(x.getTen())) {
+                return "Trùng tên điện thoại";
+            }
         }
         dienThoaiFindByMa.setMa(dienthoai.getMa());
         dienThoaiFindByMa.setTen(dienthoai.getTen());

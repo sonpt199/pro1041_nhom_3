@@ -45,6 +45,18 @@ public class ViewDangNhap extends javax.swing.JFrame {
             panel.showNotification();
             return;
         }
+        if (username.length() > 30) {
+//            txtError.setText("Username không được chưa khoảng trắng");
+            Notification panel = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_CENTER, "Username tối đa 30 ký tự");
+            panel.showNotification();
+            return;
+        }
+        if (!username.matches("\\w+")) {
+//            txtError.setText("Username không được chưa khoảng trắng");
+            Notification panel = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_CENTER, "Username chỉ gồm ký tự chữ và số");
+            panel.showNotification();
+            return;
+        }
         if (password.contains(" ")) {
 //            txtError.setText("Password không được chưa khoảng trắng");
             Notification panel = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_CENTER, "Password không được chưa khoảng trắng");
@@ -54,6 +66,18 @@ public class ViewDangNhap extends javax.swing.JFrame {
         if (password.length() < 6) {
 //            txtError.setText("Password không được chưa khoảng trắng");
             Notification panel = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_CENTER, "Password tối thiểu 6 ký tự");
+            panel.showNotification();
+            return;
+        }
+        if (password.length() > 50) {
+//            txtError.setText("Password không được chưa khoảng trắng");
+            Notification panel = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_CENTER, "Password tối đa 50 ký tự");
+            panel.showNotification();
+            return;
+        }
+        if (!password.matches("\\w+")) {
+//            txtError.setText("Password không được chưa khoảng trắng");
+            Notification panel = new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_CENTER, "Password chỉ gồm ký tự chữ và số");
             panel.showNotification();
             return;
         }

@@ -35,8 +35,6 @@ public class ChiTietDienThoaiResponse {
     
     private Integer trangThai;
     
-    private String hinhAnh;
-    
     private String imei;
     
     private Integer ram;

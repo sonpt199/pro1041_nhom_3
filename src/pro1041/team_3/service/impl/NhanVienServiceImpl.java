@@ -41,8 +41,8 @@ public class NhanVienServiceImpl implements NhanVienService {
         NhanVien findSDT = repos.findSDT(user.getSdt());
         NhanVien findEmail = repos.findEmail(user.getEmail());
         NhanVien findTenDangNhap = repos.findTenDangNhap(user.getTenDangNhap());
-        LocalDateTime time = LocalDateTime.now();
-        String maNV = "NV" + time.getSecond() + time.getMinute() + time.getHour();
+        long count = repos.getMaOrderBy() + 1;
+        String maNV = "NV0" + count;
         user.setMa(maNV);
         user.setTrangThaiLamViec(0);
 //        user.setMatKhau(String.valueOf((int) (Math.random() * 10000000)));

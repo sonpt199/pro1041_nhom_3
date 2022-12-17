@@ -139,87 +139,171 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
             XSSFSheet sheet = workbook.createSheet("Danh sách chi tiết điện thoại");
             int rowNum = 0;
             Row firstRow = sheet.createRow(rowNum++);
-            Cell idTitle = firstRow.createCell(0);
-            idTitle.setCellValue("ID");
 
-            Cell ctDtMa = firstRow.createCell(1);
+            Cell ctDtMa = firstRow.createCell(0);
             ctDtMa.setCellValue("Mã");
 
-            Cell idMauSacTitle = firstRow.createCell(2);
+            Cell idMauSacTitle = firstRow.createCell(1);
             idMauSacTitle.setCellValue("Màu sắc");
 
-            Cell idDienThoaiTitle = firstRow.createCell(3);
+            Cell idDienThoaiTitle = firstRow.createCell(2);
             idDienThoaiTitle.setCellValue("Điện thoại");
 
-            Cell idHangTitle = firstRow.createCell(4);
+            Cell idHangTitle = firstRow.createCell(3);
             idHangTitle.setCellValue("Hãng");
 
-            Cell tinhTrangTitle = firstRow.createCell(5);
+            Cell tinhTrangTitle = firstRow.createCell(4);
             tinhTrangTitle.setCellValue("Tình trạng");
 
-            Cell giaBanTitle = firstRow.createCell(6);
-            giaBanTitle.setCellValue("Giá bán");
+            Cell giaBanTitle = firstRow.createCell(5);
+            giaBanTitle.setCellValue("Đơn giá");
 
-            Cell trangThaiTitle = firstRow.createCell(7);
+            Cell trangThaiTitle = firstRow.createCell(6);
             trangThaiTitle.setCellValue("Trạng thái");
 
-            Cell imeiTitle = firstRow.createCell(8);
-            imeiTitle.setCellValue("Imei");
+            Cell imeiTitle = firstRow.createCell(7);
+            imeiTitle.setCellValue("IMEI");
 
-            Cell ramTitle = firstRow.createCell(9);
+            Cell ramTitle = firstRow.createCell(8);
             ramTitle.setCellValue("Ram");
 
-            Cell romTitle = firstRow.createCell(10);
+            Cell romTitle = firstRow.createCell(9);
             romTitle.setCellValue("Rom");
 
-            Cell moTaTitle = firstRow.createCell(11);
+            Cell moTaTitle = firstRow.createCell(10);
             moTaTitle.setCellValue("Mô tả");
 
-            Cell baoHanhTitle = firstRow.createCell(12);
-            baoHanhTitle.setCellValue("Bảo hành");
+            Cell baoHanhTitle = firstRow.createCell(11);
+            baoHanhTitle.setCellValue("Thời gian bảo hành");
 
             for (ChiTietDienThoai x : lst) {
                 Row row = sheet.createRow(rowNum++);
 
-                Cell cell1 = row.createCell(0);
-                cell1.setCellValue(x.getId().toString());
-
-                Cell cell2 = row.createCell(1);
+                Cell cell2 = row.createCell(0);
                 cell2.setCellValue(x.getDienThoai().getMa());
 
-                Cell cell3 = row.createCell(2);
+                Cell cell3 = row.createCell(1);
                 cell3.setCellValue(x.getMauSac().getTen());
 
-                Cell cell4 = row.createCell(3);
+                Cell cell4 = row.createCell(2);
                 cell4.setCellValue(x.getDienThoai().getTen());
 
-                Cell cell5 = row.createCell(4);
+                Cell cell5 = row.createCell(3);
                 cell5.setCellValue(x.getHang().getTen());
 
-                Cell cell6 = row.createCell(5);
-                cell6.setCellValue(x.getTinhTrang()+"");
+                Cell cell6 = row.createCell(4);
+                cell6.setCellValue(x.getTinhTrang() + "");
 
-                Cell cell7 = row.createCell(6);
+                Cell cell7 = row.createCell(5);
                 cell7.setCellValue(x.getDonGia() + "");
 
-                Cell cell8 = row.createCell(7);
+                Cell cell8 = row.createCell(6);
                 cell8.setCellValue(x.getTrangThai() == 0 ? "Đang bán" : x.getTrangThai() == 1 ? "Đã bán" : "Sản phẩm lỗi");
 
-                Cell cell9 = row.createCell(8);
+                Cell cell9 = row.createCell(7);
                 cell9.setCellValue(x.getImei());
 
-                Cell cell10 = row.createCell(9);
+                Cell cell10 = row.createCell(8);
                 cell10.setCellValue(x.getRam());
 
-                Cell cell11 = row.createCell(10);
+                Cell cell11 = row.createCell(9);
                 cell11.setCellValue(x.getBoNho());
 
-                Cell cell12 = row.createCell(11);
+                Cell cell12 = row.createCell(10);
                 cell12.setCellValue(x.getMoTa());
 
-                Cell cell13 = row.createCell(12);
+                Cell cell13 = row.createCell(11);
                 cell13.setCellValue(x.getThoiGianBaoHanh() + "");
             }
+            workbook.write(fos);
+            workbook.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+            return false;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean exportMau(File file) {
+        List<ChiTietDienThoai> lst = chiTietDienThoaiRepository.getAll();
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("Danh sách chi tiết điện thoại");
+            int rowNum = 0;
+            Row firstRow = sheet.createRow(rowNum++);
+
+            Cell idMauSacTitle = firstRow.createCell(0);
+            idMauSacTitle.setCellValue("Màu sắc");
+
+            Cell idDienThoaiTitle = firstRow.createCell(1);
+            idDienThoaiTitle.setCellValue("Điện thoại");
+
+            Cell idHangTitle = firstRow.createCell(2);
+            idHangTitle.setCellValue("Hãng");
+
+            Cell tinhTrangTitle = firstRow.createCell(3);
+            tinhTrangTitle.setCellValue("Tình trạng");
+
+            Cell giaBanTitle = firstRow.createCell(4);
+            giaBanTitle.setCellValue("Đơn giá");
+
+            Cell trangThaiTitle = firstRow.createCell(5);
+            trangThaiTitle.setCellValue("Trạng thái");
+
+            Cell imeiTitle = firstRow.createCell(6);
+            imeiTitle.setCellValue("IMEI");
+
+            Cell ramTitle = firstRow.createCell(7);
+            ramTitle.setCellValue("Ram");
+
+            Cell romTitle = firstRow.createCell(8);
+            romTitle.setCellValue("Rom");
+
+            Cell moTaTitle = firstRow.createCell(9);
+            moTaTitle.setCellValue("Mô tả");
+
+            Cell baoHanhTitle = firstRow.createCell(10);
+            baoHanhTitle.setCellValue("Thời gian bảo hành");
+
+            ChiTietDienThoai x = lst.get(0);
+            Row row = sheet.createRow(rowNum++);
+
+            Cell cell3 = row.createCell(0);
+            cell3.setCellValue(x.getMauSac().getTen());
+
+            Cell cell4 = row.createCell(1);
+            cell4.setCellValue(x.getDienThoai().getTen());
+
+            Cell cell5 = row.createCell(2);
+            cell5.setCellValue(x.getHang().getTen());
+
+            Cell cell6 = row.createCell(3);
+            cell6.setCellValue(x.getTinhTrang() + "");
+
+            Cell cell7 = row.createCell(4);
+            cell7.setCellValue(x.getDonGia() + "");
+
+            Cell cell8 = row.createCell(5);
+            cell8.setCellValue(x.getTrangThai() == 0 ? "Đang bán" : x.getTrangThai() == 1 ? "Đã bán" : "Sản phẩm lỗi");
+
+            Cell cell9 = row.createCell(6);
+            cell9.setCellValue(x.getImei());
+
+            Cell cell10 = row.createCell(7);
+            cell10.setCellValue(x.getRam());
+
+            Cell cell11 = row.createCell(8);
+            cell11.setCellValue(x.getBoNho());
+
+            Cell cell12 = row.createCell(9);
+            cell12.setCellValue(x.getMoTa());
+
+            Cell cell13 = row.createCell(10);
+            cell13.setCellValue(x.getThoiGianBaoHanh() + "");
             workbook.write(fos);
             workbook.close();
         } catch (FileNotFoundException ex) {
@@ -242,8 +326,8 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
     }
 
     @Override
-    public List<ChiTietDienThoaiResponse> getAllCTDienThoaiByHang(String tenHang, Date batDau, Date ketThuc) {
-        return chiTietDienThoaiRepository.getAllCTDienThoaiByHang(tenHang, batDau, ketThuc);
+    public List<ChiTietDienThoaiResponse> getAllCTDienThoai(UUID idDienThoai, UUID idHang, UUID idMauSac, Integer tinhTrang, Date batDau, Date ketThuc) {
+        return chiTietDienThoaiRepository.getAllCTDienThoai(idDienThoai, idHang, idMauSac, tinhTrang, batDau, ketThuc);
     }
 
     @Override
@@ -334,16 +418,19 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
                     Object cellValue = getCellValue(cell);
-                    if (cellValue == null || cellValue.toString().isEmpty()) {
-                        continue;
-                    }
+//                    if (cellValue == null || cellValue.toString().isEmpty()) {
+//                        continue;
+//                    }
 
                     int columnIndex = cell.getColumnIndex();
                     switch (columnIndex) {
                         case COLUMN_INDEX_MAUSAC:
+                            if (cell.getCellType() == CellType.BLANK || cell.getCellType() == CellType._NONE) {
+                                ketQua = "Màu sắc không được để trống - dòng: " + (cell.getRowIndex() + 1);
+                                return ketQua;
+                            }
                             String mauSacStr = ((String) getCellValue(cell)).trim();
-                            System.out.println(mauSacStr);
-                            if (mauSacStr == null) {
+                            if (mauSacStr.isEmpty()) {
                                 ketQua = "Màu sắc không được để trống";
                                 return ketQua;
                             }
@@ -357,6 +444,10 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
                             ctdt.setMauSac(ms);
                             break;
                         case COLUMN_INDEX_DIEN_THOAI:
+                            if (cell.getCellType() == CellType.BLANK) {
+                                ketQua = "Tên điện thoại không được để trống - dòng: " + (cell.getRowIndex() + 1);
+                                return ketQua;
+                            }
                             String dienThoaiStr = ((String) getCellValue(cell)).trim();
                             if (dienThoaiStr.length() == 0) {
                                 ketQua = "Tên điện thoại không được để trống";
@@ -373,19 +464,33 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
                             break;
                         case COLUMN_INDEX_IMEI:
 //                    ctdt.setImei(new BigDecimal((double) cellValue).intValue());
+                            if (cell.getCellType() == CellType.BLANK) {
+                                ketQua = "IMEI không được để trống - dòng: " + (cell.getRowIndex() + 1);
+                                return ketQua;
+                            }
                             String imei = ((String) getCellValue(cell)).trim();
                             if (imei.length() == 0) {
-                                ketQua = "Imei không được để trống";
+                                ketQua = "IMEI không được để trống - dòng: " + (cell.getRowIndex() + 1);
                                 return ketQua;
                             }
                             ChiTietDienThoai ctdtCheck = chiTietDienThoaiRepository.checkImei(imei);
                             if (ctdtCheck != null) {
-                                ketQua = "Imei đã tồn tại";
+                                ketQua = "Imei đã tồn tại - dòng: " + (cell.getRowIndex() + 1);
                                 return ketQua;
+                            }
+                            for (ChiTietDienThoai x : listCTDT) {
+                                if (imei.equals(x.getImei())) {
+                                    ketQua = "Danh sách điện thoại cần thêm có 2 IMEI trùng";
+                                    return ketQua;
+                                }
                             }
                             ctdt.setImei((String) getCellValue(cell));
                             break;
                         case COLUMN_INDEX_HANG:
+                            if (cell.getCellType() == CellType.BLANK) {
+                                ketQua = "Hãng không được để trống - dòng: " + (cell.getRowIndex() + 1);
+                                return ketQua;
+                            }
                             String hangStr = (String) getCellValue(cell);
                             if (hangStr.length() == 0) {
                                 ketQua = "Tên hãng không được để trống";
@@ -402,6 +507,10 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
                             ctdt.setHang(hang);
                             break;
                         case COLUMN_INDEX_RAM:
+                            if (cell.getCellType() == CellType.BLANK) {
+                                ketQua = "Ram không được để trống - dòng: " + (cell.getRowIndex() + 1);
+                                return ketQua;
+                            }
                             Integer ram = null;
                             try {
                                 ram = ((Double) getCellValue(cell)).intValue();
@@ -409,15 +518,19 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
                                     ketQua = "Ram điện thoại phải lớn hơn 0";
                                     return ketQua;
                                 }
-                                
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 ketQua = "Ram điện thoại phải là số";
-                                    return ketQua;
+                                return ketQua;
                             }
                             ctdt.setRam(ram);
                             break;
                         case COLUMN_INDEX_BO_NHO:
+                            if (cell.getCellType() == CellType.BLANK) {
+                                ketQua = "Bộ nhớ không được để trống - dòng: " + (cell.getRowIndex() + 1);
+                                return ketQua;
+                            }
                             Integer boNho = null;
                             try {
                                 boNho = ((Double) getCellValue(cell)).intValue();
@@ -425,31 +538,43 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
                                     ketQua = "Bộ nhớ điện thoại phải lớn hơn 0";
                                     return ketQua;
                                 }
-                                
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 ketQua = "Bộ nhớ điện thoại phải là số";
-                                    return ketQua;
+                                return ketQua;
                             }
                             ctdt.setBoNho(boNho);
                             break;
                         case COLUMN_INDEX_TINH_TRANG:
+                            if (cell.getCellType() == CellType.BLANK) {
+                                ketQua = "Trình trạng không được để trống - dòng: " + (cell.getRowIndex() + 1);
+                                return ketQua;
+                            }
                             Integer tinhTrang = null;
                             try {
                                 tinhTrang = ((Double) getCellValue(cell)).intValue();
-                                if (tinhTrang <= 0) {
-                                    ketQua = "Tình trạng điện thoại phải lớn hơn 0";
+                                if (tinhTrang < 50 || tinhTrang > 100) {
+                                    ketQua = "Tình trạng điện thoại phải trong khoảng từ 50-100";
                                     return ketQua;
                                 }
-                                
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 ketQua = "Tình trạng điện thoại phải là số";
-                                    return ketQua;
+                                return ketQua;
                             }
                             ctdt.setTinhTrang(tinhTrang);
                             break;
                         case COLUMN_INDEX_TRANG_THAI:
+                            if (cell.getCellType() == CellType.BLANK) {
+                                ketQua = "Trạng thái không được để trống - dòng: " + (cell.getRowIndex() + 1);
+                                return ketQua;
+                            }
+                            if (cell.getCellType() == CellType.BLANK) {
+                                ketQua = "Trạng thái không được để trống";
+                                return ketQua;
+                            }
                             String trangThaiStr = ((String) getCellValue(cell)).trim();
                             if (trangThaiStr.length() == 0) {
                                 ketQua = "Trạng thái không được để trống";
@@ -466,6 +591,10 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
                             ctdt.setTrangThai(trangThai);
                             break;
                         case COLUMN_INDEX_DON_GIA:
+                            if (cell.getCellType() == CellType.BLANK) {
+                                ketQua = "Đơn giá không được để trống - dòng: " + (cell.getRowIndex() + 1);
+                                return ketQua;
+                            }
                             BigDecimal giaBan = null;
                             try {
                                 giaBan = new BigDecimal((double) cellValue);
@@ -484,14 +613,18 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
                             ctdt.setMoTa((String) getCellValue(cell));
                             break;
                         case COLUMN_INDEX_TG_BAO_HANH:
+                            if (cell.getCellType() == CellType.BLANK) {
+                                ketQua = "Thời gian bảo hành không được để trống - dòng: " + (cell.getRowIndex() + 1);
+                                return ketQua;
+                            }
                             Integer baoHanh = null;
                             try {
                                 baoHanh = ((Double) getCellValue(cell)).intValue();
                                 if (baoHanh <= 0) {
-                                    ketQua = "Thời gian bảo hành điện thoại phải lớn hơn 0";
+                                    ketQua = "Thời gian bảo hành điện thoại phải là số nguyên dương";
                                     return ketQua;
                                 }
-                                
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 ketQua = "Thời gian bảo hành điện thoại phải là số";
@@ -505,12 +638,12 @@ public class ChiTietDienThoaiImpl implements ChiTietDienThoaiService {
 
                 }
                 listCTDT.add(ctdt);
-                
-                boolean save = chiTietDienThoaiRepository.saveAll(listCTDT);
-                if (!save) {
-                    ketQua = "Import thất bại";
-                    return ketQua;
-                }
+
+            }
+            boolean save = chiTietDienThoaiRepository.saveAll(listCTDT);
+            if (!save) {
+                ketQua = "Import thất bại";
+                return ketQua;
             }
 
             workbook.close();

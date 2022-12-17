@@ -30,14 +30,8 @@ public class HangServiceImpl implements HangService {
     }
 
     @Override
-    public ArrayList<HangDto> getAllResponse() {
-        _lstHang = new ArrayList<>();
-        List<Hang> listHang = hangRepository.getAll();
-        for (Hang x : listHang) {
-            _lstHang.add(new HangDto(x.getId(), x.getMa(), x.getTen()));
-        }
-        return _lstHang;
-
+    public List<HangDto> getAllResponse() {
+        return this.hangRepository.getAllResponse();
     }
 
     @Override
@@ -55,12 +49,13 @@ public class HangServiceImpl implements HangService {
         hangResponse.setId(null);
         Integer maMau = ma + 1;
         hangResponse.setMa("H0" + maMau);
-        if (hangResponse.getTen().trim().isEmpty()) {
+        if (hangResponse.getTen().isEmpty()) {
             return "Tên không được trống";
         }
-        Hang hangDT = hangRepository.findByMa(hangResponse.getMa());
-        if (hangDT != null) {
-            return "Mã không được trùng";
+        for (Hang x : list) {
+            if (hangResponse.getTen().equalsIgnoreCase(x.getTen())) {
+                return "Trùng tên hãng";
+            }
         }
         hangResponse = hangRepository.saveOrUpdate(hangResponse);
         if (hangResponse != null) {
@@ -94,11 +89,17 @@ public class HangServiceImpl implements HangService {
         if (hangByID == null) {
             return "Không tìm thấy";
         }
-        if (hangResponse.getTen().trim().isEmpty()) {
+        if (hangResponse.getTen().isEmpty()) {
             return "Tên không được trống";
         }
+        List<Hang> lstHang = hangRepository.getAll();
+        for (Hang x : lstHang) {
+            if (hangResponse.getTen().trim().equalsIgnoreCase(x.getTen())) {
+                return "Trùng tên hãng";
+            }
+        }
         hangByID.setMa(hangResponse.getMa());
-        hangByID.setTen(hangResponse.getTen());
+        hangByID.setTen(hangResponse.getTen().trim());
         hangResponse = hangRepository.saveOrUpdate(hangByID);
         if (hangResponse != null) {
             return "Sửa thành công";

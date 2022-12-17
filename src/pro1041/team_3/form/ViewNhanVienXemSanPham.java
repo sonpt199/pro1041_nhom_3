@@ -125,6 +125,7 @@ public class ViewNhanVienXemSanPham extends javax.swing.JPanel {
         txtDiennThoai = new javax.swing.JTextField();
         txtHang = new javax.swing.JTextField();
         txtMa = new javax.swing.JTextField();
+        btnTaoQr = new pro1041.team_3.swing.ButtonCustom();
         jspTblChiTietDienThoai = new javax.swing.JScrollPane();
         tblChiTietDienThoai = new pro1041.team_3.swing.config.Table();
 
@@ -139,7 +140,7 @@ public class ViewNhanVienXemSanPham extends javax.swing.JPanel {
 
         jLabel4.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
         jLabel4.setText("Lọc trạng thái:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 30, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, -1, -1));
 
         txtTim.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         txtTim.setToolTipText("");
@@ -154,7 +155,7 @@ public class ViewNhanVienXemSanPham extends javax.swing.JPanel {
                 txtTimActionPerformed(evt);
             }
         });
-        jPanel1.add(txtTim, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 270, 30));
+        jPanel1.add(txtTim, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 270, 30));
 
         jLabel21.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
         jLabel21.setText("Màu sắc");
@@ -281,7 +282,7 @@ public class ViewNhanVienXemSanPham extends javax.swing.JPanel {
 
         jLabel5.setFont(new java.awt.Font("Nunito", 1, 13)); // NOI18N
         jLabel5.setText("Tìm kiếm");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, 20));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, 20));
 
         tinhTrangCuPanel.setBackground(new java.awt.Color(252, 255, 255));
         tinhTrangCuPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -307,7 +308,7 @@ public class ViewNhanVienXemSanPham extends javax.swing.JPanel {
                 cbbTrangThaiActionPerformed(evt);
             }
         });
-        jPanel1.add(cbbTrangThai, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 10, 220, 40));
+        jPanel1.add(cbbTrangThai, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, 220, 40));
 
         txtMauSac.setEditable(false);
         txtMauSac.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
@@ -328,6 +329,18 @@ public class ViewNhanVienXemSanPham extends javax.swing.JPanel {
         txtMa.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         txtMa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(90, 183, 210)));
         jPanel1.add(txtMa, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 220, 30));
+
+        btnTaoQr.setBackground(new java.awt.Color(1, 181, 204));
+        btnTaoQr.setForeground(new java.awt.Color(255, 255, 255));
+        btnTaoQr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/scanQr.png"))); // NOI18N
+        btnTaoQr.setText("Tải QR");
+        btnTaoQr.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnTaoQr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaoQrActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnTaoQr, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 260, 130, -1));
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 1120, 330));
 
@@ -471,8 +484,32 @@ public class ViewNhanVienXemSanPham extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTimActionPerformed
 
+    private void btnTaoQrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoQrActionPerformed
+        //BTN Tạo QR
+        int row = tblChiTietDienThoai.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Mời chọn một điện thoại để tải mã QR");
+            return;
+        }
+        JnaFileChooser jfc = new JnaFileChooser();
+        jfc.setMode(JnaFileChooser.Mode.Directories);
+        if (!jfc.showOpenDialog((JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this))) {
+            return;
+        }
+        ChiTietDienThoaiResponse ctdt = list.get(row);
+        String mess = chiTietDTImpl.exportQr(jfc.getSelectedFile().getAbsolutePath(), ctdt.getId());
+        if (mess.equals("Tải thành công")) {
+            Notification panel = new Notification((JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this),
+                Notification.Type.SUCCESS, Notification.Location.TOP_CENTER, "Tải thành công");
+            panel.showNotification();
+        } else {
+            JOptionPane.showMessageDialog(this, mess);
+        }
+    }//GEN-LAST:event_btnTaoQrActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private pro1041.team_3.swing.ButtonCustom btnTaoQr;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private pro1041.team_3.swing.ComboBoxSuggestion cbbTinhTrangCu;

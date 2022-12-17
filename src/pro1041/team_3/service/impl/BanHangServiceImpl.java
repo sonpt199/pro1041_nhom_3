@@ -91,6 +91,7 @@ public class BanHangServiceImpl implements BanHangService {
         if (!hoaDonChiTietRepository.saveAll(lstHoaDonChiTiet)) {
             return "Lỗi hệ thống. Không thể thêm sản phẩm vào hóa đơn";
         }
+        //Gửi mail
         String output = null;
         Boolean open = true;
         String emailKh = null;
@@ -115,10 +116,10 @@ public class BanHangServiceImpl implements BanHangService {
         }
         if (emailKh != null) {
             File billFile = new File(output);
-            boolean checkSendEmail = EmailUtil.sendFile(emailKh, "Waikiki - Hóa đơn bán hàng", "Cảm ơn quý khách đã mua hàng", billFile, maHd);
-            if (!checkSendEmail) {
-                return "Lỗi gửi email hóa đơn";
-            }
+//            EmailUtil.sendFile(emailKh, "Waikiki - Hóa đơn bán hàng", "Cảm ơn quý khách đã mua hàng", billFile, maHd);
+//            if (!checkSendEmail) {
+//                return "Lỗi gửi email hóa đơn";
+//            }
         }
         return "Thanh toán thành công";
     }

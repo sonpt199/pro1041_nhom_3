@@ -13,7 +13,7 @@ import pro1041.team_3.dto.HangDto;
  */
 public interface HangService {
 
-    ArrayList<HangDto> getAllResponse();
+    List<HangDto> getAllResponse();
     
     List<Hang> getAll();
 

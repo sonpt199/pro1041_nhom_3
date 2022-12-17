@@ -43,7 +43,7 @@ import pro1041.team_3.service.impl.HoaDonServiceImpl;
 import pro1041.team_3.service.impl.NhanVienServiceImpl;
 import pro1041.team_3.swing.Notification;
 import pro1041.team_3.util.EmailUtil;
-//import pro1041.team_3.util.DailyCheckKhuyenMai;
+import pro1041.team_3.util.DailyCheckKhuyenMai;
 
 public class Main extends javax.swing.JFrame {
 
@@ -51,7 +51,7 @@ public class Main extends javax.swing.JFrame {
     private final MainForm main;
     private final MenuLayout menu;
     private final Animator animator;
-//    private final DailyCheckKhuyenMai daily;
+    private final DailyCheckKhuyenMai daily;
     private HoaDonService hoaDonService;
     private HoaDonChiTietService hoaDonChiTietService;
     private NhanVien userHienTai;
@@ -60,8 +60,8 @@ public class Main extends javax.swing.JFrame {
 
     public Main(NhanVien user) {
         initComponents();
-//        daily = new DailyCheckKhuyenMai();
-//        daily.start();
+        daily = new DailyCheckKhuyenMai();
+        daily.start();
         userHienTai = user;
         hoaDonService = new HoaDonServiceImpl();
         hoaDonChiTietService = new HoaDonChiTietServiceImpl();
@@ -181,10 +181,12 @@ public class Main extends javax.swing.JFrame {
                         dlTimHoaDon.setVisible(true);
                     } else if (index == 5) {
                         dlDoiMatKhau.setVisible(true);
-                        jpnConfirm.setVisible(true);
-                        jpnChange.setVisible(false);
+                        txtEmailError.setText("");
+                        txtMaXacNhanError.setText("");
                         txtEmailError.setVisible(false);
                         txtMaXacNhanError.setVisible(false);
+                        jpnConfirm.setVisible(true);
+                        jpnChange.setVisible(false);
                     } else if (index == 6) {
                         ViewDangNhap dangNhap = new ViewDangNhap();
                         dangNhap.setVisible(true);
@@ -239,7 +241,6 @@ public class Main extends javax.swing.JFrame {
         txtNewPass = new pro1041.team_3.swing.TextField();
         mainPanel = new javax.swing.JLayeredPane();
 
-        dlTimHoaDon.setPreferredSize(new java.awt.Dimension(1095, 590));
         dlTimHoaDon.setSize(new java.awt.Dimension(1095, 590));
         dlTimHoaDon.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -363,7 +364,6 @@ public class Main extends javax.swing.JFrame {
 
         dlTimHoaDon.getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 550));
 
-        dlDoiMatKhau.setPreferredSize(new java.awt.Dimension(270, 285));
         dlDoiMatKhau.setSize(new java.awt.Dimension(270, 285));
         dlDoiMatKhau.getContentPane().setLayout(new java.awt.CardLayout());
 
@@ -406,13 +406,11 @@ public class Main extends javax.swing.JFrame {
 
         txtMaXacNhanError.setFont(new java.awt.Font("Nunito", 2, 12)); // NOI18N
         txtMaXacNhanError.setForeground(new java.awt.Color(255, 51, 51));
-        txtMaXacNhanError.setText("Warning");
-        jpnConfirm.add(txtMaXacNhanError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 220, -1));
+        jpnConfirm.add(txtMaXacNhanError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 220, 20));
 
         txtEmailError.setFont(new java.awt.Font("Nunito", 2, 12)); // NOI18N
         txtEmailError.setForeground(new java.awt.Color(255, 51, 51));
-        txtEmailError.setText("Warning");
-        jpnConfirm.add(txtEmailError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 220, -1));
+        jpnConfirm.add(txtEmailError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 220, 20));
 
         dlDoiMatKhau.getContentPane().add(jpnConfirm, "card2");
 

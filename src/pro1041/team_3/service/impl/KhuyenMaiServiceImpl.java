@@ -40,16 +40,8 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
     @Override
     public String insert(KhuyenMai khuyenMai) {
         khuyenMai.setId(null);
-        if (khuyenMai.getMa().trim().isEmpty()) {
-            return "Mã không được trống";
-        }
-        if (khuyenMai.getTen().trim().isEmpty()) {
-            return "Tên không được trống";
-        }
-        KhuyenMai KM = khuyenMaiRepository.findByMa(khuyenMai.getMa());
-        if (KM != null) {
-            return "Mã không được trùng";
-        }
+        long count = khuyenMaiRepository.getMaOrderBy() + 1;
+        khuyenMai.setMa("KM0" + count);
         khuyenMai = khuyenMaiRepository.saveOrUpdate(khuyenMai);
         if (khuyenMai != null) {
             return "Thêm thành công";
@@ -63,12 +55,6 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
         KhuyenMai kmByID = khuyenMaiRepository.findById(khuyenMai.getId());
         if (kmByID == null) {
             return "Không tìm thấy";
-        }
-        if (khuyenMai.getMa().trim().isEmpty()) {
-            return "Mã không được trống";
-        }
-        if (khuyenMai.getTen().trim().isEmpty()) {
-            return "Tên không được trống";
         }
         kmByID.setMa(khuyenMai.getMa());
         kmByID.setTen(khuyenMai.getTen());
@@ -116,4 +102,9 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
         return this.khuyenMaiRepository.findKMKetThuc();
     }
 
+    @Override
+    public List<KhuyenMaiDto> findKMByLoai(int loai) {
+        return this.khuyenMaiRepository.findKMByLoai(loai);
+    }
+    
 }

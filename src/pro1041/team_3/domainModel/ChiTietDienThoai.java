@@ -2,6 +2,7 @@ package pro1041.team_3.domainModel;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,9 +50,6 @@ public class ChiTietDienThoai implements Serializable{
     @Column(name = "trang_thai")
     private Integer trangThai;
     
-    @Column(name = "hinh_anh")
-    private String hinhAnh;
-    
     @Column(name = "imei")
     private String imei;
     
@@ -66,5 +64,8 @@ public class ChiTietDienThoai implements Serializable{
     
     @Column(name = "thoi_gian_bao_hanh")
     private Integer thoiGianBaoHanh;
+    
+    @Column(name = "created_date")
+    private Date createdDate = new Date();
     
 }

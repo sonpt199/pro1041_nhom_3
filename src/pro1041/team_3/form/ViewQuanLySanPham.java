@@ -259,7 +259,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         chiTietDienThoai.setHang(hang);
         chiTietDienThoai.setImei(imei);
         chiTietDienThoai.setMauSac(mauSac);
-        chiTietDienThoai.setMoTa(mota == null ? null : mota);
+        chiTietDienThoai.setMoTa(mota.equals("") ? null : mota);
         chiTietDienThoai.setRam(ram);
         chiTietDienThoai.setTinhTrang(tinhTrangPhamTram);
         chiTietDienThoai.setTrangThai(trangThai);
@@ -385,6 +385,8 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         cbbDienThoai = new pro1041.team_3.swing.ComboBoxSuggestion<DienThoai>();
         cbbHang = new pro1041.team_3.swing.ComboBoxSuggestion<Hang>();
         cbbMauSac = new pro1041.team_3.swing.ComboBoxSuggestion<MauSac>();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
         jspTblChiTietDienThoai = new javax.swing.JScrollPane();
         tblChiTietDienThoai = new pro1041.team_3.swing.config.Table();
         jPanel3 = new javax.swing.JPanel();
@@ -394,6 +396,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         btnImport = new pro1041.team_3.swing.ButtonCustom();
         btnTaoQr = new pro1041.team_3.swing.ButtonCustom();
         btnExport = new pro1041.team_3.swing.ButtonCustom();
+        btnExportMau = new pro1041.team_3.swing.ButtonCustom();
 
         dlEditDienThoai.setSize(new java.awt.Dimension(700, 630));
 
@@ -879,8 +882,8 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 140, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jLabel8.setText("VND");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 80, -1, -1));
+        jLabel8.setText("GB");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
         jLabel9.setText("Mã điện thoại");
@@ -909,7 +912,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
         txtRom.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         txtRom.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(90, 183, 210)));
-        jPanel1.add(txtRom, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 220, 30));
+        jPanel1.add(txtRom, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 170, 30));
 
         jLabel11.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
         jLabel11.setText("Imei");
@@ -929,7 +932,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
         txtRam.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         txtRam.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(90, 183, 210)));
-        jPanel1.add(txtRam, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 220, 30));
+        jPanel1.add(txtRam, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 170, 30));
 
         jLabel16.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
         jLabel16.setText("Mô tả");
@@ -1006,6 +1009,14 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         jPanel1.add(cbbHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 170, 190, 40));
         jPanel1.add(cbbMauSac, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 228, 190, 40));
 
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jLabel20.setText("VND");
+        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 80, -1, -1));
+
+        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jLabel26.setText("GB");
+        jPanel1.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 190, -1, -1));
+
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 930, 380));
 
         tblChiTietDienThoai.setModel(new javax.swing.table.DefaultTableModel(
@@ -1078,7 +1089,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 btnThemActionPerformed(evt);
             }
         });
-        jPanel3.add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 130, -1));
+        jPanel3.add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 130, -1));
 
         btnSua.setBackground(new java.awt.Color(1, 181, 204));
         btnSua.setForeground(new java.awt.Color(255, 255, 255));
@@ -1090,7 +1101,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 btnSuaActionPerformed(evt);
             }
         });
-        jPanel3.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 130, -1));
+        jPanel3.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 130, -1));
 
         btnImport.setBackground(new java.awt.Color(1, 181, 204));
         btnImport.setForeground(new java.awt.Color(255, 255, 255));
@@ -1102,7 +1113,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 btnImportActionPerformed(evt);
             }
         });
-        jPanel3.add(btnImport, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 130, -1));
+        jPanel3.add(btnImport, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 130, -1));
 
         btnTaoQr.setBackground(new java.awt.Color(1, 181, 204));
         btnTaoQr.setForeground(new java.awt.Color(255, 255, 255));
@@ -1114,7 +1125,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 btnTaoQrActionPerformed(evt);
             }
         });
-        jPanel3.add(btnTaoQr, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 130, -1));
+        jPanel3.add(btnTaoQr, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 130, -1));
 
         btnExport.setBackground(new java.awt.Color(1, 181, 204));
         btnExport.setForeground(new java.awt.Color(255, 255, 255));
@@ -1126,7 +1137,19 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
                 btnExportActionPerformed(evt);
             }
         });
-        jPanel3.add(btnExport, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 130, -1));
+        jPanel3.add(btnExport, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 130, -1));
+
+        btnExportMau.setBackground(new java.awt.Color(1, 181, 204));
+        btnExportMau.setForeground(new java.awt.Color(255, 255, 255));
+        btnExportMau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pro1041/team_3/icon/export.png"))); // NOI18N
+        btnExportMau.setText("Mẫu Import");
+        btnExportMau.setFont(new java.awt.Font("Nunito", 1, 14)); // NOI18N
+        btnExportMau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportMauActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnExportMau, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 130, -1));
 
         add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 20, 160, 360));
     }// </editor-fold>//GEN-END:initComponents
@@ -1220,7 +1243,6 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
             this.tinhTrangCuPanel.setVisible(true);
             this.cbbTinhTrangCu.setSelectedItem(ctdtr.getTinhTrang() + "");
         }
-
     }//GEN-LAST:event_tblChiTietDienThoaiMouseClicked
 
     private void rdoCuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoCuActionPerformed
@@ -1254,6 +1276,10 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
             return;
         }
         ChiTietDienThoai chiTietDienThoai = this.getFormData();
+        if (chiTietDienThoai.getTrangThai() == 1) {
+            JOptionPane.showMessageDialog(this, "Mời chọn trạng thái sản phẩm");
+            return;
+        }
         if (chiTietDienThoai == null) {
             return;
         }
@@ -1342,20 +1368,17 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
         // TODO add your handling code here:
-//        LocalDateTime time = LocalDateTime.now();
-//        String fileName = "Chi_tiet_san_pham_" + time.getSecond() + time.getMinute() + time.getHour();
-
-        JFileChooser fileChooser = new JFileChooser("D:\\");
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("File Exel (.xlsx)", "xlsx");
-        fileChooser.setFileFilter(filter);
-        int x = fileChooser.showSaveDialog(this);
-        FileOutputStream fos = null;
-        File file = fileChooser.getSelectedFile();
-        if (!(x == JFileChooser.APPROVE_OPTION)) {
+JnaFileChooser jfc = new JnaFileChooser();
+        jfc.setMode(JnaFileChooser.Mode.Directories);
+        if (!jfc.showOpenDialog((JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this))) {
             return;
         }
+        String path = jfc.getSelectedFile().getAbsolutePath();
+        LocalDateTime local = LocalDateTime.now();
+        File file = new File(path + "\\DanhSachDienThoai_" + local.getDayOfMonth() + "_" + local.getMonthValue() + "_" + local.getYear() + ".xlsx");
+        
         if (chiTietDTImpl.export(file)) {
-            JOptionPane.showMessageDialog(this, "Xuất danh sách thành công", "Export", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Export thành công", "Export", JOptionPane.INFORMATION_MESSAGE);
             if (Desktop.isDesktopSupported()) {
                 Desktop desktop = Desktop.getDesktop();
                 if (file.exists()) {
@@ -1753,6 +1776,34 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
         dlEditMauSac.setLocationRelativeTo(null);
     }//GEN-LAST:event_buttonCustom6ActionPerformed
 
+    private void btnExportMauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportMauActionPerformed
+        // BTN export mẫu
+        JnaFileChooser jfc = new JnaFileChooser();
+        jfc.setMode(JnaFileChooser.Mode.Directories);
+        if (!jfc.showOpenDialog((JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this))) {
+            return;
+        }
+        String path = jfc.getSelectedFile().getAbsolutePath();
+        File file = new File(path + "\\MauImport.xlsx");
+        
+        if (chiTietDTImpl.exportMau(file)) {
+            JOptionPane.showMessageDialog(this, "Tải mẫu thành công", "Export", JOptionPane.INFORMATION_MESSAGE);
+            if (Desktop.isDesktopSupported()) {
+                Desktop desktop = Desktop.getDesktop();
+                if (file.exists()) {
+                    try {
+                        desktop.open(file);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(this, "Mở thất bại", "Export", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Thất bại", "Export", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnExportMauActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private pro1041.team_3.swing.ButtonCustom btnClear;
@@ -1761,6 +1812,7 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     private pro1041.team_3.swing.ButtonCustom btnEditDienThoai;
     private pro1041.team_3.swing.ButtonCustom btnEditHangDT;
     private pro1041.team_3.swing.ButtonCustom btnExport;
+    private pro1041.team_3.swing.ButtonCustom btnExportMau;
     private pro1041.team_3.swing.ButtonCustom btnImport;
     private pro1041.team_3.swing.ButtonCustom btnQuayLai;
     private pro1041.team_3.swing.ButtonCustom btnQuayLaiHang;
@@ -1804,11 +1856,13 @@ public class ViewQuanLySanPham extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

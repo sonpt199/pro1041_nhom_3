@@ -986,7 +986,7 @@
                 <Property name="labelColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cb" green="84" red="1" type="rgb"/>
                 </Property>
-                <Property name="labelText" type="java.lang.String" value="M&#xf4; t&#x1ea3;"/>
+                <Property name="labelText" type="java.lang.String" value="&#x110;&#x1ecb;a ch&#x1ec9;"/>
                 <Property name="lostFocusColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="d8" green="9b" red="3" type="rgb"/>
                 </Property>

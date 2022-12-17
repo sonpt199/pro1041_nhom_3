@@ -44,7 +44,7 @@ public interface ChiTietDienThoaiService {
 
     List<ChiTietDienThoaiResponse> getAllCTDienThoaiByDienThoai(String tenDienThoai, Date batDau, Date ketThuc);
 
-    List<ChiTietDienThoaiResponse> getAllCTDienThoaiByHang(String tenHang, Date batDau, Date ketThuc);
+    List<ChiTietDienThoaiResponse> getAllCTDienThoai(UUID idDienThoai, UUID idHang, UUID idMauSac, Integer tinhTrang, Date batDau, Date ketThuc);
 
     List<ChiTietDienThoaiResponse> getAllCTDienThoaiByMauSac(String tenMauSac, Date batDau, Date ketThuc);
 

@@ -37,7 +37,7 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Override
     public ArrayList<KhachHangDto> getAll() {
         _lstKhachHang = new ArrayList<>();
-        List<KhachHang> listKh = khachHangRepository.getAll();
+        List<KhachHang> listKh = khachHangRepository.getAllOrderBy();
         for (KhachHang x : listKh) {
             _lstKhachHang.add(new KhachHangDto(x.getId(), x.getMa(), x.getHoTen(), new java.sql.Date(x.getNgaySinh().getTime()),
                     x.getGioiTinh(), x.getSdt(), x.getDiaChi(), x.getEmail()));
@@ -51,7 +51,9 @@ public class KhachHangServiceImpl implements KhachHangService {
         KhachHang findSDT = khachHangRepository.findSDT(khachHang.getSdt());
         KhachHang findEmail = khachHangRepository.findEmail(khachHang.getEmail());
         LocalDateTime time = LocalDateTime.now();
-        String maKH = "KH" + time.getSecond() + time.getMinute() + time.getHour();
+        long maMax = khachHangRepository.getMaOrderBy();
+        String maKH = "KH0" + ++maMax;
+        System.out.println(maKH);
         khachHang.setMa(maKH);
         if (khachHang.getHoTen().trim().isEmpty()) {
             return "Họ tên không được trống";

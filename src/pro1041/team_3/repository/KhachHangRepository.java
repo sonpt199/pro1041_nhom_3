@@ -1,5 +1,6 @@
 package pro1041.team_3.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.Query;
@@ -83,6 +84,38 @@ public class KhachHangRepository extends Repository<KhachHang, UUID, KhachHangDt
             e.printStackTrace();
             return null;
         }
+    }
+    
+    public List<KhachHang> getAllOrderBy() {
+        List<KhachHang> list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSession();
+            String hql = "SELECT a FROM " + className + " a order by convert(int, substring(a.ma, 3, 10)) desc";
+            Query query = session.createQuery(hql);
+            list = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return list;
+    }
+    
+    public long getMaOrderBy() {
+        long ma = 0;
+        try {
+            session = HibernateUtil.getSession();
+            String hql = "SELECT count(a.ma) FROM " + className + " a ";
+            TypedQuery<Long> query = session.createQuery(hql, Long.class);
+            ma = query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ma;
+    }
+    
+    public static void main(String[] args) {
+        KhachHangRepository x = new KhachHangRepository();
+        System.out.println(x.getMaOrderBy());
     }
 
 }

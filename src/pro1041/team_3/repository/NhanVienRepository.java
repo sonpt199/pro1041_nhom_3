@@ -20,6 +20,7 @@ public class NhanVienRepository extends Repository<NhanVien, UUID, NhanVienDto> 
         className = NhanVien.class.getName();
         resCon = "new pro1041.team_3.dto.NhanVienDto"
                 + "(a.id, a.ma, a.tenDangNhap, a.hoTen, a.gioiTinh, a.sdt, a.diaChi, a.email, a.matKhau, a.trangThaiLamViec, a.vaiTro)";
+        join = " ORDER BY CONVERT(INT, SUBSTRING(a.ma, 3, 10)) DESC";
     }
 
     public List<NhanVienDto> findByTenDangNhap(String keyWord) {
@@ -129,7 +130,7 @@ public class NhanVienRepository extends Repository<NhanVien, UUID, NhanVienDto> 
         List<NhanVienDto> lst = new ArrayList<>();
         try {
             session = HibernateUtil.getSession();
-            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThaiLamViec = 0";
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThaiLamViec = 0 ORDER BY CONVERT(INT, SUBSTRING(a.ma, 3, 10)) DESC";
             Query query = session.createQuery(hql);
             lst = query.getResultList();
 
@@ -144,7 +145,7 @@ public class NhanVienRepository extends Repository<NhanVien, UUID, NhanVienDto> 
         try {
             List<NhanVienDto> lst = new ArrayList<>();
             session = HibernateUtil.getSession();
-            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThaiLamViec = 1";
+            String hql = "SELECT " + resCon + " FROM " + className + " a WHERE a.trangThaiLamViec = 1 ORDER BY CONVERT(INT, SUBSTRING(a.ma, 3, 10)) DESC";
             Query query = session.createQuery(hql);
             lst = query.getResultList();
             return lst;
@@ -206,9 +207,8 @@ public class NhanVienRepository extends Repository<NhanVien, UUID, NhanVienDto> 
             return null;
         }
     }
-    
-    
-     public boolean updateMatKhau(UUID id,String matKhau) {
+
+    public boolean updateMatKhau(UUID id, String matKhau) {
         try {
             session = HibernateUtil.getSession();
             trans = session.beginTransaction();
@@ -225,6 +225,19 @@ public class NhanVienRepository extends Repository<NhanVien, UUID, NhanVienDto> 
             e.printStackTrace();
             return false;
         }
+    }
+
+    public long getMaOrderBy() {
+        long ma = 0;
+        try {
+            session = HibernateUtil.getSession();
+            String hql = "SELECT count(a.ma) FROM " + className + " a ";
+            TypedQuery<Long> query = session.createQuery(hql, Long.class);
+            ma = query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ma;
     }
 
 }

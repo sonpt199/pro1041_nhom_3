@@ -26,4 +26,7 @@ public interface KhuyenMaiService {
     String update(KhuyenMai khuyenMai);
     
     KhuyenMai findById(UUID id);
+    
+    List<KhuyenMaiDto> findKMByLoai(int loai);
+    
 }
