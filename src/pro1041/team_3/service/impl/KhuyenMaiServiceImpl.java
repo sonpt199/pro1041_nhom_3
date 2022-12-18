@@ -39,9 +39,20 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
 
     @Override
     public String insert(KhuyenMai khuyenMai) {
+        List<KhuyenMai> list = khuyenMaiRepository.getAll();
+        Integer ma = 0;
+        for (KhuyenMai x : list) {
+            String maSoStr = x.getMa().substring(3);
+            Integer maSo = Integer.parseInt(maSoStr);
+            if (ma < maSo) {
+                ma = maSo;
+            }
+        }
+
         khuyenMai.setId(null);
-        long count = khuyenMaiRepository.getMaOrderBy() + 1;
-        khuyenMai.setMa("KM0" + count);
+        Integer maMau = ma + 1;
+        khuyenMai.setMa("KM0" + maMau);
+        
         khuyenMai = khuyenMaiRepository.saveOrUpdate(khuyenMai);
         if (khuyenMai != null) {
             return "Thêm thành công";

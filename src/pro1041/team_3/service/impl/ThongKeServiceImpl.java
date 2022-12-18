@@ -36,7 +36,7 @@ public class ThongKeServiceImpl implements ThongKeService {
             Integer nam = local.getYear();
             DoanhThuTheoNgayDto doanhThu = thongKeRepository.doanhThuTheoNgay(ngay, thang, nam);
             if (doanhThu == null) {
-                doanhThu = new DoanhThuTheoNgayDto(ngay, thang, nam, BigDecimal.ZERO, 0l, BigDecimal.ZERO, BigDecimal.ZERO);
+                doanhThu = new DoanhThuTheoNgayDto(ngay, thang, nam, BigDecimal.ZERO, 0l, 0l, 0l);
             } else {
                 doanhThu.setNgay(ngay);
                 doanhThu.setThang(thang);
@@ -57,7 +57,7 @@ public class ThongKeServiceImpl implements ThongKeService {
             nam = local.getYear();
             doanhThu = thongKeRepository.doanhThuTheoNgay(ngay, thang, nam);
             if (doanhThu == null) {
-                doanhThu = new DoanhThuTheoNgayDto(ngay, thang, nam, BigDecimal.ZERO, 0l, BigDecimal.ZERO, BigDecimal.ZERO);
+                doanhThu = new DoanhThuTheoNgayDto(ngay, thang, nam, BigDecimal.ZERO, 0l, 0l, 0l);
             } else {
                 doanhThu.setNgay(ngay);
                 doanhThu.setThang(thang);

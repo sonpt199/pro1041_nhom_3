@@ -27,7 +27,7 @@ public class ThongKeRepository {
 
     public DoanhThuTheoNgayDto doanhThuTheoNgay(int day, int month, int year) {
         String hql = "SELECT new " + DoanhThuTheoNgayDto.class.getName()
-                + "(SUM(b.tongTien), COUNT(a.hoaDon.id), SUM(b.tienMat), SUM(b.nganHang)) FROM " + HoaDonChiTiet.class.getName() + " a "
+                + "(SUM(b.tongTien), COUNT(a.hoaDon.id), COUNT(a.id), COUNT(b.khachHang.id)) FROM " + HoaDonChiTiet.class.getName() + " a "
                 + "RIGHT JOIN a.hoaDon b "
                 + "WHERE DAY(b.ngayThanhToan) = :day "
                 + "AND MONTH(b.ngayThanhToan) = :month "
@@ -50,7 +50,7 @@ public class ThongKeRepository {
     
     public DoanhThuTheoNgayDto doanhThuTheoThang(int month, int year) {
         String hql = "SELECT new " + DoanhThuTheoNgayDto.class.getName()
-                + "(SUM(b.tongTien), COUNT(a.hoaDon.id), SUM(b.tienMat), SUM(b.nganHang)) FROM " + HoaDonChiTiet.class.getName() + " a "
+                + "(SUM(b.tongTien), COUNT(a.hoaDon.id), COUNT(a.id), COUNT(b.khachHang.id)) FROM " + HoaDonChiTiet.class.getName() + " a "
                 + "RIGHT JOIN a.hoaDon b "
                 + "WHERE MONTH(b.ngayThanhToan) = :month "
                 + "AND YEAR(b.ngayThanhToan) = :year ";

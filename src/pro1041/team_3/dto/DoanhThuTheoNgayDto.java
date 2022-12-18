@@ -26,15 +26,15 @@ public class DoanhThuTheoNgayDto {
     
     private Long soHoaDon;
     
-    private BigDecimal tienMat;
+    private Long soDienThoai;
     
-    private BigDecimal nganHang;
+    private Long soKhachHang;
 
-    public DoanhThuTheoNgayDto(BigDecimal doanhThu, Long soHoaDon, BigDecimal tienMat, BigDecimal nganHang) {
+    public DoanhThuTheoNgayDto(BigDecimal doanhThu, Long soHoaDon, Long soDienThoai, Long soKhachHang) {
         this.doanhThu = doanhThu;
         this.soHoaDon = soHoaDon;
-        this.tienMat = tienMat;
-        this.nganHang = nganHang;
+        this.soDienThoai = soDienThoai;
+        this.soKhachHang = soKhachHang;
     }
             
 }

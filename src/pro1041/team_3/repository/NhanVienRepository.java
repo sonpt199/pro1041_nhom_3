@@ -231,9 +231,9 @@ public class NhanVienRepository extends Repository<NhanVien, UUID, NhanVienDto> 
         long ma = 0;
         try {
             session = HibernateUtil.getSession();
-            String hql = "SELECT count(a.ma) FROM " + className + " a ";
+            String hql = "SELECT CONVERT(BIGINT, SUBSTRING(a.ma, 3)) FROM " + className + " a ORDER BY CONVERT(BIGINT, SUBSTRING(a.ma, 3))";
             TypedQuery<Long> query = session.createQuery(hql, Long.class);
-            ma = query.getSingleResult();
+            ma = query.getFirstResult();
         } catch (Exception e) {
             e.printStackTrace();
         }

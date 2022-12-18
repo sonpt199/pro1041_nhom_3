@@ -25,7 +25,7 @@ public class GioHangChiTietRepository extends Repository<GioHangChiTiet, UUID, G
         List<BhChiTietDienThoaiDto> list = new ArrayList<>();
         try {
             session = HibernateUtil.getSession();
-            String hql = "SELECT new " + BhChiTietDienThoaiDto.class.getName() + "(b.id, b.ma, b.mauSac.ten, b.dienThoai.ten, b.hang.ten, b.tinhTrang, b.donGia, b.trangThai, b.imei, b.ram, b.boNho, b.moTa) FROM " + className + " a "
+            String hql = "SELECT new " + BhChiTietDienThoaiDto.class.getName() + "(b.id, b.dienThoai.ma, b.mauSac.ten, b.dienThoai.ten, b.hang.ten, b.tinhTrang, b.donGia, b.trangThai, b.imei, b.ram, b.boNho, b.moTa) FROM " + className + " a "
                     + "LEFT JOIN a.chiTietDienThoai b WHERE a.gioHang.id = :idGioHang";
             Query query = session.createQuery(hql);
             query.setParameter("idGioHang", idGioHang);

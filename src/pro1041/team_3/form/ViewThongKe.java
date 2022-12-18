@@ -63,6 +63,8 @@ public class ViewThongKe extends javax.swing.JPanel {
         chooserTheoHangTu.setSelectedDate(start);
         thongKeTheoHang(cbbThongKeTheoHang.getItemAt(0), start, end);
         cbbLoaiTongDoanhThu.setSelectedIndex(0);
+//        cbbNamTongDoanhThu.setSelectedIndex(0);
+//        cbbThangTongDoanhThu.setSelectedIndex(0);
     }
 
     private void loadCbbTheoDienThoai() {
@@ -81,13 +83,13 @@ public class ViewThongKe extends javax.swing.JPanel {
             moneyFormat.applyPattern("#,###");
             txtDoanhThuTheoNgay.setText(moneyFormat.format(doanhThu.getDoanhThu()) + "VNĐ");
             txtSoHoaDonTheoNgay.setText(doanhThu.getSoHoaDon().toString() + " hóa đơn");
-            txtTienMatTheoNgay.setText(doanhThu.getTienMat() == null ? "-" : moneyFormat.format(doanhThu.getTienMat()) + "VNĐ");
-            txtNganHangTheoNgay.setText(doanhThu.getNganHang() == null ? "-" : moneyFormat.format(doanhThu.getNganHang()) + "VNĐ");
+            txtSoDientThoaiTheoNgay.setText(doanhThu.getSoDienThoai() == null ? "-" : doanhThu.getSoDienThoai() + " điện thoại");
+            txtSoKhachHangTheoNgay.setText(doanhThu.getSoKhachHang() == null ? "-" : doanhThu.getSoKhachHang() + " khách hàng");
         } else {
             txtDoanhThuTheoNgay.setText("Chưa có");
             txtSoHoaDonTheoNgay.setText("Chưa có");
-            txtTienMatTheoNgay.setText("-");
-            txtNganHangTheoNgay.setText("-");
+            txtSoDientThoaiTheoNgay.setText("-");
+            txtSoKhachHangTheoNgay.setText("-");
         }
     }
 
@@ -171,10 +173,10 @@ public class ViewThongKe extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         chartPieDoanhThuCaNhan = new pro1041.team_3.chart.ChartPie();
         jPanel5 = new javax.swing.JPanel();
-        txtTienMatTheoNgay = new javax.swing.JLabel();
+        txtSoDientThoaiTheoNgay = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        txtNganHangTheoNgay = new javax.swing.JLabel();
+        txtSoKhachHangTheoNgay = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btnThongKeTheoNgay = new pro1041.team_3.swing.ButtonCustom();
         jpnTongDoanhThu = new javax.swing.JPanel();
@@ -262,16 +264,16 @@ public class ViewThongKe extends javax.swing.JPanel {
         jPanel5.setPreferredSize(new java.awt.Dimension(140, 140));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtTienMatTheoNgay.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
-        txtTienMatTheoNgay.setForeground(new java.awt.Color(255, 255, 255));
-        txtTienMatTheoNgay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtTienMatTheoNgay.setText("2000000");
-        jPanel5.add(txtTienMatTheoNgay, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, 60, 130, 31));
+        txtSoDientThoaiTheoNgay.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtSoDientThoaiTheoNgay.setForeground(new java.awt.Color(255, 255, 255));
+        txtSoDientThoaiTheoNgay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtSoDientThoaiTheoNgay.setText("2000000");
+        jPanel5.add(txtSoDientThoaiTheoNgay, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, 60, 130, 31));
 
         jLabel4.setFont(new java.awt.Font("Nunito Light", 1, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Tiền mặt");
+        jLabel4.setText("Số điện thoại");
         jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 130, 32));
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, 130, 110));
@@ -280,16 +282,16 @@ public class ViewThongKe extends javax.swing.JPanel {
         jPanel6.setPreferredSize(new java.awt.Dimension(140, 140));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtNganHangTheoNgay.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
-        txtNganHangTheoNgay.setForeground(new java.awt.Color(255, 255, 255));
-        txtNganHangTheoNgay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtNganHangTheoNgay.setText("2000000");
-        jPanel6.add(txtNganHangTheoNgay, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, 60, 130, 31));
+        txtSoKhachHangTheoNgay.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
+        txtSoKhachHangTheoNgay.setForeground(new java.awt.Color(255, 255, 255));
+        txtSoKhachHangTheoNgay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtSoKhachHangTheoNgay.setText("2000000");
+        jPanel6.add(txtSoKhachHangTheoNgay, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, 60, 130, 31));
 
         jLabel5.setFont(new java.awt.Font("Nunito Light", 1, 16)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Ngân hàng");
+        jLabel5.setText("Số khách hàng");
         jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 130, 32));
 
         jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 120, 130, 110));
@@ -323,14 +325,12 @@ public class ViewThongKe extends javax.swing.JPanel {
         jpnTongDoanhThuTheoThang.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cbbNamTongDoanhThu.setModel(new javax.swing.DefaultComboBoxModel<>(new Integer[] { 2021, 2022 }));
-        cbbNamTongDoanhThu.setSelectedIndex(-1);
         cbbNamTongDoanhThu.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
         cbbNamTongDoanhThu.setLabeText("Năm");
         cbbNamTongDoanhThu.setLabelColor(new java.awt.Color(3, 124, 227));
         jpnTongDoanhThuTheoThang.add(cbbNamTongDoanhThu, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 90, -1));
 
         cbbThangTongDoanhThu.setModel(new javax.swing.DefaultComboBoxModel(new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}));
-        cbbThangTongDoanhThu.setSelectedIndex(-1);
         cbbThangTongDoanhThu.setFont(new java.awt.Font("Nunito Light", 1, 14)); // NOI18N
         cbbThangTongDoanhThu.setLabeText("Tháng");
         cbbThangTongDoanhThu.setLabelColor(new java.awt.Color(3, 124, 227));
@@ -582,13 +582,13 @@ public class ViewThongKe extends javax.swing.JPanel {
                 moneyFormat.applyPattern("#,###");
                 txtDoanhThuTheoNgay.setText(moneyFormat.format(doanhThu.getDoanhThu()) + "VNĐ");
                 txtSoHoaDonTheoNgay.setText(doanhThu.getSoHoaDon().toString() + " hóa đơn");
-                txtTienMatTheoNgay.setText(doanhThu.getTienMat() == null ? "-" : moneyFormat.format(doanhThu.getTienMat()) + "VNĐ");
-                txtNganHangTheoNgay.setText(doanhThu.getNganHang() == null ? "-" : moneyFormat.format(doanhThu.getNganHang()) + "VNĐ");
+                txtSoDientThoaiTheoNgay.setText(doanhThu.getSoDienThoai() == null ? "-" : doanhThu.getSoDienThoai() + " điện thoại");
+                txtSoKhachHangTheoNgay.setText(doanhThu.getSoKhachHang() == null ? "-" : doanhThu.getSoKhachHang() + " khách hàng");
             } else {
                 txtDoanhThuTheoNgay.setText("Chưa có");
                 txtSoHoaDonTheoNgay.setText("Chưa có");
-                txtTienMatTheoNgay.setText("-");
-                txtNganHangTheoNgay.setText("-");
+                txtSoDientThoaiTheoNgay.setText("-");
+                txtSoKhachHangTheoNgay.setText("-");
             }
             List<DoanhThuCaNhanDto> lst = thongKeService.getDoanhThuCaNhanTheoThang(month, year);
             List<ModelChartPie> lstModel = new ArrayList<>();
@@ -613,6 +613,7 @@ public class ViewThongKe extends javax.swing.JPanel {
             jpnTongDoanhThuTheoNgay.setVisible(true);
             jpnTongDoanhThuTheoThang.setVisible(false);
         } else if (selected == 1) {
+            cbbLoaiTongDoanhThu.setSelectedIndex(0);
             jpnTongDoanhThuTheoNgay.setVisible(false);
             jpnTongDoanhThuTheoThang.setVisible(true);
         }
@@ -656,11 +657,11 @@ public class ViewThongKe extends javax.swing.JPanel {
     private pro1041.team_3.chart.charLineCustom.panel.PanelShadow panelShadow1;
     private pro1041.team_3.swing.TextField txtDen;
     private javax.swing.JLabel txtDoanhThuTheoNgay;
-    private javax.swing.JLabel txtNganHangTheoNgay;
+    private javax.swing.JLabel txtSoDientThoaiTheoNgay;
     private javax.swing.JLabel txtSoHoaDonTheoNgay;
+    private javax.swing.JLabel txtSoKhachHangTheoNgay;
     private pro1041.team_3.swing.TextField txtTheoHangDen;
     private pro1041.team_3.swing.TextField txtTheoHangTu;
-    private javax.swing.JLabel txtTienMatTheoNgay;
     private pro1041.team_3.swing.TextField txtTongDoanhThuTheoNgay;
     private pro1041.team_3.swing.TextField txtTu;
     // End of variables declaration//GEN-END:variables

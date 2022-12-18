@@ -41,9 +41,19 @@ public class NhanVienServiceImpl implements NhanVienService {
         NhanVien findSDT = repos.findSDT(user.getSdt());
         NhanVien findEmail = repos.findEmail(user.getEmail());
         NhanVien findTenDangNhap = repos.findTenDangNhap(user.getTenDangNhap());
-        long count = repos.getMaOrderBy() + 1;
-        String maNV = "NV0" + count;
-        user.setMa(maNV);
+        List<NhanVien> list = repos.getAll();
+        Integer ma = 0;
+        for (NhanVien x : list) {
+            String maSoStr = x.getMa().substring(3);
+            Integer maSo = Integer.parseInt(maSoStr);
+            if (ma < maSo) {
+                ma = maSo;
+            }
+        }
+
+        user.setId(null);
+        Integer maMau = ma + 1;
+        user.setMa("NV0" + maMau);
         user.setTrangThaiLamViec(0);
 //        user.setMatKhau(String.valueOf((int) (Math.random() * 10000000)));
 
